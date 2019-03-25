@@ -1,0 +1,56 @@
+<div class="modal">
+  <mat-toolbar color="primary">
+    <span>{{modalData.title}}</span>
+    <button mat-icon-button>
+      <mat-icon (click)="close()">clear</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="modal_content">
+    <div *ngIf="modalData.action == 'login'">
+      <form>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email Id" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="password" placeholder="Password" />
+        </mat-form-field>
+
+        <button type="submit" class="bg_green" color="primary" mat-button>Login</button>
+      </form>
+      <p class="title">New Customer ? <button mat-button (click)="createAccount()">Create an account</button></p>
+    </div>
+
+    <div *ngIf="modalData.action == 'register'">
+      <form>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="First Name" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Last Name" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Mobile" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" type="email" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" type="password" />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Confirm Password" type="password" />
+        </mat-form-field>
+
+        <button type="submit" class="bg_green" color="primary" mat-button>Register</button>
+      </form>
+      <p class="title">Already Resgister ? <button mat-button (click)="doLogin()">Click to Login</button></p>
+    </div>
+  </div>
+</div>

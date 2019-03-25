@@ -1,0 +1,231 @@
+<section class="section listing_item">
+  <div class="container">
+
+    <div class="listing_wrapper">
+      <aside class="left_sidebar">
+        <div class="d-flex clear_filter justify-content-between">
+          <h4>Filter By</h4>
+          <a href="javascritp:void(0);">Clear All</a>
+        </div>
+        <div class="left_filter_area">
+          <div class="mat_slider">
+            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000">
+            </mat-slider>
+            <p>Rs. {{matslider.value}}.00</p>
+          </div>
+          <mat-accordion>
+            <mat-expansion-panel class="mat-elevation-z" [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  BRAND
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-checkbox>Item 1</mat-checkbox>
+              <mat-checkbox>Item 2</mat-checkbox>
+              <mat-checkbox>Item 3</mat-checkbox>
+              <mat-checkbox>Item 4</mat-checkbox>
+              <mat-checkbox>Item 5</mat-checkbox>
+              <mat-checkbox>Item 6</mat-checkbox>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="mat-elevation-z">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  BRAND
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-checkbox>Item 1</mat-checkbox>
+              <mat-checkbox>Item 2</mat-checkbox>
+              <mat-checkbox>Item 3</mat-checkbox>
+              <mat-checkbox>Item 4</mat-checkbox>
+              <mat-checkbox>Item 5</mat-checkbox>
+              <mat-checkbox>Item 6</mat-checkbox>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="mat-elevation-z">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  BRAND
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-checkbox>Item 1</mat-checkbox>
+              <mat-checkbox>Item 2</mat-checkbox>
+              <mat-checkbox>Item 3</mat-checkbox>
+              <mat-checkbox>Item 4</mat-checkbox>
+              <mat-checkbox>Item 5</mat-checkbox>
+              <mat-checkbox>Item 6</mat-checkbox>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="mat-elevation-z">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  BRAND
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-checkbox>Item 1</mat-checkbox>
+              <mat-checkbox>Item 2</mat-checkbox>
+              <mat-checkbox>Item 3</mat-checkbox>
+              <mat-checkbox>Item 4</mat-checkbox>
+              <mat-checkbox>Item 5</mat-checkbox>
+              <mat-checkbox>Item 6</mat-checkbox>
+            </mat-expansion-panel>
+
+          </mat-accordion>
+        </div>
+      </aside>
+      <div class="listing_content">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Home </a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#">Mirror Table</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Mirror Table</li>
+          </ol>
+        </nav>
+        <div class="d-flex clear_filter justify-content-between">
+          <h4>Mirror Table <span>(Showing 1 – 40 products of 156 products)</span></h4>
+          <div class="sort_by">
+            <mat-form-field>
+              <mat-label>Sort By</mat-label>
+              <mat-select>
+                <mat-option>Price (Low to High)</mat-option>
+                <mat-option>Price (High to Low)</mat-option>
+                <mat-option>New Arrival</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row slider_list ">
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                  <a routerLink="" class="add_whislist"><img src="assets/images/like.svg" alt=""></a>
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-sm-4">
+            <div class="list_item">
+              <div class="ps_rl">
+                <div class="list_header">
+                  <img src="assets/images/f1.jpg" alt="">
+                </div>
+                <div class="list_footer">
+                  <p class="list_heading">Mirror Table</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="list_offer">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
+                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                      <span class="p_off">50% off</span>
+                    </p>
+                    <button mat-button class="buy_now">Buy</button>
+                  </div>
+                </div>
+                <a class="anchor" href="javascript:void(0);"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</section>

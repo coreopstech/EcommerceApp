@@ -1,0 +1,117 @@
+@import "../@theme/_theme.scss";
+.bg_white{
+    background: #fff;
+}
+.position-relative{
+    position: relative;
+}
+.navbar-expand-lg .navbar-collapse {
+    display: -webkit-box!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+    -ms-flex-preferred-size: auto;
+    flex-basis: auto;
+    
+}
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+    box-shadow: 0 2px 12px -6px rgba(0, 0, 0, .4);
+    -webkit-box-shadow: 0 2px 12px -6px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 2px 12px -6px rgba(0, 0, 0, .4);
+    z-index: 99;
+
+    ul {
+        li{
+            a{
+                color: #000;
+                text-decoration: none;
+            }
+        }
+    }
+}
+.navbar-nav {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    margin-top:0;
+}
+
+.mega_menu {    
+
+    .header_mega_menu{
+        position: absolute;
+        top: 47px;
+        width: 100%;
+        left: 0;
+        background: #ffffff;
+        z-index: 999;
+        box-shadow: 0 2px 4px 0px rgba(0,0,0,.2);
+        padding: 20px 15px;
+        right: 0;
+        display: none;
+
+        ul {
+            padding: 0;
+            list-style: none;
+
+            .menu_list_col {
+                float: left;
+                width: 20%;
+                margin-left: 0 !important;
+                padding: 0 15px;
+
+                h4{
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                    font-weight: 500;
+                    font-size: 15px;
+                    color: #000;
+                }
+
+                .menu_list_item li {
+                    margin: 12px 0;
+
+                    a{
+                        text-transform: capitalize;
+                        font-size: 14px;
+                        color: #212121;
+                        opacity: .8;
+
+                        &:hover{
+                            opacity: 1;
+                            color: $bg;
+                            transition: .2s all ease;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .nav-item {
+        &:hover{
+            .header_mega_menu{
+                display: block;
+            }
+            .nav-link{
+                color: $bg;
+                transition: .2s all ease;
+                
+            }
+        }
+        .nav-link{
+            padding: 14px 60px 14px 0 !important;
+            display: inline-block;
+            color: #000;
+            font-weight: 400;
+        }
+    }
+}

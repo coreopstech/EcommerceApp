@@ -1,0 +1,46 @@
+<app-banner></app-banner>
+
+<section>
+    <div class="feature_list">
+        <div class="container">
+            <h1>Featured Marble Art Design <a routerLink="/listing" class="view_all">View All</a></h1>
+            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+                <div ngxSlickItem *ngFor="let slide of slides" class="slide slider_list">
+                    <div class="list_item">
+                        <div class="list_header">
+                            <img src="{{ slide.img }}" alt="" width="100%">
+                        </div>
+                        <div class="list_footer">
+                            <p class="list_heading">Aquamarine </p>
+                            <p class="list_offer">Min 35% off</p>
+                            <p class="buy_now">Buy Now</p>
+                        </div>
+                        <a class="anchor" routerLink="/listing"></a>
+                    </div>
+
+                </div>
+            </ngx-slick-carousel>
+        </div>
+    </div>
+    <div class="feature_list">
+        <div class="container">
+            <h1>Featured Marble Art Design <a routerLink="/listing" class="view_all">View All</a></h1>
+            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+                <div ngxSlickItem *ngFor="let slide of slides" class="slide slider_list">
+                    <div class="list_item">
+                        <div class="list_header">
+                            <img src="{{ slide.img }}" alt="" width="100%">
+                        </div>
+                        <div class="list_footer">
+                            <p class="list_heading">Aquamarine </p>
+                            <p class="list_offer">Min 35% off</p>
+                            <p class="buy_now">Buy Now</p>
+                        </div>
+                        <a class="anchor" routerLink="/listing"></a>
+                    </div>
+
+                </div>
+            </ngx-slick-carousel>
+        </div>
+    </div>
+</section>
