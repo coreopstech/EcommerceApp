@@ -13,10 +13,14 @@ import {
   MatSliderModule,
   MatSelectModule,
   MatDialogModule,
+  MatSnackBar,
+  MatSnackBarModule,
   } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
+//Component
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -28,6 +32,13 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ListingComponent } from './listing/listing.component';
 import { ModalComponent } from './modal/modal.component';
 
+//Services
+import { HeaderMenuService } from './_services/headerMenuService';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { AuthenticationService } from './_services/authentication.service';
+import { UserService } from './_services/userService';
+import { HomeService } from './_services/home.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,8 +52,12 @@ import { ModalComponent } from './modal/modal.component';
     ModalComponent
   ],
   imports: [
-    BrowserModule,
+
+
+
+  BrowserModule,
     AppRoutingModule,
+    FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -55,9 +70,20 @@ import { ModalComponent } from './modal/modal.component';
     MatCheckboxModule,
     MatSliderModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSpinnerModule,
+    HttpClientModule,
+    MatSnackBarModule
+
+   
   ],
-  providers: [],
+  providers: [
+     //By Ajeet //
+     HeaderMenuService,
+     AuthenticationService,
+     UserService,
+     HomeService
+  ],
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]
 })
