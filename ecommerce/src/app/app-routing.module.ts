@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 
 const routes: Routes = [
   {
@@ -31,11 +32,17 @@ const routes: Routes = [
   {
     path: 'about-us',
     component: AboutusComponent
+  },
+  {
+    path: 'return-policy',
+    component: ReturnPolicyComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+
+exports: [RouterModule]
 })
 export class AppRoutingModule { }

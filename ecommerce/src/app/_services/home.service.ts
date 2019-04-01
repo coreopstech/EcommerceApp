@@ -22,7 +22,7 @@ export class HomeService {
     }
     getFooterPagesDetails(encryptedMenuId:string)
     {
-        return this.http.get<any>(this.baseUrl+`Home/GetFooterPageDetails`)
+        return this.http.get<any>(this.baseUrl+`Home/GetFooterPageDetails/`+encryptedMenuId)
             .pipe(map(result => {
                 return result;
             }));

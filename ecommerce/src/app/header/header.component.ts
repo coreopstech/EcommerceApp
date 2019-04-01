@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
-      this.spinner.hide();
       return this.parentMenuList = this.headerMenuList.filter((x) => x.ParentId === 0);
   }
   GetLevel1sList(id): any {

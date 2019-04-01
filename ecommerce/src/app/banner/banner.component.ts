@@ -33,6 +33,8 @@ export class BannerComponent implements OnInit {
     this.spinner.show();
     this.list=JSON.parse(localStorage.getItem('homedetails'));
     this.slides=this.list.HomeBannerList;
-    this.spinner.hide();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000)
   }
 }

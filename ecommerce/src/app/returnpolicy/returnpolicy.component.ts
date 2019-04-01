@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { HomeService } from './../_services/home.service';
-
 @Component({
-  selector: 'app-aboutus',
-  templateUrl: './aboutus.component.html',
-  styleUrls: ['./aboutus.component.scss']
+  selector: 'app-returnpolicy',
+  templateUrl: './returnpolicy.component.html',
+  styleUrls: ['./returnpolicy.component.scss']
 })
-export class AboutusComponent implements OnInit {
-encryptedMenuId:string;
-footerPageData:any;
-  constructor(private spinner:NgxSpinnerService,
-    private route: ActivatedRoute,
-    private homeService:HomeService) { }
+export class ReturnPolicyComponent implements OnInit {
 
-  ngOnInit() {
-    this.route.queryParams
-      .subscribe(params => {
-        this.encryptedMenuId=params.q;
-      });
-      this.getFooterPageDetails();
-  }
+  encryptedMenuId:string;
+  footerPageData:any;
+    constructor(private spinner:NgxSpinnerService,
+      private route: ActivatedRoute,
+      private homeService:HomeService) { }
+  
+    ngOnInit() {
+      this.route.queryParams
+        .subscribe(params => {
+          this.encryptedMenuId=params.q;
+        });
+        this.getFooterPageDetails();
+    }
   getFooterPageDetails()
   {
     this.spinner.show();
@@ -47,4 +47,5 @@ footerPageData:any;
           }, 1000)
         });
   }
+
 }

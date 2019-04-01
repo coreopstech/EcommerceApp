@@ -15,6 +15,7 @@ import {
   MatDialogModule,
   MatSnackBar,
   MatSnackBarModule,
+  MatCardModule,
   } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -40,6 +41,7 @@ import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/userService';
 import { HomeService } from './_services/home.service';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +53,8 @@ import { AboutusComponent } from './aboutus/aboutus.component';
     ProductDetailsComponent,
     ListingComponent,
     ModalComponent,
-    AboutusComponent
+    AboutusComponent,
+    ReturnPolicyComponent
   ],
   imports: [
 
@@ -75,7 +78,8 @@ import { AboutusComponent } from './aboutus/aboutus.component';
     MatDialogModule,
     NgxSpinnerModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule
 
    
   ],

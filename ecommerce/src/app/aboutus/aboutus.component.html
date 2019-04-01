@@ -1,3 +1,6 @@
-<p>
-  aboutus works!
-</p>
+<mat-card  *ngIf="footerPageData!=null">
+  <mat-card-title *ngIf="footerPageData.Value!=null && footerPageData.Value!=''">{{footerPageData.Value}}</mat-card-title>
+  <mat-card-content *ngIf="footerPageData.Value1!=null && footerPageData.Value1!=''">{{footerPageData.Value1}}</mat-card-content>
+  <mat-card-content *ngIf="footerPageData.Value2!=null && footerPageData.Value2!=''">{{footerPageData.Value2}}</mat-card-content>
+  <mat-card-content *ngIf="footerPageData.Value3!=null && footerPageData.Value3!=''">{{footerPageData.Value3}}</mat-card-content>
+</mat-card>

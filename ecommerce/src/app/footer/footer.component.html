@@ -1,21 +1,56 @@
 <footer class="footer pb-0">
     <div class="container">
         <div class="row" *ngIf="parentMenuList!=null && parentMenuList.length>0">
-            <div class="col-sm-2" *ngFor="let parentmenus of parentMenuList">
-                <div *ngIf="parentmenus.IsChildHas==1">
-                    <h3>{{parentmenus.Menu}}</h3>
-                    <ul class="footer_list" >
-                        <li *ngFor="let childMenu of GetLevel1sList(parentmenus.MenuId)">
-                            <a routerLink="{{childMenu.Url}}" [queryParams]="{q:childMenu.EncryptedMenuId}" >{{childMenu.Menu}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div *ngIf="parentmenus.IsChildHas==0">
-                    <h3>{{parentMenus.Menu}}</h3>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-3" *ngFor="let parentmenus of parentMenuList">
+                        <div *ngIf="parentmenus.IsChildHas==1">
+                            <h3>{{parentmenus.Menu}}</h3>
+                            <ul class="footer_list">
+                                <li *ngFor="let childMenu of GetLevel1sList(parentmenus.MenuId)">
+                                    <a routerLink="{{childMenu.Url}}"
+                                        [queryParams]="{q:childMenu.EncryptedMenuId}">{{childMenu.Menu}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div *ngIf="parentmenus.IsChildHas==0">
+                            <h3>{{parentMenus.Menu}}</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="col-sm-2">
+                <h3>Mail Us</h3>
+                <p>Coreops Internet Pvt Ltd Block B (Begonia),</p>
+
+                <p>Ground Floor, Embassy Tech Village,</p>
+
+                <p>Outer Ring Road, Devarabeesanahalli Village,</p>
+
+                <p>Varthur Hobli, Bengaluru East Taluk,</p>
+
+                <p>Bengaluru District,</p>
+
+                <p>Karnataka, India, 560103.</p>
+
+            </div>
+            <div class="col-sm-2">
+                <h3>Registered Office Address</h3>
+                <p>Coreops Internet Pvt Ltd Block B (Begonia),</p>
+
+                <p>Ground Floor, Embassy Tech Village,</p>
+
+                <p>Outer Ring Road, Devarabeesanahalli Village,</p>
+
+                <p>Varthur Hobli, Bengaluru East Taluk,</p>
+
+                <p>Bengaluru District,</p>
+
+                <p>Karnataka, India, 560103.</p>
+
+            </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-sm-4">
                 <h3> Subscribe for Deals &amp; Offers</h3>
                 <div class="input-group mb-3">
@@ -117,7 +152,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="footer_bottom">
         <div class="container">

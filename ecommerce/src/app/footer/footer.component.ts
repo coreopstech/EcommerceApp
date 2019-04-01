@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
-      this.spinner.hide();
+      
       
       return this.parentMenuList = this.footerMenuList.filter((x) => x.ParentId === 0);
   }
