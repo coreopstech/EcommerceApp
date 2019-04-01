@@ -39,6 +39,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/userService';
 import { HomeService } from './_services/home.service';
+import { AboutusComponent } from './aboutus/aboutus.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { HomeService } from './_services/home.service';
     BannerComponent,
     ProductDetailsComponent,
     ListingComponent,
-    ModalComponent
+    ModalComponent,
+    AboutusComponent
   ],
   imports: [
 

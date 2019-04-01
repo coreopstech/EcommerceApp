@@ -20,4 +20,11 @@ export class HomeService {
                 return result;
             }));
     }
+    getFooterPagesDetails(encryptedMenuId:string)
+    {
+        return this.http.get<any>(this.baseUrl+`Home/GetFooterPageDetails`)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
 }

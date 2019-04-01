@@ -19,7 +19,7 @@ export class AppComponent  {
     this. getHomeDetails();
   }
   getHomeDetails(){
-    this.spinner.show();
+     this.spinner.show();
     this.homeService.getHomeDetails().subscribe(
       result => {
         if (result.IsSuccess === true) {

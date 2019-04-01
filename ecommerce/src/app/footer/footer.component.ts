@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-footer',
@@ -6,10 +7,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
-  constructor() { }
+  footerMenuList: any;
+  parentMenuList: any;
+  level1MenuList: any;
+  list:any;
+  constructor(private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
+    this.GetParentMenusList();
+  }
+  GetParentMenusList(): void {
+    this.spinner.show();
+
+    this.list=JSON.parse(localStorage.getItem('homedetails'));
+     this.footerMenuList=this.list.HomeFooterList;
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000)
+      this.spinner.hide();
+      
+      return this.parentMenuList = this.footerMenuList.filter((x) => x.ParentId === 0);
+  }
+  GetLevel1sList(id): any {
+    return this.footerMenuList.filter((x) => x.ParentId === id);
   }
 
 }

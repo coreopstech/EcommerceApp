@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { HeaderMenuService } from './../_services/headerMenuService';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   parentMenuList: any;
   level1MenuList: any;
   list:any;
-  constructor(private spinner:NgxSpinnerService , private headerMenu: HeaderMenuService) {
+  constructor(private spinner:NgxSpinnerService) {
   }
 
   ngOnInit() {
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
+      this.spinner.hide();
       return this.parentMenuList = this.headerMenuList.filter((x) => x.ParentId === 0);
   }
   GetLevel1sList(id): any {
