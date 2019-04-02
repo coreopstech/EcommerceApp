@@ -3,7 +3,7 @@
 <section *ngIf="homeProductList!=null && homeProductList.length>0">
     <div class="feature_list" *ngFor="let slides of homeProductList">
         <div class="container">
-            <h1>{{slides.Title}} <a routerLink="/listing" class="view_all">View All</a></h1>
+            <h1>{{slides.Title}} <a routerLink="/productlist" class="view_all">View All</a></h1>
             <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
                 <div ngxSlickItem *ngFor="let slide of slides.HomeProductList" class="slide slider_list">
                     <div class="list_item">
@@ -12,10 +12,10 @@
                         </div>
                         <div class="list_footer">
                             <p class="list_heading">{{slide.ProductName}} </p>
-                            <p class="list_offer">Min {{slide.DiscountPercentageWithFormat}} off</p>
+                            <p class="list_offer" *ngIf="slide.DiscountPercentage>0.00">Min {{slide.DiscountPercentageWithFormat}} off</p>
                             <p class="buy_now">Buy Now</p>
                         </div>
-                        <a class="anchor" routerLink="/listing"></a>
+                        <a class="anchor" routerLink="/productlist"></a>
                     </div>
 
                 </div>
@@ -24,7 +24,7 @@
     </div>
     <div class="feature_list">
         <div class="container">
-            <h1>Featured Marble Art Design <a routerLink="/listing" class="view_all">View All</a></h1>
+            <h1>Featured Marble Art Design <a routerLink="/productlist" class="view_all">View All</a></h1>
             <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
                 <div ngxSlickItem *ngFor="let slide of slides" class="slide slider_list">
                     <div class="list_item">
@@ -33,7 +33,7 @@
                         </div>
                         <div class="list_footer">
                             <p class="list_heading">Aquamarine </p>
-                            <p class="list_offer">Min 35% off</p>
+                            <p class="list_offer" >Min 35% off</p>
                             <p class="buy_now">Buy Now</p>
                         </div>
                         <a class="anchor" routerLink="/listing"></a>

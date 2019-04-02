@@ -11,6 +11,7 @@ export class FooterComponent implements OnInit {
   parentMenuList: any;
   level1MenuList: any;
   list:any;
+  settingModel:any;
   constructor(private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
@@ -21,6 +22,7 @@ export class FooterComponent implements OnInit {
 
     this.list=JSON.parse(localStorage.getItem('homedetails'));
      this.footerMenuList=this.list.HomeFooterList;
+     this.settingModel=this.list.CommonSettingDetails;
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
