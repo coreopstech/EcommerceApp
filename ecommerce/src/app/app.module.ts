@@ -17,6 +17,7 @@ import {
   MatSnackBarModule,
   MatCardModule,
   MatChipsModule,
+  MatPaginatorModule,
   } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -45,6 +46,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 import { ProductListComponent } from './productlist/productlist.component';
 import { ProductService } from './_services/productService';
+import { PagerService } from './_services/pager.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +83,8 @@ import { ProductService } from './_services/productService';
     HttpClientModule,
     MatSnackBarModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    MatPaginatorModule
 
    
   ],
@@ -91,7 +94,8 @@ import { ProductService } from './_services/productService';
      AuthenticationService,
      UserService,
      HomeService,
-     ProductService
+     ProductService,
+     PagerService
   ],
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]

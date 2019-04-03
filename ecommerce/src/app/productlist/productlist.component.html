@@ -4,7 +4,7 @@
     <div class="listing_wrapper">
       <aside class="left_sidebar">
         <div class="left_filter_area">
-            <h4>Filters</h4>
+          <h4>Filters</h4>
           <div class="mat_slider" *ngIf="filterAttributes!=null && filterAttributes.length>0">
             <mat-chip-list aria-label="Fish selection">
               <mat-chip *ngFor="let filter of filterAttributes"
@@ -37,7 +37,7 @@
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
                 <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,true,colorName.ColorValue)"
+                  (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
               </div>
@@ -51,10 +51,12 @@
                 </mat-expansion-panel-header>
                 <div *ngFor="let variantValue of getVariantValueListByGroup(variantGroup.VariantGroupId)">
                   <mat-checkbox *ngIf="variantValue.IsChecked==false" value="{{variantValue.VariantValueId}}"
+                    [checked]="variantValue.IsChecked"
                     (change)="getVariantFilterProductList(variantValue.ColorId,true,variantValue.VariantValue)">
                     {{variantValue.VariantValue}}</mat-checkbox>
                   <mat-checkbox *ngIf="variantValue.IsChecked==true" value="{{variantValue.VariantValueId}}"
-                    (change)="getVariantFilterProductList($event)">
+                    [checked]="variantValue.IsChecked"
+                    (change)="getVariantFilterProductList(variantValue.ColorId,false,variantValue.VariantValue)">
                     {{variantValue.VariantValue}}</mat-checkbox>
                 </div>
               </mat-expansion-panel>
@@ -69,10 +71,12 @@
                 </mat-expansion-panel-header>
                 <div *ngFor="let attributeValue of getAtttributeValueListByGroup(attributeGroup.AttributeGroupId)">
                   <mat-checkbox *ngIf="attributeValue.IsChecked==false" value="{{attributeValue.AttributeValueId}}"
-                    (change)="getAttributeFilterProductList($event)">
+                    [checked]="attributeValue.IsChecked"
+                    (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,true,attributeValue.AttributeValue)">
                     {{attributeValue.AttributeValue}}</mat-checkbox>
                   <mat-checkbox *ngIf="attributeValue.IsChecked==true" value="{{attributeValue.AttributeValueId}}"
-                    (change)="getAttributeFilterProductList($event)">
+                    [checked]="attributeValue.IsChecked"
+                    (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,false,attributeValue.AttributeValue)">
                     {{attributeValue.AttributeValue}}</mat-checkbox>
                 </div>
               </mat-expansion-panel>
@@ -97,133 +101,38 @@
           <div class="sort_by">
             <mat-form-field>
               <mat-label>Sort By</mat-label>
-              <mat-select>
-                <mat-option>Price (Low to High)</mat-option>
-                <mat-option>Price (High to Low)</mat-option>
-                <mat-option>New Arrival</mat-option>
+              <mat-select (selectionChange)="change_Sorting($event.   value)">
+                <mat-option value="pricelowhigh">Price (Low to High)</mat-option>
+                <mat-option value="pricehighlow">Price (High to Low)</mat-option>
+                <mat-option value="default">New Arrival</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-        <div class="row slider_list ">
-          <div class="col-6 col-sm-4">
+        <div class="row slider_list " *ngIf="dataSource!=null && dataSource.length>0">
+          <div class="col-6 col-sm-4" *ngFor="let product of dataSource">
             <div class="list_item">
               <div class="ps_rl">
                 <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
-                  <a routerLink="" class="add_whislist"><img src="assets/images/like.svg" alt=""></a>
-                </div>
-                <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
-                  <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
-                      <span class="p_off">50% off</span>
-                    </p>
-                    <button mat-button class="buy_now">Buy</button>
+                  <img src="{{product.ImageUrl}}" alt="">
+                  <!-- <mat-icon class="add_whislist">favorite_border</mat-icon> -->
+                  <div class="_3gDSOa _32A6AP">
+                    <div class="DsQ2eg"><svg xmlns="http://www.w3.org/2000/svg" class="_2oLiqr" width="16" height="16"
+                        viewBox="0 0 20 16">
+                        <path
+                          d="M8.695 16.682C4.06 12.382 1 9.536 1 6.065 1 3.219 3.178 1 5.95 1c1.566 0 3.069.746 4.05 1.915C10.981 1.745 12.484 1 14.05 1 16.822 1 19 3.22 19 6.065c0 3.471-3.06 6.316-7.695 10.617L10 17.897l-1.305-1.215z"
+                          fill="#2874F0" class="_35Y7Yo" stroke="#FFF" fill-rule="evenodd" opacity=".9"></path>
+                      </svg></div>
                   </div>
-                </div>
-                <a class="anchor" href="javascript:void(0);"></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-4">
-            <div class="list_item">
-              <div class="ps_rl">
-                <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
+                  <!-- <a routerLink="" class="add_whislist"><img src="assets/images/like.svg" alt=""></a> -->
                 </div>
                 <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
+                  <p class="list_heading">{{product.ProductName}}</p>
                   <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
-                      <span class="p_off">50% off</span>
-                    </p>
-                    <button mat-button class="buy_now">Buy</button>
-                  </div>
-                </div>
-                <a class="anchor" href="javascript:void(0);"></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-4">
-            <div class="list_item">
-              <div class="ps_rl">
-                <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
-                </div>
-                <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
-                  <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
-                      <span class="p_off">50% off</span>
-                    </p>
-                    <button mat-button class="buy_now">Buy</button>
-                  </div>
-                </div>
-                <a class="anchor" href="javascript:void(0);"></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-4">
-            <div class="list_item">
-              <div class="ps_rl">
-                <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
-                </div>
-                <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
-                  <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
-                      <span class="p_off">50% off</span>
-                    </p>
-                    <button mat-button class="buy_now">Buy</button>
-                  </div>
-                </div>
-                <a class="anchor" href="javascript:void(0);"></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-4">
-            <div class="list_item">
-              <div class="ps_rl">
-                <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
-                </div>
-                <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
-                  <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
-                      <span class="p_off">50% off</span>
-                    </p>
-                    <button mat-button class="buy_now">Buy</button>
-                  </div>
-                </div>
-                <a class="anchor" href="javascript:void(0);"></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-4">
-            <div class="list_item">
-              <div class="ps_rl">
-                <div class="list_header">
-                  <img src="assets/images/f1.jpg" alt="">
-                </div>
-                <div class="list_footer">
-                  <p class="list_heading">Mirror Table</p>
-                  <div class="d-flex justify-content-between">
-                    <p class="list_offer">
-                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>1000</b>
-                      <span class="price_off"><i class="fa fa-inr" aria-hidden="true"></i>2000</span>
+                    <p class="list_offer" *ngIf="isPriceVisible">
+                      <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
+                      <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
+                          aria-hidden="true"></i>{{product.ProductMRP}}</span>
                       <span class="p_off">50% off</span>
                     </p>
                     <button mat-button class="buy_now">Buy</button>
@@ -234,8 +143,15 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-12">
+          <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[9, 12, 24]" [showFirstLastButtons]="true"
+            [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+          </mat-paginator>
+        </div>
       </div>
+
     </div>
-    <div class="clearfix"></div>
+    <div class="clearfix">
+    </div>
   </div>
 </section>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductService } from '../_services/productService';
+import { PagerService } from '../_services/pager.service';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-productlist',
@@ -9,9 +11,20 @@ import { ProductService } from '../_services/productService';
   styleUrls: ['./productlist.component.scss']
 })
 export class ProductListComponent implements OnInit {
+
+//----Paging---
+public array: any;
+public displayedColumns = ['', '', '', '', ''];
+public dataSource: any;    
+
+public pageSize = 12;
+public currentPage = 0;
+public totalSize = 0;
+
+@ViewChild(MatPaginator) paginator: MatPaginator;
+
   category_Id: number;
   subCategory_Id: number;
-  
   brand_Id: number;
   productList: any;
   filterProductCategoryList: any;
@@ -36,6 +49,9 @@ export class ProductListComponent implements OnInit {
   totalRecords: number;
   minRecords: number;
   maxRecords: number;
+  isB2B=false;
+  isBulkOrder=false;
+  isPriceVisible=true;
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -48,7 +64,8 @@ export class ProductListComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private productService: ProductService) {
+    private productService: ProductService,
+    private pagerService:PagerService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -69,12 +86,34 @@ export class ProductListComponent implements OnInit {
         this.brand_Id = params.brandId;
       });
       this.bindCategoryAttributeVariantList();
+      this.findProductBySubCategoryId(this.category_Id,this.subCategory_Id,this.brand_Id);
+  }
+  //paging//
+  public handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.iterator();
+  }
+  private iterator() {
+    const end = (this.currentPage + 1) * this.pageSize;
+    const start = this.currentPage * this.pageSize;
+    const part = this.array.slice(start, end);
+    this.dataSource = part;
+    this.change_Sorting(this.sortValue);
+    window.scroll(0,0);
+    
   }
   findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
     this.spinner.show();
     this.productService.getProductByCategoryList(categoryId, subcategoryId, brandId).subscribe(
       result => {
         if (result.IsSuccess) {
+          this.dataSource = new MatTableDataSource<Element>(result.Data);
+          this.dataSource.paginator = this.paginator;
+          this.array = result.Data;
+          this.totalSize = this.array.length;
+          this.iterator();
+
           this.allItems = result.Data;
           this.productList = result.Data;
           this.setPage(1);
@@ -98,42 +137,42 @@ export class ProductListComponent implements OnInit {
   }
   setPage(page: number) {
 
-    ////&& this.pager.totalPages>0 when issue comes of page is 1 but total pages is 0 than apply 
-    // if (page < 1 || (page > this.pager.totalPages && this.pager.totalPages > 0)) {
-    //   return;
-    // }
+    //&& this.pager.totalPages>0 when issue comes of page is 1 but total pages is 0 than apply 
+    if (page < 1 || (page > this.pager.totalPages && this.pager.totalPages > 0)) {
+      return;
+    }
 
-    // // get pager object from service
+    // get pager object from service
 
-    // this.pager = this.pagerService.getPager(this.allItems.length, page);
-    // // get current page of items
-    // this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    this.pager = this.pagerService.getPager(this.allItems.length, page);
+    // get current page of items
+    this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
 
-    // if (this.pagedItems.length > 0) {
-    //   this.minRecords = this.pager.startIndex + 1;
-    // }
-    // else {
-    //   this.minRecords = this.pager.startIndex;
-    // }
-    // this.maxRecords = this.pager.endIndex + 1;
-    // this.totalRecords = this.allItems.length;
-    // this.change_Sorting(this.sortValue);
-    // window.scroll(0, 0);
+    if (this.pagedItems.length > 0) {
+      this.minRecords = this.pager.startIndex + 1;
+    }
+    else {
+      this.minRecords = this.pager.startIndex;
+    }
+    this.maxRecords = this.pager.endIndex + 1;
+    this.totalRecords = this.allItems.length;
+    this.change_Sorting(this.sortValue);
+    window.scroll(0, 0);
 
   }
   change_Sorting(value) {
     this.sortValue = value;
     if (value === "pricehighlow") ////When Price Goes hight to low
-      this.pagedItems = this.pagedItems.sort(function (a, b) {
+      this.dataSource = this.dataSource.sort(function (a, b) {
         return b.ProductPrice - a.ProductPrice;
 
       });
     else if (value === "pricelowhigh") ////When Price Goes hight to low
-      this.pagedItems = this.pagedItems.sort(function (a, b) {
+      this.dataSource = this.dataSource.sort(function (a, b) {
         return a.ProductPrice - b.ProductPrice;
       });
     else if (value === "nameasc") ////When Price Goes hight to low
-      this.pagedItems = this.pagedItems.sort(function (a, b) {
+      this.dataSource = this.dataSource.sort(function (a, b) {
         var nameA = a.ProductName.toLowerCase(), nameB = b.ProductName.toLowerCase()
         if (nameA < nameB) //sort string ascending
           return -1;
@@ -142,7 +181,7 @@ export class ProductListComponent implements OnInit {
         return 0;
       });
     else if (value === "namedesc") ////When Price Goes hight to low
-      this.pagedItems = this.pagedItems.sort(function (a, b) {
+      this.dataSource = this.dataSource.sort(function (a, b) {
         var nameA = a.ProductName.toLowerCase(), nameB = b.ProductName.toLowerCase()
         if (nameA > nameB) //sort string descending
           return -1;
@@ -151,7 +190,7 @@ export class ProductListComponent implements OnInit {
         return 0;
       });
     else if (value === "default") ////When Price Goes hight to low
-      this.pagedItems = this.pagedItems.sort(function (a, b) {
+      this.dataSource = this.dataSource.sort(function (a, b) {
         dateA: Date; dateB: Date;
         this.dateA = new Date(a.CreatedDate), this.dateB = new Date(b.CreatedDate)
         return this.dateA - this.dateB //sort by date ascending
@@ -245,8 +284,11 @@ export class ProductListComponent implements OnInit {
         if (this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId).length > 0) {
           this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId)[0]['IsChecked'] = true;
         }
+        else{
+          this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId)[0]['IsChecked'] = false;
+        }
       });
-      console.log(this.filterProductColorList);
+      
     }
     return this.filterProductColorList;
   }
@@ -301,7 +343,7 @@ export class ProductListComponent implements OnInit {
         if (this.filterProductAttributeValueList.filter((x) => x.AttributeGroupId === id && x.AttributeValueId === element.AttributeId).length > 0) {
           this.filterProductAttributeValueList.filter((x) => x.AttributeGroupId === id && x.AttributeValueId === element.AttributeId)[0]['IsChecked'] = true;
         }
-        console.log(this.filterProductAttributeValueList);
+        
       });
 
     }
@@ -323,7 +365,7 @@ export class ProductListComponent implements OnInit {
     return this.filterProductAttributeValueList.filter((x) => x.AttributeValueId === id)[0]['AttributeValue'];
   }
   getVariantName(id): string {
-    console.log(this.filterProductVariantValueList);
+    
     return this.filterProductVariantValueList.filter((x) => x.VariantValueId === id)[0]['VariantValue'];
   }
   getColorName(id): string {
@@ -335,6 +377,7 @@ export class ProductListComponent implements OnInit {
     }
     else {
       this.removeAttributeFromFilterList(id, 2);
+      this.removeFilter(id,2);
     }
     this.filterProducts();
   }
@@ -352,7 +395,9 @@ export class ProductListComponent implements OnInit {
       this.filterAttributes.push(new FilterAttributeItems(id, variantName, 1));
     }
     else {
+      
       this.removeAttributeFromFilterList(id, 1);
+      this.removeFilter(id,1);
     }
     this.filterProducts();
   }
@@ -362,7 +407,9 @@ export class ProductListComponent implements OnInit {
     }
     else {
       this.removeAttributeFromFilterList(id, 3);
+      this.removeFilter(id,3);
     }
+    
     this.filterProducts();
   }
 
@@ -379,20 +426,17 @@ export class ProductListComponent implements OnInit {
     else if (filterType == 2) {
       //this.rebindAttributeProductlist();
       this.filterProductAttributeValueList.filter((x) => x.AttributeValueId === id)[0]['IsChecked'] = false;
-      console.log(this.filterProductAttributeValueList);
     }
     else if (filterType == 3) {
       //this.rebindColorProductlist();
       this.filterProductColorList.filter((x) => x.ColorId === id)[0]['IsChecked'] = false;
-      console.log(this.filterProductColorList);
     }
     this.filterProducts();
   }
   SetFilterProducts(): any {
     this.productService.getProductByFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes).subscribe(
       result => {
-        if (result.IsSuccess === true) {
-          console.log(result.Data);
+        if (result.IsSuccess === true) {          
           return this.allItems = result.Data;
 
         }
