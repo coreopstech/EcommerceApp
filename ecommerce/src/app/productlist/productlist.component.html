@@ -33,7 +33,7 @@
               </mat-expansion-panel-header>
               <div *ngFor="let colorName of getColorList()">
                 <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,true,colorName.ColorValue)"
+                  (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
                 <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
@@ -84,7 +84,7 @@
           </mat-accordion>
         </div>
       </aside>
-      <div class="listing_content">
+      <div class="listing_content"  *ngIf="dataSource!=null && dataSource.length>0">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -97,7 +97,7 @@
           </ol>
         </nav>
         <div class="d-flex clear_filter justify-content-between">
-          <h4>Mirror Table <span>(Showing 1 – 40 products of 156 products)</span></h4>
+          <h4>Mirror Table <span>(Showing {{startRecord}} – {{endRecord}} products of {{totalSize}} products)</span></h4>
           <div class="sort_by">
             <mat-form-field>
               <mat-label>Sort By</mat-label>
@@ -133,17 +133,17 @@
                       <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
                       <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
                           aria-hidden="true"></i>{{product.ProductMRP}}</span>
-                      <span class="p_off">50% off</span>
+                      <span class="p_off" *ngIf="product.ProductDiscount!=null && product.ProductDiscount>0">{{product.ProductDiscount}} off</span>
                     </p>
                     <button mat-button class="buy_now">Buy</button>
                   </div>
                 </div>
-                <a class="anchor" href="javascript:void(0);"></a>
+                <a class="anchor" routerLink="/productdetails/{{product.EncryptedProductId}}/{{product.EncryptedProductDetailId}}"></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-12">
+        <div class="col-sm-12"  *ngIf="dataSource!=null && dataSource.length>0">
           <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[9, 12, 24]" [showFirstLastButtons]="true"
             [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
           </mat-paginator>

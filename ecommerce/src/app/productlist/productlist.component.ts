@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductService } from '../_services/productService';
@@ -12,16 +12,16 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 })
 export class ProductListComponent implements OnInit {
 
-//----Paging---
-public array: any;
-public displayedColumns = ['', '', '', '', ''];
-public dataSource: any;    
+  //----Paging---
+  public array: any;
+  public displayedColumns = ['', '', '', '', ''];
+  public dataSource: any;
 
-public pageSize = 12;
-public currentPage = 0;
-public totalSize = 0;
+  public pageSize = 12;
+  public currentPage = 0;
+  public totalSize = 0;
 
-@ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   category_Id: number;
   subCategory_Id: number;
@@ -37,35 +37,20 @@ public totalSize = 0;
   attributeId: number;
   attributeName: string;
   filterAttributes: FilterAttributeItems[] = new Array();
-  
-  // array of all items to be paged
-  private allItems: any[];
+  startRecord: number;
+  endRecord: number
+
   private sortValue: "default";
-  // pager object
-  pager: any = {};
   queryString: string;
-  // paged items
-  pagedItems: any[];
-  totalRecords: number;
-  minRecords: number;
-  maxRecords: number;
-  isB2B=false;
-  isBulkOrder=false;
-  isPriceVisible=true;
-  formatLabel(value: number | null) {
-    if (!value) {
-      return 0;
-    }
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'k';
-    }
-    return value;
-  }
+
+  isB2B = false;
+  isBulkOrder = false;
+  isPriceVisible = true;
   constructor(private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
     private productService: ProductService,
-    private pagerService:PagerService) {
+    private pagerService: PagerService) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -85,8 +70,8 @@ public totalSize = 0;
         this.subCategory_Id = params.subcategoryId;
         this.brand_Id = params.brandId;
       });
-      this.bindCategoryAttributeVariantList();
-      this.findProductBySubCategoryId(this.category_Id,this.subCategory_Id,this.brand_Id);
+    this.bindCategoryAttributeVariantList();
+    this.findProductBySubCategoryId(this.category_Id, this.subCategory_Id, this.brand_Id);
   }
   //paging//
   public handlePage(e: any) {
@@ -97,11 +82,19 @@ public totalSize = 0;
   private iterator() {
     const end = (this.currentPage + 1) * this.pageSize;
     const start = this.currentPage * this.pageSize;
+    if(start<=0)
+    this.startRecord = 1;
+    else
+    this.startRecord = start+1;
+    if (end >= this.array.length)
+      this.endRecord = this.array.length;
+    else
+      this.endRecord = end;
     const part = this.array.slice(start, end);
     this.dataSource = part;
     this.change_Sorting(this.sortValue);
-    window.scroll(0,0);
-    
+    window.scroll(0, 0);
+
   }
   findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
     this.spinner.show();
@@ -113,17 +106,14 @@ public totalSize = 0;
           this.array = result.Data;
           this.totalSize = this.array.length;
           this.iterator();
-
-          this.allItems = result.Data;
           this.productList = result.Data;
-          this.setPage(1);
+
           this.filterMainCategory = this.filterProductCategoryList[0]["CategoryName"];
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
         }
         else {
-          this.allItems = null;
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
@@ -135,31 +125,7 @@ public totalSize = 0;
         }, 1000)
       });
   }
-  setPage(page: number) {
 
-    //&& this.pager.totalPages>0 when issue comes of page is 1 but total pages is 0 than apply 
-    if (page < 1 || (page > this.pager.totalPages && this.pager.totalPages > 0)) {
-      return;
-    }
-
-    // get pager object from service
-
-    this.pager = this.pagerService.getPager(this.allItems.length, page);
-    // get current page of items
-    this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
-
-    if (this.pagedItems.length > 0) {
-      this.minRecords = this.pager.startIndex + 1;
-    }
-    else {
-      this.minRecords = this.pager.startIndex;
-    }
-    this.maxRecords = this.pager.endIndex + 1;
-    this.totalRecords = this.allItems.length;
-    this.change_Sorting(this.sortValue);
-    window.scroll(0, 0);
-
-  }
   change_Sorting(value) {
     this.sortValue = value;
     if (value === "pricehighlow") ////When Price Goes hight to low
@@ -235,105 +201,19 @@ public totalSize = 0;
         }, 1000)
       });
   }
-  bindCategoryList(): any {
-    this.productService.getProductFilterCategoryList(this.queryString).subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductCategoryList = result.Data;
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
-  bindAttributeGroupList(): any {
-    this.productService.getProductFilterAttributeGroupList(this.queryString).subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductAttributeGroupList = result.Data;
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
-  bindColorList(): any {
-    this.productService.getProductColorList().subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductColorList = result.Data;
-
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
   getColorList(): any {
     if (this.filterAttributes.filter((x) => x.FilterType == 3).length > 0) {
       this.filterAttributes.filter((x) => x.FilterType == 3).forEach(element => {
         if (this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId).length > 0) {
           this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId)[0]['IsChecked'] = true;
         }
-        else{
+        else {
           this.filterProductColorList.filter((x) => x.ColorId === element.AttributeId)[0]['IsChecked'] = false;
         }
       });
-      
+
     }
     return this.filterProductColorList;
-  }
-
-  bindAttributeValueList(): any {
-    this.productService.getProductFilterAttributeValueList().subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductAttributeValueList = result.Data;
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
-  bindVariantGroupList(): any {
-    this.productService.getProductFilterVariantGroupList(this.queryString).subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductVariantGroupList = result.Data;
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
-  bindVariantValueList(): any {
-    this.productService.getProductFilterVariantValueList().subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          return this.filterProductVariantValueList = result.Data;
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
   }
   getAtttributeValueListByGroup(id): any {
     //alert(this.filterAttributes.length);
@@ -343,7 +223,7 @@ public totalSize = 0;
         if (this.filterProductAttributeValueList.filter((x) => x.AttributeGroupId === id && x.AttributeValueId === element.AttributeId).length > 0) {
           this.filterProductAttributeValueList.filter((x) => x.AttributeGroupId === id && x.AttributeValueId === element.AttributeId)[0]['IsChecked'] = true;
         }
-        
+
       });
 
     }
@@ -361,23 +241,14 @@ public totalSize = 0;
     if (this.filterProductVariantValueList != null && this.filterProductVariantValueList.length > 0)
       return this.filterProductVariantValueList.filter((x) => x.VariantGroupId === id);
   }
-  getAttributeName(id): string {
-    return this.filterProductAttributeValueList.filter((x) => x.AttributeValueId === id)[0]['AttributeValue'];
-  }
-  getVariantName(id): string {
-    
-    return this.filterProductVariantValueList.filter((x) => x.VariantValueId === id)[0]['VariantValue'];
-  }
-  getColorName(id): string {
-    return this.filterProductColorList.filter((x) => x.ColorId === id)[0]['ColorValue'];
-  }
-  getAttributeFilterProductList(id:number,isChecked:boolean,attributeName:string): void {
+
+  getAttributeFilterProductList(id: number, isChecked: boolean, attributeName: string): void {
     if (isChecked == true) {
       this.filterAttributes.push(new FilterAttributeItems(id, attributeName, 2));
     }
     else {
       this.removeAttributeFromFilterList(id, 2);
-      this.removeFilter(id,2);
+      this.removeFilter(id, 2);
     }
     this.filterProducts();
   }
@@ -390,26 +261,26 @@ public totalSize = 0;
       }
     }
   }
-  getVariantFilterProductList(id:number,isChecked:boolean,variantName:string): void {
+  getVariantFilterProductList(id: number, isChecked: boolean, variantName: string): void {
     if (isChecked == true) {
       this.filterAttributes.push(new FilterAttributeItems(id, variantName, 1));
     }
     else {
-      
+
       this.removeAttributeFromFilterList(id, 1);
-      this.removeFilter(id,1);
+      this.removeFilter(id, 1);
     }
     this.filterProducts();
   }
-  getColorFilterProductList(id:number,isChecked:boolean,color:string): void {
+  getColorFilterProductList(id: number, isChecked: boolean, color: string): void {
     if (isChecked == true) {
       this.filterAttributes.push(new FilterAttributeItems(id, color, 3));
     }
     else {
       this.removeAttributeFromFilterList(id, 3);
-      this.removeFilter(id,3);
+      this.removeFilter(id, 3);
     }
-    
+
     this.filterProducts();
   }
 
@@ -433,28 +304,16 @@ public totalSize = 0;
     }
     this.filterProducts();
   }
-  SetFilterProducts(): any {
-    this.productService.getProductByFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes).subscribe(
-      result => {
-        if (result.IsSuccess === true) {          
-          return this.allItems = result.Data;
-
-        }
-        else {
-
-        }
-      },
-      (err) => {
-
-      });
-  }
   filterProducts() {
     this.spinner.show();
     this.productService.getProductByFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes).subscribe(
       result => {
         if (result.IsSuccess) {
-          this.allItems = result.Data;
-          this.setPage(1);
+          this.dataSource = new MatTableDataSource<Element>(result.Data);
+          this.dataSource.paginator = this.paginator;
+          this.array = result.Data;
+          this.totalSize = this.array.length;
+          this.iterator();
           window.scroll(0, 0);
           setTimeout(() => {
             this.spinner.hide();
@@ -468,21 +327,7 @@ public totalSize = 0;
 
       });
   }
-  rebindAttributeProductlist() {
-    if (this.filterAttributes.filter(x => x.FilterType == 2).length > 0) {
-      this.allItems = this.allItems.filter((x) => x.AttributeList.find((y) => this.filterAttributes.filter((y) => y.FilterType == 2).find((z) => z.AttributeId === y.Id)));
-    }
-  }
-  rebindColorProductlist() {
-    if (this.filterAttributes.filter(x => x.FilterType == 3).length > 0) {
-      this.allItems = this.allItems.filter((x) => this.filterAttributes.filter((y) => y.FilterType == 3).find((z) => z.AttributeId === x.ColorId));
-    }
-  }
-  rebindVariantProductlist() {
-    if (this.filterAttributes.filter(x => x.FilterType == 1).length > 0) {
-      this.allItems = this.allItems.filter((x) => x.VariantList.find((y) => this.filterAttributes.filter((y) => y.FilterType == 1).find((z) => z.AttributeId === y.Id)));
-    }
-  }
+  
 }
 export class FilterAttributeItems {
   AttributeId: number;
