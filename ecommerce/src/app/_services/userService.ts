@@ -33,32 +33,27 @@ export class UserService {
         this.addressId = encryptedAddressId;
         this.orderchange.emit(this.addressId);
     }
-    changePriceCalculation(status)
-    {
-     this.pricechange.emit(status);   
+    changePriceCalculation(status) {
+        this.pricechange.emit(status);
     }
-    changeWishListValue(cartValue)
-    {
+    changeWishListValue(cartValue) {
         this.wishListValueChange.emit(cartValue);
     }
-    changeCartValue(cartValue)
-    {
+    changeCartValue(cartValue) {
         this.cartValueChange.emit(cartValue);
     }
-    
+
     register(user: User) {
         return this.http.post<any>(this.baseUrl + `Product/SignUp`, user)
             .pipe(map(result => {
                 if (result.IsSuccess) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentidentity', JSON.stringify({ token: result.Data.TokenNo, name: result.Data.FullName,id:result.Data.EncrytedId }));
+                    localStorage.setItem('currentidentity', JSON.stringify({ token: result.Data.TokenNo, name: result.Data.FullName, id: result.Data.EncrytedId }));
                 }
                 return result;
             }));
     }
     getUserDetails(userEncryptedId: string) {
-        userEncryptedId = userEncryptedId.replace('"', "");
-        userEncryptedId = userEncryptedId.replace('"', "");
         return this.http.get<any>(this.baseUrl + `Product/GetUserDetails/` + userEncryptedId)
             .pipe(map(result => {
 
@@ -72,8 +67,6 @@ export class UserService {
             }));
     }
     getUserAddressDetails(userEncryptedId: string) {
-        userEncryptedId = userEncryptedId.replace('"', "");
-        userEncryptedId = userEncryptedId.replace('"', "");
         return this.http.get<any>(this.baseUrl + `Product/GetUserAddressDetails/` + userEncryptedId)
             .pipe(map(result => {
 
@@ -95,32 +88,27 @@ export class UserService {
             }));
     }
     saveUserAddressDetails(userAddress: UserAddress) {
-        var userId = localStorage.getItem("currentUserId");
-        userId = userId.replace('"', '');
-        userId = userId.replace('"', '');
-        userAddress.encryptedUserId = userId;
+        var user = JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId = user.id;
+        userAddress.encryptedUserId = userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveUserAddressDetails`, userAddress)
             .pipe(map(result => {
                 return result;
             }));
     }
-    getTotalCartItems()
-    {
-        var userEncryptedId=localStorage.getItem("currentUserId");
-        userEncryptedId = userEncryptedId.replace('"', "");
-        userEncryptedId = userEncryptedId.replace('"', "");
-        return this.http.get<any>(this.baseUrl + `Product/GetTotalCartItmes/`+userEncryptedId)
-        .pipe(map(result => {
-            return result;
-        }));
+    getTotalCartItems() {
+        var user = JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId = user.id;
+        return this.http.get<any>(this.baseUrl + `Product/GetTotalCartItmes/` + userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
     }
 
 
 
     //
     getUserAddressDetailsList(userEncryptedId: string) {
-        userEncryptedId = userEncryptedId.replace('"', "");
-        userEncryptedId = userEncryptedId.replace('"', "");
         return this.http.get<any>(this.baseUrl + `User/GetUserAddressDetails/` + userEncryptedId)
             .pipe(map(result => {
                 return result;

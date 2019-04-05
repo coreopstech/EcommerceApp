@@ -1,0 +1,132 @@
+<div class="container" style="width:100%;">
+  <div class="_3OCeCw">
+    <div class="_2S2DLT">
+      <div class="_1eq_ut">
+        <div class="_1GRhLX _2wHLZw">
+          <div class="_38DA9m"><span class="_2Xj3Lj"><a href="/account?link=my_account"><span>My
+                  Account</span></a></span><img
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDYgMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMiAxTDQgNSAxIDkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTY1NjU2IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg=="
+              width="8" height="12" class="_3fuf-K"><span class="_2F3FgY"><span>My Orders</span></span></div>
+          <div>
+            <div>
+              <div cl *ngIf="orderList!=null && orderList.length>0">
+                <div class="row _3l2sfs" *ngFor="let order of orderList">
+                  <div class="F4CVC3">
+                    <div class="row _1LTGeE" style="margin-left:0px;">
+                      <div class="col-8-12">
+                        <div class="_1-SHG3"><a rel="noopener noreferrer" routerLink="/order_details"
+                            [queryParams]="{order_id:order.OrderNumber}">
+                            <div class="DgI5Zd">{{order.OrderNumber}}</div>
+                          </a></div>
+                      </div>
+                      <div class="col-4-12 _1CwnjI">
+
+                        <div class="JfvmoN"><a rel="noopener noreferrer" routerLink="/order_details"
+                            [queryParams]="{order_id:order.OrderNumber}">
+                            <div class="_3svin8"><svg width="12" height="12" viewBox="0 0 9 12" class="_21N3vC"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill="#2874f0" class="_3CJ419"
+                                  d="M4.2 5.7c-.828 0-1.5-.672-1.5-1.5 0-.398.158-.78.44-1.06.28-.282.662-.44 1.06-.44.828 0 1.5.672 1.5 1.5 0 .398-.158.78-.44 1.06-.28.282-.662.44-1.06.44zm0-5.7C1.88 0 0 1.88 0 4.2 0 7.35 4.2 12 4.2 12s4.2-4.65 4.2-7.8C8.4 1.88 6.52 0 4.2 0z"
+                                  fill-rule="evenodd"></path>
+                              </svg><span>Track</span></div>
+
+                          </a></div>
+
+                      </div>
+                    </div>
+                    <div class="row haP8Uf">
+                      <div class="col-sm-12" *ngIf="orderDetailsList!=null && orderDetailsList.length>0">
+                        <div class="_3xiuDJ" *ngFor="let orderDetails of getOrderDetails(order.EncryptedOrderId)">
+                          <div class="row _23QCqI">
+                            <div class="col-5-12 _22pgKz">
+                              <div class="row" style="position: relative;">
+                                <div class="col-3-12 _2eFO7I"><a
+                                    routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <div class="_3BTv9X" style="height: 75px; width: 75px;"><img
+                                        class="_1Nyybr  _30XEf0" alt="" src="{{orderDetails.ProductImage}}">
+                                    </div>
+                                  </a></div>
+                                <div class="col-8-12"><a class="_2AkmmA row NPoy5u"
+                                    routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
+                                    target="_blank">{{orderDetails.ProductName}}</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-1-12 _52MoHd">₹{{orderDetails.TotalAmountWithFormat}}</div>
+                            <div class="col-3-12 _3fG4KG">{{orderDetails.OrderStatusTitle}}<div class="_3HDMnP">
+                                {{orderDetails.OrderStatusSubTitle}}</div>
+                            </div>
+                            <div class="col-3-12 _3SALIb">
+                              <div>
+                                <div class="_1S3Y5S row _2E6MDv" *ngIf="orderDetails.IsReviewVisible"><a
+                                    routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
+                                    [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}" class="FlPMmo"><img
+                                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTknIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTggMTgiPgoJPGcgZmlsbD0nbm9uZSc+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBmaWxsPSIjMjg3NEYxIiBwb2ludHM9IjkgMTIuMDYyNSAxMy42Mzc1IDE1LjQzNzUgMTEuODYyNSA5Ljk4NzUgMTYuNSA2LjY4NzUgMTAuODEyNSA2LjY4NzUgOSAxLjA2MjUgNy4xODc1IDYuNjg3NSAxLjUgNi42ODc1IDYuMTM3NSA5Ljk4NzUgNC4zNjI1IDE1LjQzNzUiIC8+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBwb2ludHM9IjAgMCAxOCAwIDE4IDE4IDAgMTgiIC8+Cgk8L2c+Cjwvc3ZnPg=="
+                                      class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Rate &amp; Review
+                                      Product</span></a></div>
+                                <div class="_1S3Y5S row _2E6MDv" *ngIf="orderDetails.IsCancelButtonVisible"><a
+                                    [routerLink]="['/orders/cancel-order']"
+                                    [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:order.OrderNumber}"
+                                    class="FlPMmo"><img
+                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyODc0RjEiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTkgLjY2N0M0LjM5Mi42NjcuNjY3IDQuMzkyLjY2NyA5YzAgNC42MDggMy43MjUgOC4zMzMgOC4zMzMgOC4zMzMgNC42MDggMCA4LjMzMy0zLjcyNSA4LjMzMy04LjMzM0MxNy4zMzMgNC4zOTIgMTMuNjA4LjY2NyA5IC42Njd6bTQuMTY3IDExLjMyNWwtMS4xNzUgMS4xNzVMOSAxMC4xNzVsLTIuOTkyIDIuOTkyLTEuMTc1LTEuMTc1TDcuODI1IDkgNC44MzMgNi4wMDhsMS4xNzUtMS4xNzVMOSA3LjgyNWwyLjk5Mi0yLjk5MiAxLjE3NSAxLjE3NUwxMC4xNzUgOWwyLjk5MiAyLjk5MnoiLz48cGF0aCBkPSJNLTEtMWgyMHYyMEgtMSIvPjwvZz48L3N2Zz4="
+                                      class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Cancel Item
+                                    </span></a></div>
+                                <div class="_1S3Y5S row _2E6MDv" *ngIf="orderDetails.IsReturnButtonVisible"><a
+                                    [routerLink]="['/orders/return-order']"
+                                    [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:order.OrderNumber}"
+                                    class="FlPMmo"><img
+                                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyODc0RjEiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTkgLjY2N0M0LjM5Mi42NjcuNjY3IDQuMzkyLjY2NyA5YzAgNC42MDggMy43MjUgOC4zMzMgOC4zMzMgOC4zMzMgNC42MDggMCA4LjMzMy0zLjcyNSA4LjMzMy04LjMzM0MxNy4zMzMgNC4zOTIgMTMuNjA4LjY2NyA5IC42Njd6bTQuMTY3IDExLjMyNWwtMS4xNzUgMS4xNzVMOSAxMC4xNzVsLTIuOTkyIDIuOTkyLTEuMTc1LTEuMTc1TDcuODI1IDkgNC44MzMgNi4wMDhsMS4xNzUtMS4xNzVMOSA3LjgyNWwyLjk5Mi0yLjk5MiAxLjE3NSAxLjE3NUwxMC4xNzUgOWwyLjk5MiAyLjk5MnoiLz48cGF0aCBkPSJNLTEtMWgyMHYyMEgtMSIvPjwvZz48L3N2Zz4="
+                                      class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Return Item
+                                    </span></a></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row _1DI_p7"
+                            *ngIf="orderDetails.RefundDetails!=null && orderDetails.RefundDetails.OrderRefundId>0">
+                            <div class="row F1cc01">
+                              <div class="row _3JYmyi">
+                                <div class="col-4-5"><span>Refund Status</span></div>
+                                <div class="col-1-5 _2sOCzX"><a routerLink="/order_details"
+                                    [queryParams]="{order_id:order.OrderNumber}" target="_blank"
+                                    rel="noopener noreferrer"><span>View Details</span><img
+                                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDYgMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMiAxTDQgNSAxIDkiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlPSIjNTY1NjU2IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg=="
+                                      width="6" height="9" class="_2_hj9T"></a></div>
+                              </div>
+                              <div class="row _6kfNS3">
+                                <div class="row _259Ijb">
+                                  <div class="row _3X6K8C">
+                                    <div class="col-5-12 wZ1tSE">
+                                      <div class="row"><span class="mCEddO _1wzdNT">Completed</span></div>
+                                      <div class="row BoiqvK"><span>Refund ID: </span><span class="nuczcC"
+                                          style="padding-left: 3px;"></span>{{orderDetails.RefundDetails.RefundId}}
+                                      </div>
+                                    </div>
+                                    <div class="col-2-12 _1YJ5vC"></div>
+                                    <div class="col-5-12 cW3nqO"><span>
+                                        <div>{{orderDetails.RefundDetails.RefundMessage}}</div>
+                                      </span></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row cVUw-4">
+                        <div class="col-6-12 _1S28mS"><span class="_38bdEf">Ordered On
+                          </span>{{order.OrderDateWithFormat}}</div>
+                        <div class="col-6-12 Gp5Tnb"><span class="_38bdEf">Order Total </span><span
+                            class="_37pJH1">₹{{order.OrderTotalAmount}}</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

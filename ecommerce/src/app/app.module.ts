@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 import {
   MatToolbarModule,
@@ -47,6 +48,13 @@ import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 import { ProductListComponent } from './productlist/productlist.component';
 import { ProductService } from './_services/productService';
 import { PagerService } from './_services/pager.service';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderService } from './_services/orderService';
+import { OrderDetailsComponent } from './orderdetails/orderdetails.component';
+import { CancelOrderComponent } from './cancelorder/cancelorder.component';
+import { ReturnOrderComponent } from './returnorder/returnorder.component';
+import { WriteReviewsComponent } from './writereviews/writereviews.component';
+import { ReviewRatingService } from './_services/reviewRatingService';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +68,12 @@ import { PagerService } from './_services/pager.service';
     ModalComponent,
     AboutusComponent,
     ReturnPolicyComponent,
-    ProductListComponent
+    ProductListComponent,
+    OrdersComponent,
+    OrderDetailsComponent,
+    CancelOrderComponent,
+    ReturnOrderComponent,
+    WriteReviewsComponent
   ],
   imports: [
   BrowserModule,
@@ -84,7 +97,8 @@ import { PagerService } from './_services/pager.service';
     MatSnackBarModule,
     MatCardModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ToastrModule.forRoot()
 
    
   ],
@@ -95,7 +109,9 @@ import { PagerService } from './_services/pager.service';
      UserService,
      HomeService,
      ProductService,
-     PagerService
+     PagerService,
+     OrderService,
+     ReviewRatingService
   ],
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]
