@@ -6,6 +6,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 import { ProductListComponent } from './productlist/productlist.component';
+import { ProductDetailsResolve } from './_services/productDetails.reslove';
 
 const routes: Routes = [
   {
@@ -23,8 +24,20 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'product-details',
-    component: ProductDetailsComponent
+    path: 'productdetails/id',
+    component: ProductDetailsComponent,
+    resolve: {
+      productDetails: ProductDetailsResolve
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'productdetails',
+    component: ProductDetailsComponent,
+    resolve: {
+      productDetails: ProductDetailsResolve
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   {
     path: 'listing',
@@ -47,6 +60,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+
 
 
 exports: [RouterModule]

@@ -15,7 +15,11 @@
                             <p class="list_offer" *ngIf="slide.DiscountPercentage>0.00">Min {{slide.DiscountPercentageWithFormat}} off</p>
                             <p class="buy_now">Buy Now</p>
                         </div>
-                        <a class="anchor" routerLink="/productlist"></a>
+
+                        <a *ngIf="slide.ProductSEOUrl!=''" class="anchor" routerLink="/productdetails/{{slide.ProductSEOUrl}}"
+                        [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}" ></a>
+                        <a *ngIf="slide.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
+                        [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
                     </div>
 
                 </div>

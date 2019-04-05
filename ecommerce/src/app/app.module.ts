@@ -31,14 +31,13 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { BannerComponent } from './banner/banner.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ListingComponent } from './listing/listing.component';
 import { ModalComponent } from './modal/modal.component';
 
 //Services
 import { HeaderMenuService } from './_services/headerMenuService';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/userService';
 import { HomeService } from './_services/home.service';
@@ -47,6 +46,11 @@ import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 import { ProductListComponent } from './productlist/productlist.component';
 import { ProductService } from './_services/productService';
 import { PagerService } from './_services/pager.service';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { WishListService } from './_services/wishListService';
+import { ProductDetailsResolve } from './_services/productDetails.reslove';
+import { ProductDetailService } from './_services/productDetailsService';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,15 +59,18 @@ import { PagerService } from './_services/pager.service';
     HomeComponent,
     FooterComponent,
     BannerComponent,
-    ProductDetailsComponent,
     ListingComponent,
     ModalComponent,
     AboutusComponent,
     ReturnPolicyComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductDetailsComponent
   ],
   imports: [
-  BrowserModule,
+
+
+
+BrowserModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -84,7 +91,9 @@ import { PagerService } from './_services/pager.service';
     MatSnackBarModule,
     MatCardModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule,
+    ReactiveFormsModule,
 
    
   ],
@@ -95,7 +104,10 @@ import { PagerService } from './_services/pager.service';
      UserService,
      HomeService,
      ProductService,
-     PagerService
+     PagerService,
+     WishListService,
+     ProductDetailsResolve,
+     ProductDetailService
   ],
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]

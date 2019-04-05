@@ -46,6 +46,15 @@ export class ProductListComponent implements OnInit {
   isB2B = false;
   isBulkOrder = false;
   isPriceVisible = true;
+  formatLabel(value: number | null) {
+    if (!value) {
+      return 0;
+    }
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
+    }
+    return value;
+  }
   constructor(private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
