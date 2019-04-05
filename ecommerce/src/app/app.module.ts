@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+// import { ToastrModule } from 'ng6-toastr-notifications';
 
 import {
   MatToolbarModule,
@@ -33,6 +34,15 @@ import { FooterComponent } from './footer/footer.component';
 import { BannerComponent } from './banner/banner.component';
 import { ListingComponent } from './listing/listing.component';
 import { ModalComponent } from './modal/modal.component';
+import { OrderDetailsComponent } from './orderdetails/orderdetails.component';
+import { CancelOrderComponent } from './cancelorder/cancelorder.component';
+import { ReturnOrderComponent } from './returnorder/returnorder.component';
+import { WriteReviewsComponent } from './writereviews/writereviews.component';
+import { OrdersComponent } from './orders/orders.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
+import { ProductListComponent } from './productlist/productlist.component';
 
 //Services
 import { HeaderMenuService } from './_services/headerMenuService';
@@ -41,15 +51,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from './_services/authentication.service';
 import { UserService } from './_services/userService';
 import { HomeService } from './_services/home.service';
-import { AboutusComponent } from './aboutus/aboutus.component';
-import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
-import { ProductListComponent } from './productlist/productlist.component';
 import { ProductService } from './_services/productService';
 import { PagerService } from './_services/pager.service';
-import { ProductDetailsComponent } from './product-details/product-details.component';
 import { WishListService } from './_services/wishListService';
 import { ProductDetailsResolve } from './_services/productDetails.reslove';
 import { ProductDetailService } from './_services/productDetailsService';
+import { OrderService } from './_services/orderService';
+import { ReviewRatingService } from './_services/reviewRatingService';
 
 @NgModule({
   declarations: [
@@ -64,7 +72,12 @@ import { ProductDetailService } from './_services/productDetailsService';
     AboutusComponent,
     ReturnPolicyComponent,
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    OrdersComponent,
+    OrderDetailsComponent,
+    CancelOrderComponent,
+    ReturnOrderComponent,
+    WriteReviewsComponent
   ],
   imports: [
 
@@ -94,7 +107,7 @@ BrowserModule,
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-
+    // ToastrModule.forRoot()
    
   ],
   providers: [
@@ -107,7 +120,10 @@ BrowserModule,
      PagerService,
      WishListService,
      ProductDetailsResolve,
-     ProductDetailService
+     ProductDetailService,
+     OrderService,
+     ReviewRatingService
+
   ],
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]

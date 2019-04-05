@@ -6,7 +6,13 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReturnPolicyComponent } from './returnpolicy/returnpolicy.component';
 import { ProductListComponent } from './productlist/productlist.component';
+
 import { ProductDetailsResolve } from './_services/productDetails.reslove';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderDetailsComponent } from './orderdetails/orderdetails.component';
+import { CancelOrderComponent } from './cancelorder/cancelorder.component';
+import { ReturnOrderComponent } from './returnorder/returnorder.component';
+import { WriteReviewsComponent } from './writereviews/writereviews.component';
 
 const routes: Routes = [
   {
@@ -37,6 +43,26 @@ const routes: Routes = [
     resolve: {
       productDetails: ProductDetailsResolve
     },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'account/orders',
+    component: OrdersComponent
+  },
+  {
+    path: 'order_details',
+    component: OrderDetailsComponent
+  },
+  {
+    path: 'orders/cancel-order', component: CancelOrderComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'orders/return-order', component: ReturnOrderComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'write-reviews/:id', component: WriteReviewsComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   {

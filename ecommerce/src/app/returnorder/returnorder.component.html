@@ -1,0 +1,109 @@
+<div class="container" style="width:100%" *ngIf="productOrderDetails!=null">
+  <div class="_1joEet _2xhBrK">
+    <div class="_1HEvv0"><a class="_1KHd47" routerLink="/home">Home</a><svg width="16" height="27" viewBox="0 0 16 27"
+        xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+        <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy"></path>
+      </svg></div>
+    <div class="_1HEvv0"><a class="_1KHd47" routerLink="/account">My Orders</a><svg width="16" height="27"
+        viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+        <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy"></path>
+      </svg></div>
+    <div class="_1HEvv0"><a class="_1KHd47"
+        routerLink="/orderdetails/{{productOrderDetails.OrderNumber}}">{{productOrderDetails.OrderNumber}}</a><svg
+        width="16" height="27" viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+        <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy"></path>
+      </svg></div>
+    <div class="_1HEvv0">
+      <div class="_3Lv0nZ _1KHd47 Bomkwu">
+        <div class="_3aS5mM">
+          <p>Cancel</p>
+        </div>
+      </div><svg width="16" height="27" viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+        <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy"></path>
+      </svg>
+    </div>
+  </div>
+  <div class="_1bZ3ad">
+    <div class="_3qEkEX">
+      <div *ngIf="!isOrderReasonSelected">
+        <div class="_1GRhLX _38vNoF">
+          <h3 class="_1fM65H _2RMAtd"><span class="_1Tmvyj">1</span><span class="_1_m52b">Easy Return</span></h3>
+          <div class="_3K1hJZ">
+            <div class="_29WL2Q">
+              <div class="_2uxZJK">
+                <div class="_2X4yvh"><span>Reason for Return</span><span class="_3OAosJ"> *</span></div>
+                <div class="_1sTEeS">
+                  <div class="_2uWdcR"><select class="_3092M2 _1k0ChW" name="reasonList" #reasonList>
+                      <option value="0" disabled="">Select Reason</option>
+                      <option *ngFor="let reason of productOrderDetails.ReasonList" [selected]="reasonId == reason.Value" value="{{reason.Value}}">
+                        {{reason.Text}}</option>
+                    </select><span class="_1LBnEa"></span></div>
+                </div>
+              </div>
+              <div class="_2uxZJK">
+                <div class="_2X4yvh"><span>Comments</span></div>
+                <div class="_1sTEeS"><textarea required="" maxlength="1000" placeholder="eg: Item not required anymore." 
+                    class="cK8cRO" #remark>{{remarkText}}</textarea></div>
+              </div>
+              <div class="_3tpbwI"><button class="_2AkmmA" type="button"
+                  (click)="openReturnStatus(reasonList,remark)"><span>CONTINUE</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isOrderReasonSelected">
+        <div class="_1GRhLX _38vNoF">
+          <h3 class="_2RMAtd"><span class="_1Tmvyj">1</span><span class="_1_m52b">Easy Cancellation</span></h3>
+          <div class="_3K1hJZ">
+            <div class="_29WL2Q">
+              <p>Reason for cancellation:{{reasonText}}</p>
+              <div class="_3tpbwI"><button class="_2AkmmA" type="button" (click)="OpenReturn()"><span>Change
+                  </span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isOrderReasonSelected">
+        <div class="_1GRhLX _38vNoF">
+          <h3 class="_2RMAtd"><span class="_1Tmvyj">2</span><span class="_1_m52b">Refund Status</span></h3>
+          <div class="_3K1hJZ"></div>
+        </div>
+      </div>
+      <div *ngIf="isOrderReasonSelected">
+        <div class="_1GRhLX _38vNoF">
+          <h3 class="_1fM65H _2RMAtd"><span class="_1Tmvyj">1</span><span class="_1_m52b">Refund Status</span></h3>
+          <div class="_3K1hJZ">
+            <div class="_29WL2Q">
+              <p>{{productOrderDetails.RefundMessage}}</p>
+              <div class="_3tpbwI"><button class="_2AkmmA" type="button"
+                  (click)="saveOrderReturn(productOrderDetails.EncryptedOrderDetailsId,productOrderDetails.EncryptedOrderId,reasonList,remark)"><span>Request
+                    Return</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div></div>
+    </div>
+    <div class="_10LIAZ">
+      <div class="_1jO-lI">
+        <div class="TX0Evy _1tzFWe"><span>ITEM DETAILS</span></div>
+        <div class="row TX0Evy">
+          <div class="col-8-12">
+            <div class="d8vxDV"><span>{{productOrderDetails.ProductName}}</span><br></div>
+            <div class="_3JUi-u"><span>Qty: </span><span>{{productOrderDetails.ProductQuantity}}</span></div>
+            <div class="_2bxUzb">₹{{productOrderDetails.ProductAmount}}</div>
+          </div>
+          <div class="col-4-12">
+            <div class="_3BTv9X" style="height: 100px; width: 100px;"><img class="_1Nyybr  _30XEf0" alt=""
+                src="{{productOrderDetails.ImageUrl}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
