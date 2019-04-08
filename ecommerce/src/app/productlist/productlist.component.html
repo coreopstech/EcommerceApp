@@ -138,7 +138,10 @@
                     <button mat-button class="buy_now">Buy</button>
                   </div>
                 </div>
-                <a class="anchor" routerLink="/productdetails/{{product.EncryptedProductId}}/{{product.EncryptedProductDetailId}}"></a>
+                <a class="anchor" *ngIf="product.ProductSEOUrl!=''" routerLink="/productdetails/{{product.ProductSEOUrl}}"
+                [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailsId}"></a>
+                <a class="anchor" *ngIf="product.ProductSEOUrl===''" routerLink="/productdetails/{{product.ProductSEOUrl}}"
+                [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailsId}"></a>
               </div>
             </div>
           </div>

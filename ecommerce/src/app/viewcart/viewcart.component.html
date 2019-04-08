@@ -1,0 +1,144 @@
+<div class="container" style="width:100%;">
+  <div class="_4dkTmQ">
+    <div class="_1368i6">
+      <div class="riAgLt">
+        <div class="TFpAof" *ngIf="productCartList!=null && productCartList.length>0">
+          <div class="_3YIJgh"><span class="_1WMqsr">My Cart ({{productData.TotalItems}})</span>
+          </div>
+          <div>
+            <div *ngFor="let cart of productCartList" class="_3ycxrs">
+              <div class="PaJLWc"><a class="_2u3tZM"
+                  routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}"><img
+                    src="{{cart.ProductImageUrl}}"></a>
+                <div class="_3vIvU_">
+                  <div class="_1Ox9a7"><a class="_325-ji _3ROAwx"
+                      routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}">{{cart.ProductName}}</a>
+                  </div>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p XU9vZa">₹{{cart.Price}}</span>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p LYRnr_">₹{{cart.MRP}}</span>
+                </div>
+                <div class="aCNg3Z">
+                  <ul class="_1OKOUv">
+                    <li class="_3ErF0Y">
+                      <div class="bzD9az">Delivery by, Sun Feb 17 | <span class="_3ACFa6"><span
+                            class="_3o5jSD">Free</span></span><span class="_3ACFa6 _1wJt4G">₹40</span></div>
+                    </li>
+                  </ul>
+                  <ul class="_2103ss">
+                    <li><span>10 Days Replacement Policy</span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="_3cto0P">
+                <div class="_3RkJty">
+                  <div class="_3md1dr">
+
+                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="wNrY5O"> – </button>
+                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="wNrY5O" disabled="disabled"> – </button>
+                    <div class="_2zH4zg">
+                      <input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly=""></div>
+                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="wNrY5O"> +</button>
+                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="wNrY5O" disabled="disabled"> +</button>
+                  </div>
+                </div>
+                <div class="_3IO2ev _2K02N8 _2x63a8">
+                  <div class="gdUKd9" tabindex="22"
+                    (click)="MoveProductIntoSavedLater(cart.EncryptedProductDetailsId,cart.ProductDetailsId)"><span>Save
+                      For Later</span></div>
+                  <div class="gdUKd9" tabindex="23"
+                    (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)"><span>Remove</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="_2CQPOE _1J8_NP"><a><button (click)="router.navigate(['/home']);"
+                class="_2AkmmA _14O7kc mrmU5i"><svg width="16" height="27" viewBox="0 0 16 27"
+                  xmlns="http://www.w3.org/2000/svg" class="_18lbcF">
+                  <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff"
+                    class="_2mfUhF">
+                  </path>
+                </svg><span>Continue shopping</span></button></a>
+            <form method="post" action="/checkout/init"><input type="hidden" name="domain" value="physical"><button
+                (click)="router.navigate(['/checkout']);" class="_2AkmmA _14O7kc _7UHT_c" tabindex="30"><span>Place
+                  Order</span></button></form>
+          </div>
+        </div>
+        <div class="TFpAof" *ngIf="productCartList==null">
+        <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
+            class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a routerLink="/wishlist"><span
+              class="_3RKxAZ">+ Add items from wishlist</span></a></div>
+        </div>
+        <div class="TFpAof" *ngIf="!productCartList.length>0">
+          <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
+              class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a href="/wishlist"><span
+                class="_3RKxAZ">+ Add items from wishlist</span></a></div>
+          </div>
+        <div class="TFpAof IlFCEW" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
+          <div class="_3zo6mW"><span class="K9IlAR">Saved for Later ({{savedProductData.TotalItems}})</span></div>
+          <div>
+            <div class="_3ycxrs" *ngFor="let saved of productSavedForLaterList">
+              <div class="PaJLWc"><a class="_2u3tZM"
+                  routerLink="/productdetails/{{saved.EncryptedProductId}}/{{saved.EncryptedProductDetailsId}}"><img
+                    src="{{saved.ProductImageUrl}}"></a>
+                <div class="_3vIvU_">
+                  <div class="_1Ox9a7"><a class="_325-ji _3ROAwx"
+                      routerLink="/productdetails/{{saved.EncryptedProductId}}/{{saved.EncryptedProductDetailsId}}">{{saved.ProductName}}</a>
+                  </div>
+                  <div class="v7-Wbf"> 6 GB RAM </div>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p XU9vZa">₹{{saved.Price}}</span>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p LYRnr_">₹{{saved.MRP}}</span>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="hMGTLH">17% Off</span>
+                </div>
+              </div>
+              <div class="_3cto0P">
+                <div class="_3RkJty">
+                  <div class="_3md1dr"><button class="wNrY5O" disabled=""> – </button>
+                    <div class="_2zH4zg _3jYsHz"><input type="text" value="{{saved.ProductQuantity}}" class="_2csFM9"
+                        disabled=""></div><button class="wNrY5O" disabled=""> + </button>
+                  </div>
+                </div>
+                <div class="_3IO2ev _2K02N8 _2x63a8">
+                  <div class="gdUKd9" tabindex="12"
+                    (click)="MoveProductIntoCart(saved.EncryptedProductDetailsId,saved.ProductDetailsId)"><span>Move to
+                      Cart</span></div>
+                  <div class="gdUKd9" tabindex="13"
+                    (click)="RemoveProductSavedLater(saved.EncryptedProductDetailsId,saved.ProductDetailsId)">
+                    <span>Remove</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="_2qUgWb _3uHNGv _3CKRe3" style="height: auto;"
+        *ngIf="productCartList!=null && productCartList.length>0 && commanSetting!=null && commanSetting.IsPriceVisible">
+        <div class="_2zqhDs _1lD380" style="left: auto; top: 248.6px;">
+          <div class="_13wOiu"><span class="_2huYiT">Price details</span>
+            <div class="_2twTWD">
+              <div class="hJYgKM">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
+              <div class="hJYgKM">Delivery Charges<span><span class="_27kB8M _3Oa-sk">Free</span></span></div>
+              <div class="_3xFQAD">
+                <div class="hJYgKM">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
+              </div>
+            </div>
+            <div class="_34jRkt"><span class="_27kB8M">Your Total Savings on this order <div class="QE-hRv">
+                  ₹<span>1,140</span></div></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="_2qUgWb _3uHNGv _3CKRe3">
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -41,7 +41,7 @@ export class ToolbarComponent implements OnInit {
     });
   }
   getTotalItemsCount() {
-    if (!localStorage.getItem("currentUser")) {
+    if (!localStorage.getItem("currentidentity")) {
       if (localStorage.getItem("cartList")) {
         var items = JSON.parse(localStorage.getItem("cartList"));
         if (items != null && items.length > 0) {

@@ -8,7 +8,7 @@ import { ReviewRating } from '../_models/reviewRating';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("currentuser")
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
     })
 };
 @Injectable()
@@ -36,7 +36,6 @@ export class ReviewRatingService {
             }));
     }
     saveReviewDetails(review: ReviewRating, encryptedOrderDetailsId: string, encryptedReviewRatingId: string) {
-        var currentUserId = localStorage.getItem("currentUserId");
         var user=JSON.parse(localStorage.getItem("currentidentity"));
         var userEncryptedId=user.id;
         review.EncryptedOrderDetailsId = encryptedOrderDetailsId;
@@ -49,14 +48,13 @@ export class ReviewRatingService {
     }
     saveRatingDetails(rating: number, OrderDetailsId: string, ReviewRatingId: string) {
         var review: ReviewRating;
-        var currentUserId = localStorage.getItem("currentUserId");
         var user=JSON.parse(localStorage.getItem("currentidentity"));
         var userEncryptedId=user.id;
         
         var body = {
             reviewRating: rating,
             encryptedOrderDetailsId: OrderDetailsId,
-            userEncryptedId: currentUserId,
+            userEncryptedId: userEncryptedId,
             encryptedReviewRatingId: ReviewRatingId
         }
         return this.http.post<any>(this.baseUrl + `ReviewRating/SaveRatingDetails`, body)

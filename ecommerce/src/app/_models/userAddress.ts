@@ -1,16 +1,17 @@
 export class UserAddress {
-    addressId:number;
-    encryptedAddressId:string;
-    userId: number;
-    encryptedUserId:string;
-    name: string;
-    mobileNumber:string;
-    pinCode:string;
-    address:string;
-    cityId:number;
-    stateId:number;
-    landmark:string;
-    alternateMobileNumber:string;
-    addressType:number;
-
+    AddressId:number;
+    EncryptedAddressId:string;
+    UserId: number;
+    EncryptedUserId:string;
+    Name: string;
+    MobileNumber:string;
+    PinCode:string;
+    Address:string;
+    CityId:string;
+    StateId:string;
+    Landmark:string;
+    AlternateMobileNumber:string;
+    AddressType:number;
+    CityList:any;
+    StateList:any;
 }

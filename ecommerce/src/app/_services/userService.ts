@@ -10,7 +10,7 @@ import { UserAddress } from '../_models/userAddress';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("currentuser")
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
     })
 };
 @Injectable()
@@ -90,7 +90,7 @@ export class UserService {
     saveUserAddressDetails(userAddress: UserAddress) {
         var user = JSON.parse(localStorage.getItem("currentidentity"));
         var userEncryptedId = user.id;
-        userAddress.encryptedUserId = userEncryptedId;
+        userAddress.EncryptedUserId = userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveUserAddressDetails`, userAddress)
             .pipe(map(result => {
                 return result;

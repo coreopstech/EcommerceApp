@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ReviewRatingService } from '../_services/reviewRatingService';
 import { ReviewRating } from '../_models/reviewRating';
 import { environment } from './../../environments/environment.prod';
+import {RatingModule} from "ngx-rating";
 
 
 @Component({
@@ -72,6 +73,7 @@ export class WriteReviewsComponent implements OnInit {
           else {
             this.reviewModel.ReviewDescription='';
             this.reviewModel.ReviewTitle='';
+            this.reviewModel.ReviewRating=0;
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -81,6 +83,7 @@ export class WriteReviewsComponent implements OnInit {
         error => {
           this.reviewModel.ReviewDescription='';
             this.reviewModel.ReviewTitle='';
+            this.reviewModel.ReviewRating=0;
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
@@ -119,7 +122,6 @@ export class WriteReviewsComponent implements OnInit {
 
   SaveRating(rating)
   {
-    alert(rating);
     this.reviewRatingService.saveRatingDetails(rating,this.orderDetailsId,this.encryptedReviewRatingId)
     .subscribe(
       result => {

@@ -7,7 +7,7 @@ import { environment } from './../../environments/environment.prod';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("currentuser")
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
     })
 };
 @Injectable()
@@ -17,12 +17,9 @@ export class WishListService {
     }
 
     getWishList() {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
-        return this.http.get<any>(this.baseUrl + `WishList/GetProductWishtList/` + currentUserId)
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
+        return this.http.get<any>(this.baseUrl + `WishList/GetProductWishtList/` + userEncryptedId)
             .pipe(map(result => {
                 return result;
             }));
@@ -30,15 +27,12 @@ export class WishListService {
     }
     saveProductIntoWishList(encryptedProductDetailsId,encryptedProductId)
     {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
         var body={
             encryptedProductDetailsId:encryptedProductDetailsId,
             encryptedProductId:encryptedProductId,
-            userEncryptedId:currentUserId
+            userEncryptedId:userEncryptedId
         }
         return this.http.post<any>(this.baseUrl + `WishList/SaveProductIntoWishList`, body)
             .pipe(map(result => {
@@ -47,15 +41,12 @@ export class WishListService {
     }
     removeProductIntoWishList(encryptedProductDetailsId,encryptedProductId)
     {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
         var body={
             encryptedProductDetailsId:encryptedProductDetailsId,
             encryptedProductId:encryptedProductId,
-            userEncryptedId:currentUserId
+            userEncryptedId:userEncryptedId
         }
         return this.http.post<any>(this.baseUrl + `WishList/RemoveProductIntoWishList`, body)
             .pipe(map(result => {

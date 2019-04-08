@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { ToastrModule } from 'ng6-toastr-notifications';
+ import { ToastrModule } from 'ng6-toastr-notifications';
 
 import {
   MatToolbarModule,
@@ -19,14 +19,16 @@ import {
   MatCardModule,
   MatChipsModule,
   MatPaginatorModule,
+  MatRadioModule
   } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { RatingModule } from'ngx-rating';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Component
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -58,6 +60,13 @@ import { ProductDetailsResolve } from './_services/productDetails.reslove';
 import { ProductDetailService } from './_services/productDetailsService';
 import { OrderService } from './_services/orderService';
 import { ReviewRatingService } from './_services/reviewRatingService';
+import { ViewCartComponent } from './viewcart/viewcart.component';
+import { CheckOutComponent } from './checkout/checkout.component';
+import { MyCartService } from './_services/mycartService';
+import { CustomerAddressComponent } from './customer-address/customer-address.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import { PaymentOptionsComponent } from './payment-options/payment-options.component';
+
 
 @NgModule({
   declarations: [
@@ -77,7 +86,12 @@ import { ReviewRatingService } from './_services/reviewRatingService';
     OrderDetailsComponent,
     CancelOrderComponent,
     ReturnOrderComponent,
-    WriteReviewsComponent
+    WriteReviewsComponent,
+    ViewCartComponent,
+    CheckOutComponent,
+    CustomerAddressComponent,
+    OrderSummaryComponent,
+    PaymentOptionsComponent
   ],
   imports: [
 
@@ -85,7 +99,6 @@ import { ReviewRatingService } from './_services/reviewRatingService';
 
 BrowserModule,
     AppRoutingModule,
-    FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
@@ -107,7 +120,9 @@ BrowserModule,
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-    // ToastrModule.forRoot()
+     ToastrModule.forRoot(),
+     RatingModule
+     
    
   ],
   providers: [
@@ -122,7 +137,8 @@ BrowserModule,
      ProductDetailsResolve,
      ProductDetailService,
      OrderService,
-     ReviewRatingService
+     ReviewRatingService,
+     MyCartService
 
   ],
   entryComponents: [ModalComponent],

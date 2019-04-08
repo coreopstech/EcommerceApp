@@ -13,16 +13,13 @@ export class ProductDetailService {
     }
 
     getProductDetails(productId, productDetailId) {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
         var cartData = localStorage.getItem("cartList");
         var body = {
             EncryptedProductId: productId,
             EncryptedProductDetailsId: productDetailId,
-            UserEncryptedId: currentUserId,
+            UserEncryptedId: userEncryptedId,
             cartDetails: JSON.parse(cartData)
         }
         return this.http.post<any>(this.baseUrl + 'Product/GetProductDetail/', body)
@@ -49,13 +46,10 @@ export class ProductDetailService {
             }));
     }
     saveProductIntoCart(encryptedProductDetailId, encryptedProductId) {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
         var body = {
-            UserEncryptedId: currentUserId,
+            UserEncryptedId: userEncryptedId,
             EncryptedProductDetailsId: encryptedProductDetailId,
             EncryptedProductId: encryptedProductId
         }
@@ -66,12 +60,9 @@ export class ProductDetailService {
     }
     saveBulkOrder(bulkOrder:BulkOrder)
     {
-        var currentUserId = localStorage.getItem("currentUserId");
-        if (localStorage.getItem("currentUserId")) {
-            currentUserId = currentUserId.replace('"', '');
-            currentUserId = currentUserId.replace('"', '');
-        }
-        bulkOrder.UserEncryptedId=currentUserId;
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
+        bulkOrder.UserEncryptedId=userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveBulkOrder/`, bulkOrder)
             .pipe(map(result => {
                 return result;

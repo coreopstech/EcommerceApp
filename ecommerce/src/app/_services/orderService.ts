@@ -6,7 +6,7 @@ import { environment } from './../../environments/environment.prod';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem("currentuser")
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
     })
 };
 @Injectable()

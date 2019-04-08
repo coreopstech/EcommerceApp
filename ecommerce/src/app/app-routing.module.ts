@@ -13,6 +13,8 @@ import { OrderDetailsComponent } from './orderdetails/orderdetails.component';
 import { CancelOrderComponent } from './cancelorder/cancelorder.component';
 import { ReturnOrderComponent } from './returnorder/returnorder.component';
 import { WriteReviewsComponent } from './writereviews/writereviews.component';
+import { ViewCartComponent } from './viewcart/viewcart.component';
+import { CheckOutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -62,6 +64,14 @@ const routes: Routes = [
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   {
+    path: 'viewcart', component: ViewCartComponent,
+    
+  },
+  {
+    path: 'checkout', component: CheckOutComponent,
+    
+  },
+  {
     path: 'write-reviews/:id', component: WriteReviewsComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
@@ -86,6 +96,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+
 
 
 
