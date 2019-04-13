@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-7">
         <ul>
-          <li><a class="logo" [routerLink]="''"><img src="../../assets/images/logo.png" alt=""></a></li>
+          <li><a class="logo" [routerLink]="'/home'"><img src="../../assets/images/logo.png" alt=""></a></li>
           <li class="search_bar">
             <form>
               <input matInput class="form-control" placeholder="Search..." />
@@ -18,9 +18,9 @@
       </div>
       <div class="col-md-5">
         <ul class="right_bar">
-          <li><a [routerLink]="" (click)="doLogin()">Login</a></li>
-          <li><a [routerLink]="" (click)="createAccount()">Register</a></li>
-          <li class="my_ac">
+          <li  *ngIf="!isUserLogged()"><a [routerLink]="" (click)="doLogin()">Login</a></li>
+          <li  *ngIf="!isUserLogged()"><a [routerLink]="" (click)="createAccount()">Register</a></li>
+          <li class="my_ac" *ngIf="isUserLogged()">
             <a [routerLink]="">My Account</a>
             <ul class="my_account">
               <li>
@@ -28,7 +28,7 @@
                    My Profile</a>
               </li>
               <li>
-                <a href="javascript:void(0);">
+                <a routerLink="/account/orders">
                   Orders</a>
               </li>
               <li>
@@ -40,15 +40,15 @@
                 </a>
               </li>
               <li>
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" (click)="logout()">
                   <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
               </li>
             </ul>
           </li>
-          <li><a [routerLink]="">Whislist</a></li>
+          <li  *ngIf="isUserLogged()"><a [routerLink]="">Whislist</a></li>
           <li>
             <a [routerLink]="">
-              <button mat-icon-button matBadge="8" matBadgePosition="after" matBadgeColor="primary">
+              <button mat-icon-button matBadge="{{totalItems}}" matBadgePosition="after" matBadgeColor="primary">
                 <mat-icon>shopping_cart</mat-icon>
               </button>
             </a>

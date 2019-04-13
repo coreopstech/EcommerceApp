@@ -1,0 +1,93 @@
+<div class="_7XMNLT" *ngIf="encryptedAddressId==''">
+    <div class="_1GRhLX _38vNoF">
+      <h3 class="_2RMAtd"><span class="_1Tmvyj">3</span><span class="_1_m52b">Order Summary</span></h3>
+      <div class="_3K1hJZ"></div>
+    </div>
+  </div>
+  <div class="_7XMNLT" *ngIf="encryptedAddressId!='' && selectedEncryptAddressId==''">
+    <div class="_1GRhLX _38vNoF">
+      <h3 class="_1fM65H _2RMAtd"><span class="_1Tmvyj">3</span><span class="_1_m52b">Order Summary</span></h3>
+      <div class="_3K1hJZ">
+        <div class="_2eTL2v">
+          <div class="_20egpM" *ngIf="productCartList!=null && productCartList.length>0">
+            <div class="_3ycxrs" *ngFor="let cart of productCartList">
+              <div class="PaJLWc">
+                <div class="_2u3tZM"><img
+                    src="{{cart.ProductImageUrl}}">
+                </div>
+                <div>
+                  <div class="_3vIvU_">
+                    <div class="_1Ox9a7">
+                      <div class="_325-ji">{{cart.ProductName}}</div>
+                    </div>
+                    <!-- <div class="v7-Wbf"> Free Standing </div>
+                    <div class="_2EitLy"><span>Seller: NetRetail1</span><img class="_3H62tS"
+                      src="http://localhost/Ecommerce.Web/Upload/ProductImages/{{cart.ProductImageUrl}}"></div> -->
+                    <span class="pMSy0p XU9vZa">₹{{cart.Price}}</span><span class="pMSy0p LYRnr_">₹{{cart.MRP}}</span>
+                    <!-- <span class="hMGTLH">60%    Off</span>
+                    <div class="c8yCDe" id="offers-LSTSLEEKYFW7XNEMDU9JC0HUL"><span>2 Offers Available</span><svg
+                        width="14" height="14" xmlns="http://www.w3.org/2000/svg" class="_3p6_km">
+                        <g fill="none">
+                          <path d="M-1-1h16v16H-1"></path>
+                          <path
+                            d="M7 0C3.136 0 0 3.136 0 7s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zm.7 10.5H6.3V6.3h1.4v4.2zm0-5.6H6.3V3.5h1.4v1.4z"
+                            fill="#388e3c" class=""></path>
+                        </g>
+                      </svg></div> -->
+                  </div>
+                </div>
+                <div class="aCNg3Z">
+                  <div class="_3aZm8l">
+                    <div class="bzD9az">Delivery by, Wed Feb 27 | <span class="_3ACFa6"><span
+                          class="_3o5jSD">Free</span></span><span class="_3ACFa6 _1wJt4G">₹40</span></div>
+                  </div>
+                  <div class="_2103ss"></div>
+                </div>
+              </div>
+              <div class="_3cto0P">
+                <div class="_3RkJty">
+                  <div class="_3md1dr">
+                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="wNrY5O"> – </button>
+                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="wNrY5O" disabled="disabled"> – </button>
+  
+                    <div class="_2zH4zg"><input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly="">
+                    </div>
+                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="wNrY5O"> +</button>
+                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="wNrY5O" disabled="disabled"> +</button>
+                  </div>
+                </div>
+                <div class="_3IO2ev _2K02N8 _2x63a8">
+                  <div (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)" class="gdUKd9"
+                    tabindex="12"><span>Remove</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="_3cCusG"><span id="to-payment"><button class="_2AkmmA _2Q4i61 _7UHT_c"
+                  (click)="OpenPaymentOptions(encryptedAddressId)">CONTINUE</button></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="_7XMNLT" *ngIf="selectedEncryptAddressId!=''" >
+    <div class="_1GRhLX _38vNoF">
+      <div class="_1QbRjw">
+        <h3 class="_2RMAtd"><span class="_1Tmvyj">3</span></h3>
+        <div class="_3FNwOm">
+          <div class="_1_m52b">Order Summary<svg height="10" width="16" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg" class="_3baQOY">
+              <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" stroke="#2974f0"></path>
+            </svg></div>
+          <div class="_2jDL7w"><span class="dNZmcB">{{productData.TotalItems}} Items</span></div>
+        </div><button class="_3Jk8fm" (click)="ShowOrderSummary()" >Change</button>
+      </div>
+    </div>
+  </div>

@@ -8,13 +8,18 @@
 
   <div class="modal_content">
     <div *ngIf="modalData.action == 'login'">
-      <form>
+      <form (ngSubmit)="loginForm.form.valid && onLogin()" #loginForm="ngForm" *ngIf="loginModel!=null">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Email Id" />
+          <input matInput placeholder="Email Id/ Mobile" [(ngModel)]="loginModel.EmailModile" name="emailMobile" #emailMobile="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && emailMobile.invalid }" required/>
+          <div *ngIf="loginForm.submitted && emailMobile.invalid" class="invalid-feedback">
+              </div>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput type="password" placeholder="Password" />
+          <input matInput type="password" placeholder="Password" [(ngModel)]="loginModel.Password" name="password" #password="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required/>
+          <div *ngIf="loginForm.submitted && password.invalid" class="invalid-feedback">
+              <!-- <div *ngIf="password.errors.required">Password is required</div> -->
+            </div>
         </mat-form-field>
 
         <button type="submit" class="bg_green" color="primary" mat-button>Login</button>
@@ -23,29 +28,29 @@
     </div>
 
     <div *ngIf="modalData.action == 'register'">
-      <form>
+      <form (ngSubmit)="registerForm.form.valid && onRegister()" #registerForm="ngForm" *ngIf="registerModel!=null">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="First Name" />
+          <input matInput placeholder="First Name" [(ngModel)]="registerModel.FirstName" name="firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && firstName.invalid }" required/>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Last Name" />
+          <input matInput placeholder="Last Name" [(ngModel)]="registerModel.LastName" name="lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && lastName.invalid }" required/>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Mobile" />
+          <input matInput placeholder="Mobile" [(ngModel)]="registerModel.Mobile" name="mobile" #mobile="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && mobile.invalid }" required/>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Email" type="email" />
+          <input matInput placeholder="Email" type="email" [(ngModel)]="registerModel.Email" name="email" #email="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && email.invalid }" required/>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Password" type="password" />
+          <input matInput placeholder="Password" type="password" [(ngModel)]="registerModel.Password" name="password" #password="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && password.invalid }" required/>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Confirm Password" type="password" />
+          <input matInput placeholder="Confirm Password" type="password" [(ngModel)]="registerModel.ConfirmPassword" name="confirmPassword" #confirmPassword="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && confirmPassword.invalid }" required/>
         </mat-form-field>
 
         <button type="submit" class="bg_green" color="primary" mat-button>Register</button>

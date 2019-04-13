@@ -1,0 +1,217 @@
+<div class="container" style="width:100%">
+  <div class="_2kIypH" *ngIf="orderData!=null">
+    <div class="_1VV5Cf _1QHAXj">
+      <div class="_1SFos- " style="transform: scaleX(1);"></div>
+    </div>
+    <div class="_2QEGRr">
+      <div class="_2rhtPx"><span>
+          <div class="_1joEet">
+            <div class="_1HEvv0"><a class="_1KHd47" routerLink="/home">Home</a><svg width="16" height="27"
+                viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+                <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy">
+                </path>
+              </svg></div>
+            <div class="_1HEvv0"><a class="_1KHd47" routerLink="/account">My Account</a><svg width="16" height="27"
+                viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+                <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy">
+                </path>
+              </svg></div>
+            <div class="_1HEvv0"><a class="_1KHd47" routerLink="/account/orders">My Orders</a><svg width="16" height="27"
+                viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+                <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy">
+                </path>
+              </svg></div>
+            <div class="_1HEvv0">
+              <div class="_3Lv0nZ _1KHd47 Bomkwu _1PKeD1">
+                <div class="_3aS5mM">
+                  <p>{{orderData.OrderNumber}}</p>
+                </div>
+              </div><svg width="16" height="27" viewBox="0 0 16 27" xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
+                <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff" class="_24NaUy">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="_1GRhLX _17XScb _3qesVJ row">
+            <div class="col-8-12 _1MoCT-">
+              <div class="_15sywe">
+                <div class="S19oOu"><span>Delivery Address</span></div>
+                <div class="_33IUH-">
+                  <div class="_28vuId">{{orderData.userAddressDetails.Name}}</div>
+                  <div class="_1oqxSg">{{orderData.userAddressDetails.FullAddress}}</div>
+                  <div class="_2EfNSn" *ngIf="orderData.userAddressDetails.MobileNumber"><span
+                      class="_28vuId">Phone</span><span
+                      class="_2KwVbu">{{orderData.userAddressDetails.MobileNumber}}</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4-12 _3FXQ6P _1MoCT-"><span class="_1CWg6K">More actions</span>
+              <div class="row _3xbQnf">
+                <div class="_3PNaZO"><img
+                    src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/downloadInvoice_686685.png"
+                    class="_2Q-6ef"><span class="_3skYqB">Invoice</span></div><button class="_2AkmmA _3c5Gic"><img
+                    class="_2XpekH"><span>Request Invoice</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="_1GRhLX _1YeuTr" style="margin-left:0px;">
+            <div *ngIf="orderData">
+              <div class="row x77_9t" *ngFor="let orderDetails of orderData.orderDetailsList" style="margin-left:0px;">
+                <div class="col-3-12 _22pgKz">
+                  <div class="row" style="position: relative;">
+                    <div class="col-3-12 _2eFO7I"><a
+                        routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
+                        target="_blank" rel="noopener noreferrer">
+                        <div class="_3BTv9X" style="height: 75px; width: 75px;"><img class="_1Nyybr  _30XEf0" alt=""
+                            src="{{orderDetails.ProductImage}}">
+                        </div>
+                      </a></div>
+                    <div class="col-8-12"><a class="_2AkmmA row NPoy5u"
+                        routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
+                        target="_blank">{{orderDetails.ProductName}}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-5-12 _3ncsB7">
+                  <div class="_3BVwT" *ngIf="orderDetails.OrderStatus==7">
+                    <div class="_1i5nEe _3pfz6S" style="width: 100%;">
+                      <div class="_17G29n RSqBek" style="transition-delay: 0s;"><span class="_3Qv1YL">Return</span>
+                      </div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 0s;"></div>
+                      <div class="_2QynGw">
+                        <div class="_1tBjl7" style="transition-delay: 0s; transform: scaleX(1);"></div>
+                      </div>
+                    </div>
+                    <div class="_1i5nEe _3pfz6S">
+                      <div class="_17G29n RSqBek qnIvIS" style="transition-delay: 1s;"><span
+                          class="_3Qv1YL">Refund</span></div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 1s;"></div>
+                    </div>
+                  </div>
+                  <div class="_3BVwT" *ngIf="orderDetails.OrderStatus!=7">
+                    <div class="_1i5nEe" *ngIf="orderDetails.OrderStatus!=6" style="width: 33.3333%;">
+                      <div class="_17G29n RSqBek" style="transition-delay: 0s;"><span class="_3Qv1YL">Ordered</span>
+                      </div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 0s;"></div>
+                      <div class="_2QynGw">
+                        <div *ngIf="orderDetails.OrderStatus>1" class="_1tBjl7"
+                          style="transition-delay: 0s; transform: scaleX(1);"></div>
+                        <div *ngIf="!orderDetails.OrderStatus>1" class="_1tBjl7"
+                          style="transition-delay: 0s; transform: scaleX(0);"></div>
+                      </div>
+                    </div>
+                    <div class="_1i5nEe" *ngIf="orderDetails.OrderStatus==6" style="width: 100%;">
+                      <div class="_17G29n RSqBek" style="transition-delay: 0s;"><span class="_3Qv1YL">Ordered</span>
+                      </div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 0s;"></div>
+                      <div class="_2QynGw">
+                        <div *ngIf="orderDetails.OrderStatus>1" class="_1tBjl7"
+                          style="transition-delay: 0s; transform: scaleX(1);"></div>
+                        <div *ngIf="!orderDetails.OrderStatus>1" class="_1tBjl7"
+                          style="transition-delay: 0s; transform: scaleX(0);"></div>
+                      </div>
+                    </div>
+                    <div class="_1i5nEe" style="width: 33.3333%;" *ngIf="orderDetails.OrderStatus!=6">
+                      <div class="_17G29n RSqBek" style="transition-delay: 1s;"><span class="_3Qv1YL">Packed</span>
+                      </div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 1s;"></div>
+
+                      <div class="_2QynGw">
+                        <div *ngIf="orderDetails.OrderStatus>2" class="_1tBjl7"
+                          style="transition-delay: 1s; transform: scaleX(1);"></div>
+                        <div *ngIf="!orderDetails.OrderStatus>2" class="_1tBjl7"
+                          style="transition-delay: 1s; transform: scaleX(0);"></div>
+                      </div>
+                    </div>
+                    <div class="_1i5nEe" style="width: 33.3333%;" *ngIf="orderDetails.OrderStatus!=6">
+                      <div class="_17G29n RSqBek" style="transition-delay: 2s;"><span class="_3Qv1YL">Shipped</span>
+                      </div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 2s;"></div>
+                      <div class="_2QynGw">
+                        <div *ngIf="orderDetails.OrderStatus>4" class="_1tBjl7"
+                          style="transition-delay: 2s; transform: scaleX(1);"></div>
+                        <div *ngIf="!orderDetails.OrderStatus>4" class="_1tBjl7"
+                          style="transition-delay: 2s; transform: scaleX(0);"></div>
+                      </div>
+                    </div>
+                    <div class="_1i5nEe" *ngIf="orderDetails.OrderStatus!=6">
+                      <div class="_17G29n RSqBek qnIvIS" style="transition-delay: 3s;"><span
+                          class="_3Qv1YL">Delivered</span></div>
+                      <div class="_3HKlvX _31uEzM" style="transition-delay: 3s;"></div>
+                    </div>
+                    <div class="_1i5nEe" *ngIf="orderDetails.OrderStatus==6">
+                      <div class="_17G29n _1rOJf0 qnIvIS" style="transition-delay: 1s;"><span
+                          class="_3Qv1YL">Cancelled</span></div>
+                      <div class="_3HKlvX _2M417H" style="transition-delay: 1s;"></div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <!-- <div class="col-7-12">
+                  <ol class="progtrckr" data-progtrckr-steps="5">
+                    <li class="progtrckr-done">Ordered</li>
+                    <li class="progtrckr-done">Packed</li>
+                    <li class="progtrckr-done">Shipped</li>
+                    <li class="progtrckr-todo">Delivered</li>
+                  </ol>
+                </div> -->
+                <div class="_2HvExN col-4-12">
+                  <div class="f3C4Tt">₹{{orderDetails.TotalAmountWithFormat}}<div class="_20yN1P"></div>
+                  </div>
+                  <div class="_3JuTif">
+                    <div class="_1S3Y5S row" *ngIf="orderDetails.IsReviewVisible"><a
+                        routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
+                        [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}" class="FlPMmo"><img
+                          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTYnIGhlaWdodD0nMTknIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTggMTgiPgoJPGcgZmlsbD0nbm9uZSc+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBmaWxsPSIjMjg3NEYxIiBwb2ludHM9IjkgMTIuMDYyNSAxMy42Mzc1IDE1LjQzNzUgMTEuODYyNSA5Ljk4NzUgMTYuNSA2LjY4NzUgMTAuODEyNSA2LjY4NzUgOSAxLjA2MjUgNy4xODc1IDYuNjg3NSAxLjUgNi42ODc1IDYuMTM3NSA5Ljk4NzUgNC4zNjI1IDE1LjQzNzUiIC8+CgkJPHBvbHlnb24gaWQ9IlNoYXBlIiBwb2ludHM9IjAgMCAxOCAwIDE4IDE4IDAgMTgiIC8+Cgk8L2c+Cjwvc3ZnPg=="
+                          class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Rate &amp; Review Product</span></a>
+                    </div>
+                    <div class="_1S3Y5S row _2E6MDv" *ngIf="orderDetails.IsCancelButtonVisible"><a
+                        [routerLink]="['/orders/cancel-order']"
+                        [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderData.OrderNumber}"
+                        class="FlPMmo"><img
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyODc0RjEiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTkgLjY2N0M0LjM5Mi42NjcuNjY3IDQuMzkyLjY2NyA5YzAgNC42MDggMy43MjUgOC4zMzMgOC4zMzMgOC4zMzMgNC42MDggMCA4LjMzMy0zLjcyNSA4LjMzMy04LjMzM0MxNy4zMzMgNC4zOTIgMTMuNjA4LjY2NyA5IC42Njd6bTQuMTY3IDExLjMyNWwtMS4xNzUgMS4xNzVMOSAxMC4xNzVsLTIuOTkyIDIuOTkyLTEuMTc1LTEuMTc1TDcuODI1IDkgNC44MzMgNi4wMDhsMS4xNzUtMS4xNzVMOSA3LjgyNWwyLjk5Mi0yLjk5MiAxLjE3NSAxLjE3NUwxMC4xNzUgOWwyLjk5MiAyLjk5MnoiLz48cGF0aCBkPSJNLTEtMWgyMHYyMEgtMSIvPjwvZz48L3N2Zz4="
+                          class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Cancel Item
+                        </span></a></div>
+                    <div class="_1S3Y5S row _2E6MDv" *ngIf="orderDetails.IsReturnButtonVisible"><a
+                        [routerLink]="['/orders/return-order']"
+                        [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderData.OrderNumber}"
+                        class="FlPMmo"><img
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyODc0RjEiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTkgLjY2N0M0LjM5Mi42NjcuNjY3IDQuMzkyLjY2NyA5YzAgNC42MDggMy43MjUgOC4zMzMgOC4zMzMgOC4zMzMgNC42MDggMCA4LjMzMy0zLjcyNSA4LjMzMy04LjMzM0MxNy4zMzMgNC4zOTIgMTMuNjA4LjY2NyA5IC42Njd6bTQuMTY3IDExLjMyNWwtMS4xNzUgMS4xNzVMOSAxMC4xNzVsLTIuOTkyIDIuOTkyLTEuMTc1LTEuMTc1TDcuODI1IDkgNC44MzMgNi4wMDhsMS4xNzUtMS4xNzVMOSA3LjgyNWwyLjk5Mi0yLjk5MiAxLjE3NSAxLjE3NUwxMC4xNzUgOWwyLjk5MiAyLjk5MnoiLz48cGF0aCBkPSJNLTEtMWgyMHYyMEgtMSIvPjwvZz48L3N2Zz4="
+                          class="_3Q4GqT col-1-5"><span class="_3zvrLw col-3-5">Return Item
+                        </span></a></div>
+                  </div>
+                </div>
+                <div class="_3YJBAw">
+                  <div class="row"><span class="col-3-12 _2BU9FV"><img
+                        src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMjg3NEYxIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4KICAgIDxwYXRoIGQ9Ik0yMCA4aC0zVjRIM2MtMS4xIDAtMiAuOS0yIDJ2MTFoMmMwIDEuNjYgMS4zNCAzIDMgM3MzLTEuMzQgMy0zaDZjMCAxLjY2IDEuMzQgMyAzIDNzMy0xLjM0IDMtM2gydi01bC0zLTR6TTYgMTguNWMtLjgzIDAtMS41LS42Ny0xLjUtMS41cy42Ny0xLjUgMS41LTEuNSAxLjUuNjcgMS41IDEuNS0uNjcgMS41LTEuNSAxLjV6bTEzLjUtOWwxLjk2IDIuNUgxN1Y5LjVoMi41em0tMS41IDljLS44MyAwLTEuNS0uNjctMS41LTEuNXMuNjctMS41IDEuNS0xLjUgMS41LjY3IDEuNSAxLjUtLjY3IDEuNS0xLjUgMS41eiIvPgo8L3N2Zz4="
+                        class="_333iJH"></span>
+                    <span *ngIf="orderDetails.OrderStatus!=6" class="col-9-12 _1XR3uz"><span
+                        class="">{{orderDetails.OrderStatusTitle}}</span></span>
+                    <span *ngIf="orderDetails.OrderStatus==6" class="col-9-12 _1XR3uz"><span
+                        class="mU1-I_">{{orderDetails.OrderStatusTitle}}</span></span>
+                  </div>
+                </div>
+                <div class="_1B20jd" *ngIf="orderDetails.RefundDetails!=null && orderDetails.RefundDetails.OrderRefundId>0">
+                  <div class="row _2w4pr3"><span class="col-3-12 _3QEasX"><img
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0tMS0xaDIwdjIwSC0xIi8+PHBhdGggZmlsbD0iI0ZGOUYwMCIgZmlsbC1ydWxlPSJub256ZXJvIiBkPSJNOSAuNjY3QzQuNC42NjcuNjY3IDQuNC42NjcgOVM0LjQgMTcuMzMzIDkgMTcuMzMzIDE3LjMzMyAxMy42IDE3LjMzMyA5IDEzLjYuNjY3IDkgLjY2N3ptLjgzMyAxMi41SDguMTY3di01aDEuNjY2djV6bTAtNi42NjdIOC4xNjdWNC44MzNoMS42NjZWNi41eiIvPjwvZz48L3N2Zz4="
+                        class="-jS33H"><span><span class="_3JTI0b">Refund</span><span
+                          class="_3JTI0b">Completed</span></span></span>
+                    <div class="col-9-12 _3jRcLK cW3nqO"><span>
+                        <div>{{orderDetails.RefundDetails.RefundMessage}}.</div>
+                      </span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="_1OJGFU">
+
+              <div class="_11dQu7"><span class="_27lDDD">Total</span><span
+                  class="_1B26g2">₹{{orderData.OrderTotalAmountWithFormat}}</span>
+              </div>
+            </div>
+          </div>
+        </span></div>
+    </div>
+  </div>
+</div>

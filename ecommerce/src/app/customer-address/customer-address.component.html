@@ -1,0 +1,203 @@
+<div class="_1GRhLX _38vNoF" *ngIf="!isLogged && !selectedEncryptedId">
+  <h3 class="_2RMAtd"><span class="_1Tmvyj">2</span><span class="_1_m52b">Delivery Address</span></h3>
+  <div class="_3K1hJZ"></div>
+</div>
+<div class="_1GRhLX _38vNoF" *ngIf="isLogged && !selectedEncryptedId">
+  <h3 class="_1fM65H _2RMAtd"><span class="_1Tmvyj">2</span><span class="_1_m52b">Delivery Address</span></h3>
+  <div class="_3K1hJZ">
+    <div>
+      <div *ngIf="customerAddressList!=null && customerAddressList.length>0">
+        <div *ngFor="let address of customerAddressList">
+          <label (click)="ShowEdit_DeliveryButton(address.EncryptedAddressId)"
+            *ngIf="(editRecordId!=address.EncryptedAddressId)" for="{{address.EncryptedAddressId}}"
+            class="_8J-bZE _1tkDFt _1YWq5E _2i24Q8 _1Icwrf">
+            <input *ngIf="(isbuttonVisibleId==address.EncryptedAddressId)" type="radio" class="_2haq-9" name="address"
+              readonly="" id="{{address.EncryptedAddressId}}" value="on" checked="">
+            <input *ngIf="(isbuttonVisibleId!=address.EncryptedAddressId)" type="radio" class="_2haq-9" name="address"
+              readonly="" id="{{address.EncryptedAddressId}}" value="on">
+            <div class="_6ATDKp"></div>
+            <div class="_2o59RR">
+              <div class="A1v2GV">
+                <div id="address.EncryptedAddressId" class="_1i74Oi _2Y3Dxm">
+                  <p class="_22O2Xt"><span class="_3n0HwW">{{address.Name}}</span><span
+                      *ngIf="address.AddressTypeName!=''" class="_rmbzw">{{address.AddressTypeName}}</span><span
+                      class="_2kSC_X _3n0HwW">{{address.MobileNumber}}</span></p><span
+                    class="_22O2Xt GeUS8P">{{address.Address}},{{address.CityName}},{{address.StateName}} - <span
+                      class="_3n0HwW">{{address.PinCode}}</span></span><button
+                    *ngIf="(isbuttonVisibleId==address.EncryptedAddressId)" type="button"
+                    (click)="SetAddressId(address.EncryptedAddressId)" class="_2AkmmA _I6-pD _7UHT_c">Deliver
+                    Here</button>
+                </div>
+                <div class="_3Ojtt3" *ngIf="(isbuttonVisibleId==address.EncryptedAddressId)"><button type="button"
+                    class="FoDyGO" (click)="ShowAddressDetails(address.EncryptedAddressId)">EDIT</button></div>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div *ngIf="!isAddEdit">
+        <div class="-pqoEC"></div>
+        <div class="_2Y8lQ1" (click)="ShowAddressDetails('')"><img height="14" width="14"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyMTc1RkYiIGQ9Ik0xMS4yNSA2Ljc1aC00LjV2NC41aC0xLjV2LTQuNUguNzV2LTEuNWg0LjVWLjc1aDEuNXY0LjVoNC41Ii8+PHBhdGggZD0iTS0zLTNoMTh2MThILTMiLz48L2c+PC9zdmc+"
+            class="_2hT5Bw">Add a new address</div>
+      </div>
+      <div *ngIf="isAddEdit">
+        <div class="-pqoEC"></div>
+        <div><label for="newAddressForm" class="_8J-bZE _2s38SO _29FFjj _3lyfHx _1Icwrf"><input type="radio"
+              class="_2haq-9" name="address" readonly="" id="newAddressForm" value="on">
+            <div class="_6ATDKp"></div>
+            <div class="_2o59RR">
+              <div>
+                <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" class="form-group"
+                  *ngIf="customerAddress!=null">
+                  <span class="aGTn1j">ADD A NEW ADDRESS</span>
+                  <div class="_3llGqN">
+                    <div class="uK6xOa">
+                      <div class="_3fgAI3 Th26Zc">
+                        <input type="hidden" [ngModel]="customerAddress.AddressId"
+                          [ngModelOptions]="{standalone: true}" />
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Name" [(ngModel)]="customerAddress.Name" name="Name"
+                            #Name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }" required />
+                        </mat-form-field>
+                      </div>
+                      <div class="_3fgAI3 Th26Zc">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Mobile Number" [(ngModel)]="customerAddress.MobileNumber"
+                            name="mobile" #mobile="ngModel" [ngClass]="{ 'is-invalid': f.submitted && mobile.invalid }"
+                            required />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="uK6xOa">
+                      <div class="_3fgAI3 Th26Zc">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Pin Code" [(ngModel)]="customerAddress.PinCode" name="pin"
+                            #pin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pin.invalid }" required />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="uK6xOa _3g_m0J">
+                      <div class="_1X5WZZ _1QG_7g">
+                        <div class="_2mJu7M Th26Zc">
+                          <mat-form-field class="example-full-width">
+                            <textarea matInput placeholder="Address (Area and Street)"
+                              [(ngModel)]="customerAddress.Address" name="customeraddress" #customeraddress="ngModel"
+                              [ngClass]="{ 'is-invalid': f.submitted && customeraddress.invalid }" required></textarea>
+                          </mat-form-field>
+                        </div>
+                        <div class="_39_KcN _3-mqeJ"></div>
+                      </div>
+                    </div>
+                    <div class="uK6xOa">
+                      <div class="_1X5WZZ _3fgAI3 _3g_m0J">
+
+                        <div class="M2VvVb">
+                          <div class="MYSb8y">State</div>
+                          <div class="_2uWdcR _3fgAI3 N25bMB"><select class="_3092M2 _3fgAI3 N25bMB QoXnA9" name="state"
+                              #state="ngModel" #state="ngModel" (change)="onStateChange($event.target.value)" value="customerAddress.StateId"
+                              [ngModel]="customerAddress.StateId" required="" tabindex="7"
+                              [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                              <option value="" disabled="">--Select State--</option>
+                              <option *ngFor="let state of customerAddress.StateList" [ngValue]="state.Value" value="{{state.Value}}">
+                                {{state.Text}}</option>
+                            </select><span class="_1LBnEa _2KY_MK"></span>
+                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                              <div *ngIf="f.state.errors.required">State is required</div>
+                            </div>
+                          </div>
+                          <!-- <mat-form-field class="example-full-width">
+                                    <mat-label>Select an State</mat-label>
+                                    <mat-select [(ngModel)]="customerAddress.StateId" name="state" #state="ngModel">
+                                      <mat-option>None</mat-option>
+                                      <mat-option *ngFor="let state of customerAddress.StateList" value="{{state.Value}}">
+                                        {{state.Text}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field> -->
+                        </div>
+                      </div>
+
+                      <div class="_1X5WZZ _3fgAI3 _3g_m0J">
+                        <div class="M2VvVb">
+                          <div class="MYSb8y">City</div>
+                          <div class="_2uWdcR _3fgAI3 N25bMB"><select class="_3092M2 _3fgAI3 N25bMB QoXnA9" name="city"
+                              #city="ngModel" #city="ngModel" required="" [ngModel]="customerAddress.CityId" value="customerAddress.CityId"
+                              tabindex="7" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                              <option value="" disabled="">--Select City--</option>
+                              <option *ngFor="let city of cities" value="{{city.Value}}" [ngValue]="city.Value" >{{city.Text}}</option>
+                            </select><span class="_1LBnEa _2KY_MK"></span>
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                              <div *ngIf="f.city.errors.required">City is required</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="uK6xOa">
+                      <div class="_3fgAI3 Th26Zc">
+                        <mat-form-field class="example-full-width">
+                          <textarea matInput placeholder="Landmark (Optional)" [(ngModel)]="customerAddress.Landmark"
+                            name="landmarkOptional" #landmarkOptional="ngModel"></textarea>
+                        </mat-form-field>
+
+                      </div>
+                      <div class="_3fgAI3 Th26Zc">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Alternate Phone (Optional)"
+                            [(ngModel)]="customerAddress.AlternateMobileNumber" name="alternateMobile"
+                            #alternateMobile="ngModel" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <!-- <div class="_3XXwRR">
+                            <p class="_2dwzAy">Address Type</p>
+                            <div class="_3qg3HS">
+                              <div>
+                                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                                [ngModel]="customerAddress.AddressType">
+                                  <mat-radio-button class="example-radio-button" 
+                                    [value]="1">
+                                    Home (All day delivery)
+                                  </mat-radio-button>
+                                  <mat-radio-button class="example-radio-button" 
+                                    [value]="2">
+                                    Work (Delivery between 10 AM - 5 PM)
+                                  </mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+                            </div>
+                          </div> -->
+                    <div class="_1qbqu2 uK6xOa"> <button type="submit"  class="_2AkmmA EqjTfe _7UHT_c" color="primary" mat-button>Save
+                        and Deliver Here</button>
+                      <button type="button" class="_2AkmmA _237M5J" color="primary" (click)="ResetAddressList()"
+                        mat-button>Cancel</button>
+                    </div>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="_7XMNLT" *ngIf="selectedEncryptedId">
+  <div class="_1GRhLX _38vNoF">
+    <div class="_1QbRjw">
+      <h3 class="_2RMAtd"><span class="_1Tmvyj">2</span></h3>
+      <div class="_3FNwOm">
+        <div class="_1_m52b">Delivery Address<svg height="10" width="16" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg" class="_3baQOY">
+            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" stroke="#2974f0"></path>
+          </svg></div>
+        <div class="_2jDL7w"><span><span class="dNZmcB">{{selectedAddressDetails.Name}}
+            </span><span>{{selectedAddressDetails.Address}},{{selectedAddressDetails.CityName}},{{selectedAddressDetails.StateName}}
+              - <span class="_3n0HwW">{{selectedAddressDetails.PinCode}}</span></span></span></div>
+      </div><button class="_3Jk8fm" (click)="ShowAddress()">Change</button>
+    </div>
+  </div>
+</div>
