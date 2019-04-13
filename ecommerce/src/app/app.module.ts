@@ -66,6 +66,7 @@ import { MyCartService } from './_services/mycartService';
 import { CustomerAddressComponent } from './customer-address/customer-address.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
+import { WishListComponent } from './wishlist/wishlist.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { PaymentOptionsComponent } from './payment-options/payment-options.compo
     CheckOutComponent,
     CustomerAddressComponent,
     OrderSummaryComponent,
-    PaymentOptionsComponent
+    PaymentOptionsComponent,
+    WishListComponent
   ],
   imports: [
 

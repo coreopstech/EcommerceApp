@@ -23,6 +23,11 @@ export class ProductListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  categoryName: string;
+  subCategoryName: string;
+  encryptedCategoryId: string;
+  encryptedSubCategoryId: string;
+  encryptedBrandId: string;
   category_Id: number;
   subCategory_Id: number;
   brand_Id: number;
@@ -38,7 +43,7 @@ export class ProductListComponent implements OnInit {
   attributeName: string;
   filterAttributes: FilterAttributeItems[] = new Array();
   startRecord: number;
-  endRecord: number
+  endRecord: number;
 
   private sortValue: "default";
   queryString: string;
@@ -91,10 +96,10 @@ export class ProductListComponent implements OnInit {
   private iterator() {
     const end = (this.currentPage + 1) * this.pageSize;
     const start = this.currentPage * this.pageSize;
-    if(start<=0)
-    this.startRecord = 1;
+    if (start <= 0)
+      this.startRecord = 1;
     else
-    this.startRecord = start+1;
+      this.startRecord = start + 1;
     if (end >= this.array.length)
       this.endRecord = this.array.length;
     else
@@ -104,6 +109,11 @@ export class ProductListComponent implements OnInit {
     this.change_Sorting(this.sortValue);
     window.scroll(0, 0);
 
+  }
+  onPriceChange(event: any) {
+    
+    this.filterProductsByPrice(event.value);
+    
   }
   findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
     this.spinner.show();
@@ -176,6 +186,12 @@ export class ProductListComponent implements OnInit {
     this.productService.getCategoryAttributeVariantList(this.queryString).subscribe(
       result => {
         if (result.IsSuccess === true) {
+          console.log(result.Data);
+          this.categoryName = result.Data.CategoryName;
+          this.subCategoryName = result.Data.SubCategoryName;
+          this.encryptedCategoryId = result.Data.EncryptedCategoryId;
+          this.encryptedSubCategoryId = result.Data.EncryptedSubCategoryId;
+          this.encryptedBrandId = result.Data.EncryptedBrandId;
           if (result.Data.categoryFilterList != null && result.Data.categoryFilterList.length > 0) {
             this.filterProductCategoryList = result.Data.categoryFilterList;
           }
@@ -281,6 +297,9 @@ export class ProductListComponent implements OnInit {
     }
     this.filterProducts();
   }
+  getProductPriceChange(price:number): void {
+    this.filterProducts();
+  }
   getColorFilterProductList(id: number, isChecked: boolean, color: string): void {
     if (isChecked == true) {
       this.filterAttributes.push(new FilterAttributeItems(id, color, 3));
@@ -336,7 +355,30 @@ export class ProductListComponent implements OnInit {
 
       });
   }
-  
+  filterProductsByPrice(price:number) {
+    this.spinner.show();
+    this.productService.getProductByPriceFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes,price).subscribe(
+      result => {
+        if (result.IsSuccess) {
+          this.dataSource = new MatTableDataSource<Element>(result.Data);
+          this.dataSource.paginator = this.paginator;
+          this.array = result.Data;
+          this.totalSize = this.array.length;
+          this.iterator();
+          window.scroll(0, 0);
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+        else {
+
+        }
+      },
+      (err) => {
+
+      });
+  }
+
 }
 export class FilterAttributeItems {
   AttributeId: number;

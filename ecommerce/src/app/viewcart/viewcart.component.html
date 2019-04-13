@@ -11,11 +11,17 @@
                   routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}"><img
                     src="{{cart.ProductImageUrl}}"></a>
                 <div class="_3vIvU_">
-                  <div class="_1Ox9a7"><a class="_325-ji _3ROAwx"
-                      routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}">{{cart.ProductName}}</a>
+                  <div class="_1Ox9a7">
+                    <a class="_325-ji _3ROAwx" *ngIf="cart.ProductSEOUrl!=''"
+                      routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                      [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                    <a class="_325-ji _3ROAwx" *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                      [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                   </div>
-                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p XU9vZa">₹{{cart.Price}}</span>
-                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p LYRnr_">₹{{cart.MRP}}</span>
+                  <span 
+                    class="pMSy0p XU9vZa">₹{{cart.Price}}</span>
+                  <span 
+                    class="pMSy0p LYRnr_">₹{{cart.MRP}}</span>
                 </div>
                 <div class="aCNg3Z">
                   <ul class="_1OKOUv">
@@ -66,22 +72,22 @@
                   <path d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z" fill="#fff"
                     class="_2mfUhF">
                   </path>
-                </svg><span>Continue shopping</span></button></a>
+                </svg><span (click)="router.navigate(['/home']);">Continue shopping</span></button></a>
             <form method="post" action="/checkout/init"><input type="hidden" name="domain" value="physical"><button
                 (click)="router.navigate(['/checkout']);" class="_2AkmmA _14O7kc _7UHT_c" tabindex="30"><span>Place
                   Order</span></button></form>
           </div>
         </div>
         <div class="TFpAof" *ngIf="productCartList==null">
-        <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
-            class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a routerLink="/wishlist"><span
-              class="_3RKxAZ">+ Add items from wishlist</span></a></div>
+          <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
+              class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a routerLink="/wishlist"><span
+                class="_3RKxAZ">+ Add items from wishlist</span></a></div>
         </div>
         <div class="TFpAof" *ngIf="!productCartList.length>0">
           <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
               class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a href="/wishlist"><span
                 class="_3RKxAZ">+ Add items from wishlist</span></a></div>
-          </div>
+        </div>
         <div class="TFpAof IlFCEW" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
           <div class="_3zo6mW"><span class="K9IlAR">Saved for Later ({{savedProductData.TotalItems}})</span></div>
           <div>
@@ -94,8 +100,10 @@
                       routerLink="/productdetails/{{saved.EncryptedProductId}}/{{saved.EncryptedProductDetailsId}}">{{saved.ProductName}}</a>
                   </div>
                   <div class="v7-Wbf"> 6 GB RAM </div>
-                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p XU9vZa">₹{{saved.Price}}</span>
-                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p LYRnr_">₹{{saved.MRP}}</span>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible"
+                    class="pMSy0p XU9vZa">₹{{saved.Price}}</span>
+                  <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible"
+                    class="pMSy0p LYRnr_">₹{{saved.MRP}}</span>
                   <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="hMGTLH">17% Off</span>
                 </div>
               </div>
@@ -120,7 +128,7 @@
         </div>
       </div>
       <div class="_2qUgWb _3uHNGv _3CKRe3" style="height: auto;"
-        *ngIf="productCartList!=null && productCartList.length>0 && commanSetting!=null && commanSetting.IsPriceVisible">
+        *ngIf="productCartList!=null && productCartList.length>0">
         <div class="_2zqhDs _1lD380" style="left: auto; top: 248.6px;">
           <div class="_13wOiu"><span class="_2huYiT">Price details</span>
             <div class="_2twTWD">

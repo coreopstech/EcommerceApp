@@ -198,8 +198,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {
     this.spinner.show();
-    alert(encryptedproductDetailsId);
-    alert(productDetailsId);
     var body = {
       EncryptedProductDetailsId: encryptedproductDetailsId,
       ProductDetailsId: productDetailsId,
@@ -208,7 +206,8 @@ export class ProductDetailsComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000)
-    this.router.navigate(["/checkout"]);
+    localStorage.setItem('buynow', JSON.stringify({ itemId: encryptedproductDetailsId, quantity:1 }));
+    this.router.navigate(['checkout'],{ queryParams: { otracker:"BuyNow_Click" } });
   }
   AddToWishList(encryptedproductDetailsId, encryptedProductId) {
     this.spinner.show();

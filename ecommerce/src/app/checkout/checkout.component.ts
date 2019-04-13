@@ -21,6 +21,8 @@ export class CheckOutComponent implements OnInit {
   isLogged = false;
   productCartList: any;
   productData: any;
+  encryptedProductDetailsId: string;
+  otraker: string;
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -34,15 +36,26 @@ export class CheckOutComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.otraker = params.otracker;
+      });
+
     this.userService.pricechange.subscribe(status => {
       if (status) {
-        this.getCartList();
+        if (this.otraker.toLowerCase() == 'buynow_click')
+          this.getBuyNowCartList();
+        else
+          this.getCartList();
       }
     });
 
     if (localStorage.getItem("currentidentity")) {
       this.isLogged = true;
       this.userName = JSON.parse(localStorage.getItem("currentidentity")).name;
+      if (this.otraker.toLowerCase() == 'buynow_click')
+      this.getBuyNowCartList();
+    else
       this.getCartList();
       if (this.productCartList == null) {
         this.router.navigate(['/viewcart']);
@@ -57,6 +70,29 @@ export class CheckOutComponent implements OnInit {
   getCartList() {
     this.spinner.show();
     this.productCartList = this.myCartService.getSavedCartList().subscribe(
+      result => {
+        if (result.IsSuccess === true) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+          this.productData = result.Data;
+          return this.productCartList = result.Data.productList;
+        }
+        else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+      },
+      (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      });
+  }
+  getBuyNowCartList() {
+    this.spinner.show();
+    this.productCartList = this.myCartService.getBuyNowCartList().subscribe(
       result => {
         if (result.IsSuccess === true) {
           setTimeout(() => {

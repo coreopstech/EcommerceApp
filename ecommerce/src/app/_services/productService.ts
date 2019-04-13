@@ -33,6 +33,20 @@ export class ProductService {
                 return result;
             }));
     }
+    getProductByPriceFilter(categoryId, subCategoryId, brandId, filterAttributes,price) {
+        var body = {
+            CategoryId: categoryId,
+            SubCategoryId: subCategoryId,
+            BrandId: brandId,
+            filterAttribute: filterAttributes,
+            Price:price
+        }
+
+        return this.http.post<any>(this.baseUrl + `Product/ProductListByFilters`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
     getProductBySubCategoryList(id) {
         var params = new HttpParams();
         params.append('Id', id);

@@ -3,7 +3,7 @@ import { UserService } from '../_services/userService';
 import { OrderService } from '../_services/orderService';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-payment-options',
@@ -12,28 +12,57 @@ import { Router } from '@angular/router';
 })
 export class PaymentOptionsComponent implements OnInit {
 
-  encryptedAddressId="";
-  paymentType:number;
-  isCOD=false;
-    constructor(private userService:UserService,
-      private orderService:OrderService,
-      private toast:ToastrManager,private spinner:NgxSpinnerService,private router:Router) { }
-  
-    ngOnInit() {
-      this.userService.orderchange.subscribe(encryptedAddressId => {
-        if(encryptedAddressId!='')
-        {
-          this.encryptedAddressId = encryptedAddressId;
-        }
-        else
-        {
-          this.encryptedAddressId = '';
-        }
+  encryptedAddressId = "";
+  paymentType: number;
+  isCOD = false;
+  otraker: string;
+  constructor(private userService: UserService,
+    private orderService: OrderService,
+    private route: ActivatedRoute,
+    private toast: ToastrManager, private spinner: NgxSpinnerService, private router: Router) { }
+
+  ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.otraker = params.otracker;
       });
+    this.userService.orderchange.subscribe(encryptedAddressId => {
+      if (encryptedAddressId != '') {
+        this.encryptedAddressId = encryptedAddressId;
+      }
+      else {
+        this.encryptedAddressId = '';
+      }
+    });
+  }
+  SaveOrderDetails() {
+    this.spinner.show();
+    if (this.otraker.toLowerCase() == 'buynow_click') {
+      this.orderService.savebuynoworder(this.paymentType, this.encryptedAddressId).subscribe(
+        result => {
+          if (result.IsSuccess === true) {
+            this.toast.successToastr(result.Message);
+            localStorage.removeItem("buynow");
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.router.navigate(["/account/orders"]);
+          }
+          else {
+            this.toast.errorToastr(result.Message);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+        }, 
+        (err) => {
+          this.toast.errorToastr(err);
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }); 
     }
-    SaveOrderDetails()
-    {
-      this.spinner.show();
+    else {
       this.orderService.saveOrderDetails(this.paymentType, this.encryptedAddressId).subscribe(
         result => {
           if (result.IsSuccess === true) {
@@ -42,7 +71,7 @@ export class PaymentOptionsComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.router.navigate(["/orders"]);
+            this.router.navigate(["/account/orders"]);
           }
           else {
             this.toast.errorToastr(result.Message);
@@ -56,21 +85,19 @@ export class PaymentOptionsComponent implements OnInit {
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
-  
         });
     }
-    OpenCashOnDelivery(paymentType)
-    {
-      this.isCOD=true;
-      this.paymentType=1; ////for COD 
-    }
-  
-    DoPayment()
-   {  
+  }
+  OpenCashOnDelivery(paymentType) {
+    this.isCOD = true;
+    this.paymentType = 1; ////for COD 
+  }
+
+  DoPayment() {
     this.userService.setAddressId_Order(this.encryptedAddressId);
     this.router.navigate(["/payment"]);
-   }
-   
-   
-  
+  }
+
+
+
 }
