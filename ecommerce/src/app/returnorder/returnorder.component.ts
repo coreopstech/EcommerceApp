@@ -66,7 +66,7 @@ export class ReturnOrderComponent implements OnInit {
         }, 1000)
       });
   }
-  openReturnStatus(reasonList,remark)
+  openReturnStatus(reasonList, remark)
   {
     this.spinner.show()
     if(parseInt(reasonList.value)<=0)
