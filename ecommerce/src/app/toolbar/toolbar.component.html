@@ -32,7 +32,7 @@
                   Orders</a>
               </li>
               <li>
-                <a href="javascript:void(0);"> Whislist</a>
+                <a routerLink="/wishlist"> Whislist</a>
               </li>
               <li>
                 <a href="javascript:void(0);">  Notificatins
@@ -47,7 +47,7 @@
           </li>
           <li  *ngIf="isUserLogged()"><a [routerLink]="">Whislist</a></li>
           <li>
-            <a [routerLink]="">
+            <a routerLink="/viewcart">
               <button mat-icon-button matBadge="{{totalItems}}" matBadgePosition="after" matBadgeColor="primary">
                 <mat-icon>shopping_cart</mat-icon>
               </button>

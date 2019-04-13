@@ -14,28 +14,28 @@ import { HeaderMenuService } from './../_services/headerMenuService';
 export class ViewCartComponent implements OnInit {
 
   productCartList: any;
-  productData:any;
-  savedProductData:any;
+  productData: any;
+  savedProductData: any;
   productSavedForLaterList: any;
   constructor(private myCartService: MyCartService,
     private spinner: NgxSpinnerService,
     private toast: ToastrManager,
     private router: Router,
-    private userService:UserService,
-    private headerService:HeaderMenuService) {
+    private userService: UserService,
+    private headerService: HeaderMenuService) {
 
-      this.router.routeReuseStrategy.shouldReuseRoute = function () {
-        return false;
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
       }
-      this.router.events.subscribe((evt) => {
-        if (evt instanceof NavigationEnd) {
-          // trick the Router into believing it's last link wasn't previously loaded
-          this.router.navigated = false;
-          // if you need to scroll back to top, here is the right place
-          window.scrollTo(0, 0);
-        }
-      });
-     }
+    });
+  }
 
   ngOnInit() {
 
@@ -44,17 +44,17 @@ export class ViewCartComponent implements OnInit {
   }
   getCartList() {
     this.spinner.show();
-    this.productCartList=this.myCartService.getCartList().subscribe(
+    this.productCartList = this.myCartService.getCartList().subscribe(
       result => {
         if (result.IsSuccess === true) {
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
-          this.productData=result.Data;
+          this.productData = result.Data;
           return this.productCartList = result.Data.productList;
         }
         else {
-          this.productData=result.Data;
+          this.productData = result.Data;
           return this.productCartList = result.Data.productList;
           setTimeout(() => {
             this.spinner.hide();
@@ -66,7 +66,7 @@ export class ViewCartComponent implements OnInit {
           this.spinner.hide();
         }, 1000)
       });
-      this.userService.changeCartValue(0);
+    this.userService.changeCartValue(0);
   }
   getSavedForLaterList() {
     this.spinner.show();
@@ -76,11 +76,11 @@ export class ViewCartComponent implements OnInit {
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
-          this.savedProductData=result.Data;
+          this.savedProductData = result.Data;
           return this.productSavedForLaterList = result.Data.productList;
         }
         else {
-          this.savedProductData=result.Data;
+          this.savedProductData = result.Data;
           return this.productSavedForLaterList = result.Data.productList;
           setTimeout(() => {
             this.spinner.hide();
@@ -102,7 +102,7 @@ export class ViewCartComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            
+
             this.ngOnInit();
           }
           else {
@@ -120,7 +120,7 @@ export class ViewCartComponent implements OnInit {
     else {
       if (localStorage.getItem("cartList")) {
         var cart = JSON.parse(localStorage.getItem("cartList"));
-        cart = cart.filter((x) => x.ProductDetailsId != ProductDetailsId && x.IsSavedForLater==false);
+        cart = cart.filter((x) => x.ProductDetailsId != ProductDetailsId && x.IsSavedForLater == false);
         if (cart != null && cart.length > 0) {
           localStorage.setItem("cartList", JSON.stringify(cart));
         }
@@ -131,7 +131,7 @@ export class ViewCartComponent implements OnInit {
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
-     
+
       this.ngOnInit();
     }
     this.userService.changeCartValue(0);
@@ -145,7 +145,7 @@ export class ViewCartComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            
+
             this.ngOnInit();
           }
           else {
@@ -163,7 +163,7 @@ export class ViewCartComponent implements OnInit {
     else {
       if (localStorage.getItem("cartList")) {
         var cart = JSON.parse(localStorage.getItem("cartList"));
-        cart = cart.filter((x) => x.ProductDetailsId != ProductDetailsId && x.IsSavedForLater==true);
+        cart = cart.filter((x) => x.ProductDetailsId != ProductDetailsId && x.IsSavedForLater == true);
         if (cart != null && cart.length > 0) {
           localStorage.setItem("cartList", JSON.stringify(cart));
         }
@@ -206,7 +206,7 @@ export class ViewCartComponent implements OnInit {
       else {
         if (localStorage.getItem("cartList")) {
           var cart = JSON.parse(localStorage.getItem("cartList"));
-          var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater==false);
+          var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater == false);
           cart[index].ProductQuantity = ProductQuantity + 1;
           console.log(cart);
           if (cart != null && cart.length > 0) {
@@ -258,7 +258,7 @@ export class ViewCartComponent implements OnInit {
       else {
         if (localStorage.getItem("cartList")) {
           var cart = JSON.parse(localStorage.getItem("cartList"));
-          var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater==false);
+          var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater == false);
           cart[index].ProductQuantity = ProductQuantity - 1;
           console.log(cart);
           if (cart != null && cart.length > 0) {
@@ -309,7 +309,7 @@ export class ViewCartComponent implements OnInit {
     else {
       if (localStorage.getItem("cartList")) {
         var cart = JSON.parse(localStorage.getItem("cartList"));
-        var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater==true);
+        var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater == true);
         cart[index].IsSavedForLater = false;
         if (cart != null && cart.length > 0) {
           localStorage.setItem("cartList", JSON.stringify(cart));
@@ -351,7 +351,7 @@ export class ViewCartComponent implements OnInit {
     else {
       if (localStorage.getItem("cartList")) {
         var cart = JSON.parse(localStorage.getItem("cartList"));
-        var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater==false);
+        var index = cart.findIndex((element) => element.ProductDetailsId === ProductDetailsId && element.IsSavedForLater == false);
         cart[index].IsSavedForLater = true;
         if (cart != null && cart.length > 0) {
           localStorage.setItem("cartList", JSON.stringify(cart));
@@ -366,7 +366,4 @@ export class ViewCartComponent implements OnInit {
       this.ngOnInit();
     }
   }
- 
-
-
 }

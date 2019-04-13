@@ -15,6 +15,7 @@ import { ReturnOrderComponent } from './returnorder/returnorder.component';
 import { WriteReviewsComponent } from './writereviews/writereviews.component';
 import { ViewCartComponent } from './viewcart/viewcart.component';
 import { CheckOutComponent } from './checkout/checkout.component';
+import { WishListComponent } from './wishlist/wishlist.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,10 @@ const routes: Routes = [
   },
   {
     path: 'checkout', component: CheckOutComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'checkout', component: CheckOutComponent,
     
   },
   {
@@ -78,6 +83,10 @@ const routes: Routes = [
   {
     path: 'listing',
     component: ListingComponent
+  },
+  {
+    path: 'wishlist',
+    component: WishListComponent
   },
   {
     path: 'about-us',
