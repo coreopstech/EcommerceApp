@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment.prod';
+import { Cart } from '../_models/cart';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -87,6 +88,23 @@ export class OrderService {
             ReturnRemark:remark
         }
         return this.http.post<any>(this.baseUrl + `Order/SaveOrderReturn`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    savebuynoworder(paymentType:number,encryptedAddressId:string)
+    {
+        var buyNowCart=JSON.parse(localStorage.getItem("buynow"));
+        var cart=new Cart(0,buyNowCart.itemId,buyNowCart.quantity,true);
+        var user=JSON.parse(localStorage.getItem("currentidentity"));
+        var userEncryptedId=user.id;
+        var body={
+                paymentType:paymentType,
+                encryptedAddressId:encryptedAddressId,
+                userEncryptedId:userEncryptedId,
+                cartDetails:cart
+        }
+        return this.http.post<any>(this.baseUrl + `Order/SaveBuyNowOrderDetails`, body)
             .pipe(map(result => {
                 return result;
             }));

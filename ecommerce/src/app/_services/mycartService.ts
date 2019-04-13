@@ -59,6 +59,7 @@ export class MyCartService {
                 return result;
             }));
     }
+   
     RemoveProductIntoCart(encryptedProductDetailId,) {
         var user=JSON.parse(localStorage.getItem("currentidentity"));
         var userEncryptedId=user.id;
@@ -120,9 +121,11 @@ export class MyCartService {
                 return result;
             }));
     }
-    getBuyNowCartList(cart:Cart) {
+    getBuyNowCartList() {
+        var buyNowCart=JSON.parse(localStorage.getItem("buynow"));
         var user=JSON.parse(localStorage.getItem("currentidentity"));
         var userEncryptedId=user.id;
+        var cart=new Cart(0,buyNowCart.itemId,buyNowCart.quantity,true);
         var body = {
             UserEncryptedId: userEncryptedId,
             cartModel:cart

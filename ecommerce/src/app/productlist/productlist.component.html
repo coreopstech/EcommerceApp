@@ -20,7 +20,7 @@
         </div> -->
         <div class="left_filter_area">
           <div class="mat_slider">
-            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000">
+            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000" (change)="onPriceChange($event)">
             </mat-slider>
             <p>Rs. {{matslider.value}}.00</p>
           </div>
@@ -84,24 +84,26 @@
           </mat-accordion>
         </div>
       </aside>
-      <div class="listing_content"  *ngIf="dataSource!=null && dataSource.length>0">
+      <div class="listing_content" *ngIf="dataSource!=null && dataSource.length>0">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Home </a>
+              <a routerLink="/home">Home </a>
             </li>
             <li class="breadcrumb-item">
-              <a href="#">Mirror Table</a>
+              <a [routerLink]="['/productlist']"
+                [queryParams]="{categoryId:encryptedCategoryId,subcategoryId:encryptedSubCategoryId,brandId:encryptedBrandId}">{{categoryName}}</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Mirror Table</li>
+            <li class="breadcrumb-item active" aria-current="page">{{subCategoryName}}</li>
           </ol>
         </nav>
         <div class="d-flex clear_filter justify-content-between">
-          <h4>Mirror Table <span>(Showing {{startRecord}} – {{endRecord}} products of {{totalSize}} products)</span></h4>
+          <h4>{{subCategoryName}} <span>(Showing {{startRecord}} – {{endRecord}} products of {{totalSize}}
+              products)</span></h4>
           <div class="sort_by">
             <mat-form-field>
               <mat-label>Sort By</mat-label>
-              <mat-select (selectionChange)="change_Sorting($event.   value)">
+              <mat-select (selectionChange)="change_Sorting($event.value)">
                 <mat-option value="pricelowhigh">Price (Low to High)</mat-option>
                 <mat-option value="pricehighlow">Price (High to Low)</mat-option>
                 <mat-option value="default">New Arrival</mat-option>
@@ -133,20 +135,23 @@
                       <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
                       <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
                           aria-hidden="true"></i>{{product.ProductMRP}}</span>
-                      <span class="p_off" *ngIf="product.ProductDiscount!=null && product.ProductDiscount>0">{{product.ProductDiscount}} off</span>
+                      <span class="p_off"
+                        *ngIf="product.ProductDiscount!=null && product.ProductDiscount>0">{{product.ProductDiscount}}
+                        off</span>
                     </p>
                     <button mat-button class="buy_now">Buy</button>
                   </div>
                 </div>
-                <a class="anchor" *ngIf="product.ProductSEOUrl!=''" routerLink="/productdetails/{{product.ProductSEOUrl}}"
-                [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailsId}"></a>
-                <a class="anchor" *ngIf="product.ProductSEOUrl===''" routerLink="/productdetails/{{product.ProductSEOUrl}}"
-                [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailsId}"></a>
+                <a class="anchor" *ngIf="product.ProductSEOUrl!=''" class="anchor"
+                  routerLink="/productdetails/{{product.ProductSEOUrl}}"
+                  [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailId}"></a>
+                <a class="anchor" *ngIf="product.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
+                  [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailId}"></a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-12"  *ngIf="dataSource!=null && dataSource.length>0">
+        <div class="col-sm-12" *ngIf="dataSource!=null && dataSource.length>0">
           <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[9, 12, 24]" [showFirstLastButtons]="true"
             [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
           </mat-paginator>

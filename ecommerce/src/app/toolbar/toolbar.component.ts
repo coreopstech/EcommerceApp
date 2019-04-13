@@ -39,6 +39,7 @@ export class ToolbarComponent implements OnInit {
         this.getTotalItemsCount();
       }
     });
+    this.getTotalItemsCount();
   }
   getTotalItemsCount() {
     if (!localStorage.getItem("currentidentity")) {

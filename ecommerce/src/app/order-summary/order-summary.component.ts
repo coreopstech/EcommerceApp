@@ -4,7 +4,7 @@ import { UserService } from '../_services/userService';
 import { MyCartService } from '../_services/mycartService';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
@@ -18,16 +18,25 @@ export class OrderSummaryComponent implements OnInit {
   productData: any;
   selectedEncryptAddressId = "";
   buyNowCart: Cart;
+  otraker: string;
   constructor(private userService: UserService, private myCartService: MyCartService,
     private spinner: NgxSpinnerService,
     private toast: ToastrManager,
+    private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.otraker = params.otracker;
+      });
     this.userService.change.subscribe(encryptedAddressId => {
       if (encryptedAddressId != '') {
         this.encryptedAddressId = encryptedAddressId;
-        this.getCartList();
+        if (this.otraker.toLowerCase() == 'buynow_click')
+          this.getBuyNowCartList();
+        else
+          this.getCartList();
       }
       else {
         this.encryptedAddressId = '';
@@ -35,6 +44,30 @@ export class OrderSummaryComponent implements OnInit {
     });
 
   }
+  getBuyNowCartList() {
+    this.spinner.show();
+    this.productCartList = this.myCartService.getBuyNowCartList().subscribe(
+      result => {
+        if (result.IsSuccess === true) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+          this.productData = result.Data;
+          return this.productCartList = result.Data.productList;
+        }
+        else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+      },
+      (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      });
+  }
+
   getCartList() {
     this.spinner.show();
     this.productCartList = this.myCartService.getSavedCartList().subscribe(
@@ -60,6 +93,13 @@ export class OrderSummaryComponent implements OnInit {
   }
   RemoveProduct(encryptedProductDetailsId, ProductDetailsId) {
     this.spinner.show();
+    if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+      localStorage.removeItem("buynow")
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000)
+    }
+    else{
     this.myCartService.RemoveProductIntoCart(encryptedProductDetailsId).subscribe(
       result => {
         if (result.IsSuccess === true) {
@@ -87,32 +127,42 @@ export class OrderSummaryComponent implements OnInit {
           this.spinner.hide();
         }, 1000)
       });
+    }
   }
   AddProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, maximumQuantity) {
     this.spinner.show();
     if (maximumQuantity >= ProductQuantity + 1) {
+      if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+        var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
+        localStorage.setItem("buynow", JSON.stringify({ itemId: buyNowCart.itemId, quantity: buyNowCart.quantity + 1 }));
+        this.userService.changePriceCalculation(true);
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      }
+      else {
+        this.myCartService.UpdateProductQuantity(encryptedProductDetailsId, encryptedProductId, ProductQuantity + 1).subscribe(
+          result => {
+            if (result.IsSuccess === true) {
+              setTimeout(() => {
+                this.spinner.hide();
+              }, 1000)
+              this.getCartList();
 
-      this.myCartService.UpdateProductQuantity(encryptedProductDetailsId, encryptedProductId, ProductQuantity + 1).subscribe(
-        result => {
-          if (result.IsSuccess === true) {
+              this.userService.changePriceCalculation(true);
+            }
+            else {
+              setTimeout(() => {
+                this.spinner.hide();
+              }, 1000)
+            }
+          },
+          (err) => {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.getCartList();
-
-            this.userService.changePriceCalculation(true);
-          }
-          else {
-            setTimeout(() => {
-              this.spinner.hide();
-            }, 1000)
-          }
-        },
-        (err) => {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        });
+          });
+      }
     }
     else {
       this.toast.errorToastr("Only " + maximumQuantity + " product allowed.");
@@ -125,26 +175,36 @@ export class OrderSummaryComponent implements OnInit {
     alert(ProductQuantity);
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
-      this.myCartService.UpdateProductQuantity(encryptedProductDetailsId, encryptedProductId, ProductQuantity - 1).subscribe(
-        result => {
-          if (result.IsSuccess === true) {
+      if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+        var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
+        localStorage.setItem("buynow", JSON.stringify({ itemId: buyNowCart.itemId, quantity: buyNowCart.quantity - 1 }));
+        this.userService.changePriceCalculation(true);
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      }
+      else {
+        this.myCartService.UpdateProductQuantity(encryptedProductDetailsId, encryptedProductId, ProductQuantity - 1).subscribe(
+          result => {
+            if (result.IsSuccess === true) {
+              setTimeout(() => {
+                this.spinner.hide();
+              }, 1000)
+              this.getCartList();
+              this.userService.changePriceCalculation(true);
+            }
+            else {
+              setTimeout(() => {
+                this.spinner.hide();
+              }, 1000)
+            }
+          },
+          (err) => {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.getCartList();
-            this.userService.changePriceCalculation(true);
-          }
-          else {
-            setTimeout(() => {
-              this.spinner.hide();
-            }, 1000)
-          }
-        },
-        (err) => {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        });
+          });
+      }
     }
     else {
       this.toast.errorToastr("At Least " + minimumQuantity + " product added into cart.");
