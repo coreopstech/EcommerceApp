@@ -42,7 +42,7 @@ export class PaymentOptionsComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.router.navigate(["/orders"]);
+            this.router.navigate(["/account/orders"]);
           }
           else {
             this.toast.errorToastr(result.Message);
