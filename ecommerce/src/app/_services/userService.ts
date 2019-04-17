@@ -59,8 +59,31 @@ export class UserService {
                 return result;
             }));
     }
+    saveUserDetails(user: User) {
+        return this.http.post<any>(this.baseUrl + `User/SaveUserDetails`, user)
+            .pipe(map(result => {
+                if (result.IsSuccess) {
+                    
+                }
+                return result;
+            }));
+    }
     getUserDetails(userEncryptedId: string) {
         return this.http.get<any>(this.baseUrl + `Product/GetUserDetails/` + userEncryptedId)
+            .pipe(map(result => {
+
+                return result;
+            }));
+    }
+    getUserData() {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `User/GetUserDetail/` + userEncryptedId)
             .pipe(map(result => {
 
                 return result;

@@ -67,6 +67,15 @@ import { CustomerAddressComponent } from './customer-address/customer-address.co
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { PaymentOptionsComponent } from './payment-options/payment-options.component';
 import { WishListComponent } from './wishlist/wishlist.component';
+import { ShippingComponent } from './shipping/shipping.component';
+import { CancellationComponent } from './cancellation/cancellation.component';
+import { FaqComponent } from './faq/faq.component';
+import { TermsComponent } from './terms/terms.component';
+import { SecurityComponent } from './security/security.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { ContactusComponent } from './contactus/contactus.component';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
@@ -93,7 +102,16 @@ import { WishListComponent } from './wishlist/wishlist.component';
     CustomerAddressComponent,
     OrderSummaryComponent,
     PaymentOptionsComponent,
-    WishListComponent
+    WishListComponent,
+    ShippingComponent,
+    CancellationComponent,
+    FaqComponent,
+    TermsComponent,
+    SecurityComponent,
+    PrivacyComponent,
+    PaymentsComponent,
+    ContactusComponent,
+    AccountComponent
   ],
   imports: [
 

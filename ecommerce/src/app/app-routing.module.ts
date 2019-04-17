@@ -16,6 +16,16 @@ import { WriteReviewsComponent } from './writereviews/writereviews.component';
 import { ViewCartComponent } from './viewcart/viewcart.component';
 import { CheckOutComponent } from './checkout/checkout.component';
 import { WishListComponent } from './wishlist/wishlist.component';
+import { ShippingComponent } from './shipping/shipping.component';
+import { CancellationComponent } from './cancellation/cancellation.component';
+import { FaqComponent } from './faq/faq.component';
+import { SecurityComponent } from './security/security.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { ContactusComponent } from './contactus/contactus.component';
+import { AccountComponent } from './account/account.component';
+
 
 const routes: Routes = [
   {
@@ -47,6 +57,10 @@ const routes: Routes = [
       productDetails: ProductDetailsResolve
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'account',
+    component: AccountComponent
   },
   {
     path: 'account/orders',
@@ -98,6 +112,47 @@ const routes: Routes = [
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   {
+    path: 'shipping-policy',
+    component: ShippingComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'cancellation-policy',
+    component: CancellationComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'helpcenter',
+    component: FaqComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'security',
+    component: SecurityComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'terms',
+    component: TermsComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'payments',
+    component: PaymentsComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'contact-us',
+    component: ContactusComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+ 
+  {
     path: 'productlist', component: ProductListComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
@@ -105,10 +160,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-
-
-
-
 exports: [RouterModule]
 })
 export class AppRoutingModule { }
