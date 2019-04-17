@@ -7,10 +7,14 @@ import { UserAddress } from '../_models/userAddress';
 
 
 
+var token = '';
+if (localStorage.getItem("currentidentity") != null) {
+    token = JSON.parse(localStorage.getItem("currentidentity")).token;
+}
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
+        'Authorization': 'Bearer ' + token
     })
 };
 @Injectable()
@@ -97,8 +101,13 @@ export class UserService {
             }));
     }
     getTotalCartItems() {
-        var user = JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId = user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `Product/GetTotalCartItmes/` + userEncryptedId)
             .pipe(map(result => {
                 return result;

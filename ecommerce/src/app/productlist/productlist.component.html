@@ -20,7 +20,8 @@
         </div> -->
         <div class="left_filter_area">
           <div class="mat_slider">
-            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000" (change)="onPriceChange($event)">
+            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000"
+              (change)="onPriceChange($event)">
             </mat-slider>
             <p>Rs. {{matslider.value}}.00</p>
           </div>
@@ -31,16 +32,35 @@
                   COLOR
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <div *ngFor="let colorName of getColorList()">
-                <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
-                  [value]="colorName.ColorId">
-                  {{colorName.ColorValue}}</mat-checkbox>
-                <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
-                  [value]="colorName.ColorId">
-                  {{colorName.ColorValue}}</mat-checkbox>
+              <div *ngIf="isColorListVisible==0">
+                <div *ngFor="let colorName of getColorList().slice(10)">
+                  <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked"
+                    (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
+                    [value]="colorName.ColorId">
+                    {{colorName.ColorValue}}</mat-checkbox>
+                  <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
+                    (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
+                    [value]="colorName.ColorId">
+                    {{colorName.ColorValue}}</mat-checkbox>
+                </div>
+                <p *ngIf="isColorListVisible==0" style="cursor:pointer;color:blue;" (click)="ShowColorList(1)">Show More
+                </p>
               </div>
+              <div *ngIf="isColorListVisible==1">
+                <div *ngFor="let colorName of getColorList()">
+                  <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked"
+                    (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
+                    [value]="colorName.ColorId">
+                    {{colorName.ColorValue}}</mat-checkbox>
+                  <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
+                    (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
+                    [value]="colorName.ColorId">
+                    {{colorName.ColorValue}}</mat-checkbox>
+                </div>
+                <p *ngIf="isColorListVisible==1" style="cursor:pointer;color:blue;" (click)="ShowColorList(0)">Show Less
+                </p>
+              </div>
+
             </mat-expansion-panel>
             <div *ngIf="filterProductVariantGroupList!=null && filterProductVariantGroupList.length>0">
               <mat-expansion-panel class="mat-elevation-z" *ngFor="let variantGroup of filterProductVariantGroupList">

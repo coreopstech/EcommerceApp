@@ -55,11 +55,13 @@ export class ViewCartComponent implements OnInit {
         }
         else {
           this.productData = result.Data;
-          return this.productCartList = result.Data.productList;
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
+          return this.productCartList = result.Data.productList;
         }
+         
+          
       },
       (err) => {
         setTimeout(() => {

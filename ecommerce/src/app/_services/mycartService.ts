@@ -4,11 +4,14 @@ import { map } from 'rxjs/operators';
 import { User } from './../_models/user';
 import { Cart } from './../_models/cart';
 import { environment } from './../../environments/environment.prod';
-
+var token = '';
+if (localStorage.getItem("currentidentity") != null) {
+    token = JSON.parse(localStorage.getItem("currentidentity")).token;
+}
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
+        'Authorization': 'Bearer ' + token
     })
 };
 @Injectable()
@@ -17,102 +20,139 @@ export class MyCartService {
     constructor(private http: HttpClient) {
     }
     getCartList() {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var cartData = localStorage.getItem("cartList");
         var body = {
             UserEncryptedId: userEncryptedId,
-            cartDetails:JSON.parse(cartData)
+            cartDetails: JSON.parse(cartData)
         }
-        console.log(cartData);
         return this.http.post<any>(this.baseUrl + `Product/GetCartList`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
     getSavedForLaterList() {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var cartData = localStorage.getItem("cartList");
         var body = {
             UserEncryptedId: userEncryptedId,
-            cartDetails:JSON.parse(cartData)
+            cartDetails: JSON.parse(cartData)
         }
-        console.log(cartData);
+        
         return this.http.post<any>(this.baseUrl + `Product/GetSaveForLaterList`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
-    
-    UpdateProductQuantity(encryptedProductDetailId,encryptedProductId,productQuantity) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var body={
-                UserEncryptedId:userEncryptedId,
-                EncryptedProductDetailsId:encryptedProductDetailId,
-                EncryptedProductId:encryptedProductId,
-                ProductQuantity:productQuantity
+
+    UpdateProductQuantity(encryptedProductDetailId, encryptedProductId, productQuantity) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        return this.http.post<any>(this.baseUrl + `Product/UpdateProductQuantity/`,body)
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            EncryptedProductDetailsId: encryptedProductDetailId,
+            EncryptedProductId: encryptedProductId,
+            ProductQuantity: productQuantity
+        }
+        return this.http.post<any>(this.baseUrl + `Product/UpdateProductQuantity/`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
-   
-    RemoveProductIntoCart(encryptedProductDetailId,) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var body={
-                UserEncryptedId:userEncryptedId,
-                EncryptedProductDetailsId:encryptedProductDetailId,
+
+    RemoveProductIntoCart(encryptedProductDetailId, ) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        return this.http.post<any>(this.baseUrl + `Product/RemoveProductIntoCart/`,body)
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            EncryptedProductDetailsId: encryptedProductDetailId,
+        }
+        return this.http.post<any>(this.baseUrl + `Product/RemoveProductIntoCart/`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
-    RemoveProductIntoSavedLater(encryptedProductDetailId,) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var body={
-                UserEncryptedId:userEncryptedId,
-                EncryptedProductDetailsId:encryptedProductDetailId,
+    RemoveProductIntoSavedLater(encryptedProductDetailId, ) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        return this.http.post<any>(this.baseUrl + `Product/RemoveProductIntoSavedLater/`,body)
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            EncryptedProductDetailsId: encryptedProductDetailId,
+        }
+        return this.http.post<any>(this.baseUrl + `Product/RemoveProductIntoSavedLater/`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
-    MovedToCart(encryptedProductDetailId)
-    {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var body={
-                UserEncryptedId:userEncryptedId,
-                EncryptedProductDetailsId:encryptedProductDetailId,
+    MovedToCart(encryptedProductDetailId) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        return this.http.post<any>(this.baseUrl + `Product/MoveProductIntoCart/`,body)
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            EncryptedProductDetailsId: encryptedProductDetailId,
+        }
+        return this.http.post<any>(this.baseUrl + `Product/MoveProductIntoCart/`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
-    MovedToSavedLater(encryptedProductDetailId)
-    {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var body={
-                UserEncryptedId:userEncryptedId,
-                EncryptedProductDetailsId:encryptedProductDetailId,
+    MovedToSavedLater(encryptedProductDetailId) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        return this.http.post<any>(this.baseUrl + `Product/MovedProductToSavedLater/`,body)
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            EncryptedProductDetailsId: encryptedProductDetailId,
+        }
+        return this.http.post<any>(this.baseUrl + `Product/MovedProductToSavedLater/`, body)
             .pipe(map(result => {
                 return result;
             }));
     }
     getSavedCartList() {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body = {
             UserEncryptedId: userEncryptedId,
         }
@@ -122,13 +162,22 @@ export class MyCartService {
             }));
     }
     getBuyNowCartList() {
-        var buyNowCart=JSON.parse(localStorage.getItem("buynow"));
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
-        var cart=new Cart(0,buyNowCart.itemId,buyNowCart.quantity,true);
+        var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        if (user != null && user.id != null && user.id != '') {
+            userEncryptedId = user.id;
+        }
+        //var userEncryptedId=user.id;
+        var cart = new Cart(0, buyNowCart.itemId, buyNowCart.quantity, true);
         var body = {
             UserEncryptedId: userEncryptedId,
-            cartModel:cart
+            cartModel: cart
         }
         return this.http.post<any>(this.baseUrl + `Product/GetBuyNowCartList`, body)
             .pipe(map(result => {
