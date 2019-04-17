@@ -5,12 +5,12 @@ import { environment } from './../../environments/environment.prod';
 import { ReviewRating } from '../_models/reviewRating';
 
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-    })
-};
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//         'Content-Type': 'application/json',
+//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
+//     })
+// };
 @Injectable()
 export class ReviewRatingService {
     baseUrl = environment.baseUrl;

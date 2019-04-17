@@ -37,7 +37,7 @@ export class PaymentOptionsComponent implements OnInit {
   }
   SaveOrderDetails() {
     this.spinner.show();
-    if (this.otraker.toLowerCase() == 'buynow_click') {
+    if (this.otraker!='' && this.otraker== 'buynow_click') {
       this.orderService.savebuynoworder(this.paymentType, this.encryptedAddressId).subscribe(
         result => {
           if (result.IsSuccess === true) {

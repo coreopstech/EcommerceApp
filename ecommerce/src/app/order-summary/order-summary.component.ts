@@ -33,7 +33,7 @@ export class OrderSummaryComponent implements OnInit {
     this.userService.change.subscribe(encryptedAddressId => {
       if (encryptedAddressId != '') {
         this.encryptedAddressId = encryptedAddressId;
-        if (this.otraker.toLowerCase() == 'buynow_click')
+        if (this.otraker!='' && this.otraker == 'buynow_click')
           this.getBuyNowCartList();
         else
           this.getCartList();
@@ -93,7 +93,7 @@ export class OrderSummaryComponent implements OnInit {
   }
   RemoveProduct(encryptedProductDetailsId, ProductDetailsId) {
     this.spinner.show();
-    if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+    if (this.otraker!='' && this.otraker == 'buynow_click') {
       localStorage.removeItem("buynow")
       setTimeout(() => {
         this.spinner.hide();
@@ -132,7 +132,7 @@ export class OrderSummaryComponent implements OnInit {
   AddProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, maximumQuantity) {
     this.spinner.show();
     if (maximumQuantity >= ProductQuantity + 1) {
-      if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+      if (this.otraker!='' && this.otraker== 'buynow_click') {
         var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
         localStorage.setItem("buynow", JSON.stringify({ itemId: buyNowCart.itemId, quantity: buyNowCart.quantity + 1 }));
         this.userService.changePriceCalculation(true);
@@ -175,7 +175,7 @@ export class OrderSummaryComponent implements OnInit {
     alert(ProductQuantity);
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
-      if (this.otraker.toLocaleLowerCase() == 'buynow_click') {
+      if (this.otraker!='' && this.otraker == 'buynow_click') {
         var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
         localStorage.setItem("buynow", JSON.stringify({ itemId: buyNowCart.itemId, quantity: buyNowCart.quantity - 1 }));
         this.userService.changePriceCalculation(true);

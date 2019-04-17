@@ -43,7 +43,7 @@ export class CheckOutComponent implements OnInit {
 
     this.userService.pricechange.subscribe(status => {
       if (status) {
-        if (this.otraker.toLowerCase() == 'buynow_click')
+        if (this.otraker!='' && this.otraker == 'buynow_click')
           this.getBuyNowCartList();
         else
           this.getCartList();
@@ -53,7 +53,7 @@ export class CheckOutComponent implements OnInit {
     if (localStorage.getItem("currentidentity")) {
       this.isLogged = true;
       this.userName = JSON.parse(localStorage.getItem("currentidentity")).name;
-      if (this.otraker.toLowerCase() == 'buynow_click')
+      if (this.otraker!='' && this.otraker == 'buynow_click')
       this.getBuyNowCartList();
     else
       this.getCartList();

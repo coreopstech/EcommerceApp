@@ -13,8 +13,13 @@ export class ProductDetailService {
     }
 
     getProductDetails(productId, productDetailId) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId="";
+        if(localStorage.getItem("currentidentity")!=null)
+        {
+            var user=JSON.parse(localStorage.getItem("currentidentity"));
+            userEncryptedId=user.id;
+        }
+        
         var cartData = localStorage.getItem("cartList");
         var body = {
             EncryptedProductId: productId,
