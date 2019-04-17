@@ -4,20 +4,32 @@ import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment.prod';
 import { Cart } from '../_models/cart';
 
-// const httpOptions = {
-//     headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-//     })
-// };
+
+var token='';
+if(localStorage.getItem("currentidentity")!=null)
+{
+    token=JSON.parse(localStorage.getItem("currentidentity")).token;
+}
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    })
+};
+
 @Injectable()
 export class OrderService {
     baseUrl = environment.baseUrl;
     constructor(private http: HttpClient) {
     }
     saveOrderDetails(paymentType:number,encryptedAddressId:string) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body={
                 paymentType:paymentType,
                 encryptedAddressId:encryptedAddressId,
@@ -30,8 +42,13 @@ export class OrderService {
     }
     getOrderList()
     {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `Order/GetOrderList/`+userEncryptedId)
             .pipe(map(result => {
                 return result;
@@ -39,8 +56,13 @@ export class OrderService {
     }
     getOrderDetailsList()
     {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `Order/GetOrderDetailsList/`+ userEncryptedId)
             .pipe(map(result => {
                 return result;
@@ -62,8 +84,13 @@ export class OrderService {
     }
     saveOrderCancelDetails(encryptedOrderDetailsId:string,encryptedOrderId:string,reasonId:number,remark:string)
     {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body={
             EncryptedOrderDetailsId:encryptedOrderDetailsId,
             EncryptedOrderId:encryptedOrderId,
@@ -78,8 +105,13 @@ export class OrderService {
     }
     saveOrderReturnDetails(encryptedOrderDetailsId:string,encryptedOrderId:string,reasonId:number,remark:string)
     {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body={
             EncryptedOrderDetailsId:encryptedOrderDetailsId,
             EncryptedOrderId:encryptedOrderId,
@@ -96,8 +128,13 @@ export class OrderService {
     {
         var buyNowCart=JSON.parse(localStorage.getItem("buynow"));
         var cart=new Cart(0,buyNowCart.itemId,buyNowCart.quantity,true);
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body={
                 paymentType:paymentType,
                 encryptedAddressId:encryptedAddressId,

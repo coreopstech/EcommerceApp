@@ -5,20 +5,30 @@ import { environment } from './../../environments/environment.prod';
 import { ReviewRating } from '../_models/reviewRating';
 
 
-// const httpOptions = {
-//     headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-//     })
-// };
+var token = '';
+if (localStorage.getItem("currentidentity") != null) {
+    token = JSON.parse(localStorage.getItem("currentidentity")).token;
+}
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    })
+};
+
 @Injectable()
 export class ReviewRatingService {
     baseUrl = environment.baseUrl;
     constructor(private http: HttpClient) {
     }
     getReviewRatingList() {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `ReviewRating/GetReviewRatingList/` + userEncryptedId)
             .pipe(map(result => {
                 return result;
@@ -36,8 +46,13 @@ export class ReviewRatingService {
             }));
     }
     saveReviewDetails(review: ReviewRating, encryptedOrderDetailsId: string, encryptedReviewRatingId: string) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         review.EncryptedOrderDetailsId = encryptedOrderDetailsId;
         review.UserEncryptedId = userEncryptedId;
         review.EncryptedReviewRatingId = encryptedReviewRatingId;
@@ -48,8 +63,13 @@ export class ReviewRatingService {
     }
     saveRatingDetails(rating: number, OrderDetailsId: string, ReviewRatingId: string) {
         var review: ReviewRating;
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         
         var body = {
             reviewRating: rating,

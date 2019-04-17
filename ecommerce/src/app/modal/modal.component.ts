@@ -53,19 +53,19 @@ export class ModalComponent implements OnInit {
   }
 
   doLogin() {
+    
     this.modalData.action = 'login';
     this.modalData.title = 'Login';
     this.loginModel = new User();
     this.loginModel.EmailModile = "";
     this.loginModel.Password = "";
+    
   }
 
   close() {
     this.dialogRef.close();
   }
   onLogin() {
-    console.log(this.loginModel);
-    alert(this.loginModel.EmailModile);
     this.spinner.show();
     this.submitted = true;
     this.authenticationService.login(this.loginModel)

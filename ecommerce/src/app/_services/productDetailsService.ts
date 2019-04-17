@@ -5,7 +5,16 @@ import { environment } from './../../environments/environment.prod';
 import { BulkOrder } from './../_models/bulkOrder';
 
 
-
+var token = '';
+if (localStorage.getItem("currentidentity") != null) {
+    token = JSON.parse(localStorage.getItem("currentidentity")).token;
+}
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    })
+};
 @Injectable()
 export class ProductDetailService {
     baseUrl = environment.baseUrl;
@@ -13,13 +22,15 @@ export class ProductDetailService {
     }
 
     getProductDetails(productId, productDetailId) {
-        var userEncryptedId="";
-        if(localStorage.getItem("currentidentity")!=null)
-        {
-            var user=JSON.parse(localStorage.getItem("currentidentity"));
-            userEncryptedId=user.id;
+
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
         }
-        
+
         var cartData = localStorage.getItem("cartList");
         var body = {
             EncryptedProductId: productId,
@@ -51,8 +62,13 @@ export class ProductDetailService {
             }));
     }
     saveProductIntoCart(encryptedProductDetailId, encryptedProductId) {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         var body = {
             UserEncryptedId: userEncryptedId,
             EncryptedProductDetailsId: encryptedProductDetailId,
@@ -65,8 +81,13 @@ export class ProductDetailService {
     }
     saveBulkOrder(bulkOrder:BulkOrder)
     {
-        var user=JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId=user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         bulkOrder.UserEncryptedId=userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveBulkOrder/`, bulkOrder)
             .pipe(map(result => {
