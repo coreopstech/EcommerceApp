@@ -76,6 +76,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
+import { AccountmenuComponent } from './accountmenu/accountmenu.component';
 
 
 @NgModule({
@@ -111,7 +112,8 @@ import { AccountComponent } from './account/account.component';
     PrivacyComponent,
     PaymentsComponent,
     ContactusComponent,
-    AccountComponent
+    AccountComponent,
+    AccountmenuComponent
   ],
   imports: [
 
@@ -138,6 +140,7 @@ BrowserModule,
     MatCardModule,
     MatChipsModule,
     MatPaginatorModule,
+    MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
      ToastrModule.forRoot(),

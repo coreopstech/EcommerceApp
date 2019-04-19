@@ -68,6 +68,15 @@ export class UserService {
                 return result;
             }));
     }
+    saveUserData(user: User) {
+        return this.http.post<any>(this.baseUrl + `Product/UpdateUserDetails`, user)
+            .pipe(map(result => {
+                if (result.IsSuccess) {
+                    
+                }
+                return result;
+            }));
+    }
     getUserDetails(userEncryptedId: string) {
         return this.http.get<any>(this.baseUrl + `Product/GetUserDetails/` + userEncryptedId)
             .pipe(map(result => {

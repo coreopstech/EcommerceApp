@@ -13,6 +13,7 @@ import { User } from '../_models/user';
 })
 export class AccountComponent implements OnInit {
   profileModel: User;
+  isEditable=false;
   constructor(private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
@@ -26,11 +27,11 @@ export class AccountComponent implements OnInit {
   onRegister() {
 
     this.spinner.show();
-    this.userService.register(this.profileModel)
+    this.userService.saveUserData(this.profileModel)
       .subscribe(
         result => {
           if (result.IsSuccess) {
-
+            this.isEditable=false;
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -87,5 +88,9 @@ export class AccountComponent implements OnInit {
             this.spinner.hide();
           }, 1000)
         });
+  }
+  EditUserDetails(isEditable)
+  {
+    this.isEditable=true;
   }
 }
