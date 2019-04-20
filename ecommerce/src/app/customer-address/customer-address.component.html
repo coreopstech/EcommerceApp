@@ -91,45 +91,29 @@
                     </div>
                     <div class="uK6xOa">
                       <div class="_1X5WZZ _3fgAI3 _3g_m0J">
-
-                        <div class="M2VvVb">
-                          <div class="MYSb8y">State</div>
-                          <div class="_2uWdcR _3fgAI3 N25bMB"><select class="_3092M2 _3fgAI3 N25bMB QoXnA9" name="state"
-                              #state="ngModel" #state="ngModel" (change)="onStateChange($event.target.value)" value="customerAddress.StateId"
-                              [ngModel]="customerAddress.StateId" required="" tabindex="7"
-                              [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
-                              <option value="" disabled="">--Select State--</option>
-                              <option *ngFor="let state of customerAddress.StateList" [ngValue]="state.Value" value="{{state.Value}}">
-                                {{state.Text}}</option>
-                            </select><span class="_1LBnEa _2KY_MK"></span>
-                            <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
-                              <div *ngIf="f.state.errors.required">State is required</div>
-                            </div>
-                          </div>
-                          <!-- <mat-form-field class="example-full-width">
-                                    <mat-label>Select an State</mat-label>
-                                    <mat-select [(ngModel)]="customerAddress.StateId" name="state" #state="ngModel">
-                                      <mat-option>None</mat-option>
-                                      <mat-option *ngFor="let state of customerAddress.StateList" value="{{state.Value}}">
-                                        {{state.Text}}</mat-option>
-                                    </mat-select>
-                                  </mat-form-field> -->
+                        <div>
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Select an State</mat-label>
+                            <mat-select [(ngModel)]="customerAddress.StateIdWithFormat" name="state" #state="ngModel"
+                              (selectionChange)="onStateChange(customerAddress.StateIdWithFormat)">
+                              <mat-option>None</mat-option>
+                              <mat-option *ngFor="let state of customerAddress.StateList" value="{{state.Value}}">
+                                {{state.Text}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         </div>
                       </div>
 
                       <div class="_1X5WZZ _3fgAI3 _3g_m0J">
-                        <div class="M2VvVb">
-                          <div class="MYSb8y">City</div>
-                          <div class="_2uWdcR _3fgAI3 N25bMB"><select class="_3092M2 _3fgAI3 N25bMB QoXnA9" name="city"
-                              #city="ngModel" #city="ngModel" required="" [ngModel]="customerAddress.CityId" value="customerAddress.CityId"
-                              tabindex="7" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
-                              <option value="" disabled="">--Select City--</option>
-                              <option *ngFor="let city of cities" value="{{city.Value}}" [ngValue]="city.Value" >{{city.Text}}</option>
-                            </select><span class="_1LBnEa _2KY_MK"></span>
-                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                              <div *ngIf="f.city.errors.required">City is required</div>
-                            </div>
-                          </div>
+                        <div>
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Select an City</mat-label>
+                            <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
+                              <mat-option>None</mat-option>
+                              <mat-option *ngFor="let city of cities" value="{{city.Value}}">
+                                {{city.Text}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         </div>
                       </div>
                     </div>
@@ -150,33 +134,31 @@
                         </mat-form-field>
                       </div>
                     </div>
-                    <!-- <div class="_3XXwRR">
-                            <p class="_2dwzAy">Address Type</p>
-                            <div class="_3qg3HS">
-                              <div>
-                                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                                [ngModel]="customerAddress.AddressType">
-                                  <mat-radio-button class="example-radio-button" 
-                                    [value]="1">
-                                    Home (All day delivery)
-                                  </mat-radio-button>
-                                  <mat-radio-button class="example-radio-button" 
-                                    [value]="2">
-                                    Work (Delivery between 10 AM - 5 PM)
-                                  </mat-radio-button>
-                                </mat-radio-group>
-                              </div>
-                            </div>
-                          </div> -->
-                    <div class="_1qbqu2 uK6xOa"> <button type="submit"  class="_2AkmmA EqjTfe _7UHT_c" color="primary" mat-button>Save
+                    <div class="_3XXwRR">
+                      <p class="_2dwzAy">Address Type</p>
+                      <div class="_3qg3HS">
+                        <div>
+                          <mat-radio-group aria-label="Select an option"
+                            [(ngModel)]="customerAddress.AddressTypeWithFormat" name="addressType"
+                            #addressType="ngModel">
+                            <mat-radio-button value="1">
+                              Home (All day delivery)
+                            </mat-radio-button>
+                            <mat-radio-button value="2">
+                              Work (Delivery between 10 AM - 5 PM)
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="_1qbqu2 uK6xOa"> <button type="submit" class="_2AkmmA EqjTfe _7UHT_c" color="primary"
+                        mat-button>Save
                         and Deliver Here</button>
                       <button type="button" class="_2AkmmA _237M5J" color="primary" (click)="ResetAddressList()"
                         mat-button>Cancel</button>
                     </div>
                   </div>
-
                 </form>
-
               </div>
             </div>
           </label>

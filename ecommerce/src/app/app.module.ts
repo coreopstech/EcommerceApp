@@ -77,6 +77,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
 import { AccountmenuComponent } from './accountmenu/accountmenu.component';
+import { CustomerlistComponent } from './customerlist/customerlist.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { AccountmenuComponent } from './accountmenu/accountmenu.component';
     PaymentsComponent,
     ContactusComponent,
     AccountComponent,
-    AccountmenuComponent
+    AccountmenuComponent,
+    CustomerlistComponent
   ],
   imports: [
 

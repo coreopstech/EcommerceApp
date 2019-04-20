@@ -5,6 +5,7 @@ import { UserService } from '../_services/userService';
 import { AuthenticationService } from './../_services/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../_models/user';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 @Component({
   selector: 'app-account',
@@ -18,6 +19,7 @@ export class AccountComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private toast:ToastrManager,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -39,7 +41,7 @@ export class AccountComponent implements OnInit {
           }
           else {
 
-            this.snackBar.open(result.Message, '', {
+            this.toast.errorToastr(result.Message, '', {
               duration: 3000,
             });
             setTimeout(() => {
@@ -49,7 +51,7 @@ export class AccountComponent implements OnInit {
 
         },
         error => {
-          this.snackBar.open(error, '', {
+          this.toast.errorToastr(error, '', {
             duration: 2000,
           });
           setTimeout(() => {
@@ -71,8 +73,8 @@ export class AccountComponent implements OnInit {
           }
           else {
             this.profileModel = result.Data;
-            this.snackBar.open(result.Message, '', {
-              duration: 3000,
+            this.toast.errorToastr(result.Message, '', {
+              duration: 2000,
             });
             setTimeout(() => {
               this.spinner.hide();
@@ -81,7 +83,7 @@ export class AccountComponent implements OnInit {
 
         },
         error => {
-          this.snackBar.open(error, '', {
+          this.toast.errorToastr(error, '', {
             duration: 2000,
           });
           setTimeout(() => {
@@ -92,5 +94,37 @@ export class AccountComponent implements OnInit {
   EditUserDetails(isEditable)
   {
     this.isEditable=true;
+  }
+  DeactivateUserAccount()
+  {
+    this.spinner.show();
+    this.userService.DeactiveUserAccount()
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+            this.router.navigate(['/home']);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+
+          }
+          else {
+            this.toast.errorToastr(result.Message, '', {
+              duration: 3000,
+            });
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toast.errorToastr(error, '', {
+            duration: 2000,
+          });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
   }
 }

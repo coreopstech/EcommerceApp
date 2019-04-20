@@ -25,6 +25,7 @@ import { TermsComponent } from './terms/terms.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
+import { CustomerlistComponent } from './customerlist/customerlist.component';
 
 
 const routes: Routes = [
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'account/orders',
     component: OrdersComponent
+  },
+  {
+    path: 'account/addresses',
+    component: CustomerlistComponent
   },
   {
     path: 'order_details',

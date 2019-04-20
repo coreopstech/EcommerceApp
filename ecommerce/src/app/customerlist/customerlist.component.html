@@ -1,0 +1,158 @@
+<div id="container">
+  <div class="_1VD0UF">
+    <div class="_1b9jby row">
+      <app-accountmenu></app-accountmenu>
+      <div class="_5tT1ZC">
+        <div class="bfHz-X">
+          <div class="_1GRhLX _2F3XAu"><span class="_985Oh_">Manage Addresses</span>
+            <div>
+              <div class="_1yf-9T">
+                <div>
+                  <div class="_2kr2AM" *ngIf="!isAddNewAddress" (click)="openAddressForm(0)"><img height="14" width="14"
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyMTc1RkYiIGQ9Ik0xMS4yNSA2Ljc1aC00LjV2NC41aC0xLjV2LTQuNUguNzV2LTEuNWg0LjVWLjc1aDEuNXY0LjVoNC41Ii8+PHBhdGggZD0iTS0zLTNoMTh2MThILTMiLz48L2c+PC9zdmc+"
+                      class="_5GGQaL">ADD A NEW ADDRESS</div>
+                </div>
+                <div *ngIf="isAddNewAddress || isEditable">
+                  <div class="u0Atks">
+                    <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" class="form-group"
+                      *ngIf="customerAddress!=null">
+                      <span *ngIf="isEditable" class="aGTn1j">MANAGE ADDRESS</span>
+                      <span *ngIf="isAddNewAddress" class="aGTn1j">ADD A NEW ADDRESS</span>
+                      <div class="_3llGqN">
+                        <div class="uK6xOa">
+                          <div class="_3fgAI3 Th26Zc">
+                            <input type="hidden" [ngModel]="customerAddress.AddressId"
+                              [ngModelOptions]="{standalone: true}" />
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Name" [(ngModel)]="customerAddress.Name" name="Name"
+                                #Name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }" required />
+                            </mat-form-field>
+                          </div>
+                          <div class="_3fgAI3 Th26Zc">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Mobile Number" [(ngModel)]="customerAddress.MobileNumber" maxlength="10"
+                                name="mobile" #mobile="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && mobile.invalid }" required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="uK6xOa">
+                          <div class="_3fgAI3 Th26Zc">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Pin Code" [(ngModel)]="customerAddress.PinCode" name="pin" maxlength="6"
+                                #pin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pin.invalid }" required />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="uK6xOa">
+                              <mat-form-field >
+                                <textarea matInput placeholder="Address (Area and Street)" rows="3"
+                                  [(ngModel)]="customerAddress.Address" name="customeraddress"
+                                  #customeraddress="ngModel"
+                                  [ngClass]="{ 'is-invalid': f.submitted && customeraddress.invalid }"
+                                  required></textarea>
+                              </mat-form-field>
+                          
+                        </div>
+                        <div class="uK6xOa">
+                          <div class="_1X5WZZ _3fgAI3 _3g_m0J">
+
+                            <div >
+                              <mat-form-field class="example-full-width">
+                                <mat-label>Select an State</mat-label>
+                                <mat-select [(ngModel)]="customerAddress.StateIdWithFormat" name="state" #state="ngModel"
+                                  (selectionChange)="onStateChange(customerAddress.StateIdWithFormat)">
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let state of customerAddress.StateList" value="{{state.Value}}">
+                                    {{state.Text}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+
+                          <div class="_1X5WZZ _3fgAI3 _3g_m0J">
+                            <div >
+                              <mat-form-field class="example-full-width">
+                                <mat-label>Select an City</mat-label>
+                                <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
+                                  <mat-option>None</mat-option>
+                                  <mat-option *ngFor="let city of cities" value="{{city.Value}}">
+                                    {{city.Text}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="uK6xOa">
+                          <div class="_3fgAI3 Th26Zc">
+                            <mat-form-field class="example-full-width">
+                              <textarea matInput placeholder="Landmark (Optional)"
+                                [(ngModel)]="customerAddress.Landmark" name="landmarkOptional"
+                                #landmarkOptional="ngModel"></textarea>
+                            </mat-form-field>
+
+                          </div>
+                          <div class="_3fgAI3 Th26Zc">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Alternate Phone (Optional)"
+                                [(ngModel)]="customerAddress.AlternateMobileNumber" name="alternateMobile" maxlength="10"
+                                #alternateMobile="ngModel" />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="_3XXwRR">
+                          <p class="_2dwzAy">Address Type</p>
+                          <div class="_3qg3HS">
+                            <div>
+                              <mat-radio-group aria-label="Select an option" [(ngModel)]="customerAddress.AddressTypeWithFormat"
+                                name="addressType" #addressType="ngModel">
+                                <mat-radio-button value="1" >
+                                  Home (All day delivery)
+                                </mat-radio-button>
+                                <mat-radio-button value="2">
+                                  Work (Delivery between 10 AM - 5 PM)
+                                </mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="_1qbqu2 uK6xOa"> <button type="submit" class="_2AkmmA EqjTfe _7UHT_c"
+                            color="primary" mat-button>Save</button>
+                          <button type="button" class="_2AkmmA _237M5J" color="primary" (click)="closeAddressForm()"
+                            mat-button>Cancel</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="customerAddressList!=null && customerAddressList.length>0">
+                <div class="_2HW10N" *ngFor="let address of customerAddressList">
+                  <div class="_1MIUfH" *ngIf="encryptedAddressId!=address.EncryptedAddressId">
+                    <div class="iqngYe">
+                      <div class="_1suckO"><img
+                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgNCAxNiI+CiAgICA8ZyBmaWxsPSIjODc4Nzg3IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIyIi8+CiAgICAgICAgPGNpcmNsZSBjeD0iMiIgY3k9IjgiIHI9IjIiLz4KICAgICAgICA8Y2lyY2xlIGN4PSIyIiBjeT0iMTQiIHI9IjIiLz4KICAgIDwvZz4KPC9zdmc+Cg==">
+                        <div class="_1GRhLX _2-SLui">
+                          <div class="_2-u7lV" (click)="openAddressForm(address.EncryptedAddressId)"><span>Edit</span>
+                          </div>
+                          <div class="_2-u7lV" (click)="DeleteAddress(address.EncryptedAddressId)"><span>Delete</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="_2AIo8W" *ngIf="address.AddressTypeName!=''"><span
+                        class="_3zENzM">{{address.AddressTypeName}}</span></div>
+                    <p class="ZBYhh4"><span class="_2Fw4MM">{{address.Name}}</span><span
+                        class="_3MbGVP _2Fw4MM">{{address.MobileNumber}}</span></p><span
+                      class="ZBYhh4 _1Zn3iq">{{address.Address}},{{address.CityName}},{{address.StateName}} - <span
+                        class="_3n0HwW">{{address.PinCode}}</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

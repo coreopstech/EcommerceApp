@@ -1,41 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserService } from '../_services/userService';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { FormBuilder } from '@angular/forms';
+import { UserService } from '../_services/userService';
 import { UserAddress } from './../_models/userAddress';
+import { MatDialog } from '@angular/material';
+import { ModalComponent } from './../modal/modal.component';
+
 
 @Component({
-  selector: 'app-customer-address',
-  templateUrl: './customer-address.component.html',
-  styleUrls: ['./customer-address.component.scss']
+  selector: 'app-customerlist',
+  templateUrl: './customerlist.component.html',
+  styleUrls: ['./customerlist.component.scss']
 })
-export class CustomerAddressComponent implements OnInit {
-
-  isLogged = false;
+export class CustomerlistComponent implements OnInit {
   customerAddressList: any;
-  customerAddress= new UserAddress();
-  isAddEdit = false;
-  submitted = false;
-  loading = false;
+  customerAddress = new UserAddress();
+  isAddNewAddress = false;
+  isEditable = false;
   cities: any;
-  editRecordId: string;
-  isbuttonVisibleId: string;
-  selectedEncryptedId: string;
-  selectedAddressDetails:any;
-  
+  encryptedAddressId="";
   constructor(private userService: UserService,
+    public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder,
-    private toast: ToastrManager) { }
+    private toast: ToastrManager) {
+
+  }
 
   ngOnInit() {
     this.spinner.show();
-    this.editRecordId = "";
-    this.isbuttonVisibleId = "";
-   
     if (localStorage.getItem("currentidentity")) {
-      this.isLogged = true;
+
       this.userService.getUserAddressDetails(JSON.parse(localStorage.getItem("currentidentity")).id)
         .subscribe(
           result => {
@@ -58,13 +54,29 @@ export class CustomerAddressComponent implements OnInit {
             }, 1000)
           });
     }
-
   }
-
+  openAddressForm(id: string) {
+    if (id != '0') {
+      this.isEditable = true;
+      this.isAddNewAddress = false;
+      this.ShowAddressDetails(id);
+      this.encryptedAddressId=id;
+    }
+    else {
+      this.ShowAddressDetails('');
+      this.isEditable = false;
+      this.isAddNewAddress = true;
+      this.encryptedAddressId="";
+    }
+  }
+  closeAddressForm() {
+    this.isEditable = false;
+    this.isAddNewAddress = false;
+    this.encryptedAddressId="";
+  }
   ShowAddressDetails(addressId) {
     this.spinner.show();
-    this.editRecordId = addressId;
-    this.isAddEdit = true;
+
     if (addressId === '')
       addressId = 0;
     this.userService.getAddressDetails(addressId)
@@ -74,9 +86,8 @@ export class CustomerAddressComponent implements OnInit {
             this.customerAddress = result.Data;
             if (this.customerAddress.CityList != null && this.customerAddress.CityList.length > 0) {
               this.cities = this.customerAddress.CityList;
-              this.customerAddress= result.Data;
+              this.customerAddress = result.Data;
             }
-            console.log(this.customerAddress);
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -95,11 +106,10 @@ export class CustomerAddressComponent implements OnInit {
         });
 
   }
-
-
+  
   onSubmit() {
     this.spinner.show();
-  
+    
     this.userService.saveUserAddressDetails(this.customerAddress)
       .subscribe(
         result => {
@@ -107,10 +117,10 @@ export class CustomerAddressComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.isAddEdit = false;
-            this.editRecordId = "";
-            this.SetAddressId(result.Data.EncryptedAddressId);
-            //this.ngOnInit();
+
+            this.closeAddressForm();
+            this.ngOnInit();
+            this.toast.successToastr(result.Message);
           }
           else {
             this.toast.errorToastr(result.Message);
@@ -122,12 +132,12 @@ export class CustomerAddressComponent implements OnInit {
         },
         error => {
           this.toast.errorToastr(error);
-         
+
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
         });
- 
+
   }
   onStateChange(stateId) {
     this.userService.getCityList(stateId)
@@ -135,7 +145,7 @@ export class CustomerAddressComponent implements OnInit {
         result => {
           if (result.IsSuccess) {
             this.cities = result.Data;
-            console.log(this.cities);
+            //console.log(this.cities);
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -154,47 +164,11 @@ export class CustomerAddressComponent implements OnInit {
         });
 
   }
-  ResetAddressList() {
-    this.loading = false;
-    this.isAddEdit = false;
-    this.editRecordId = "";
-    this.submitted=false;
-    this.ngOnInit();
+  DeleteAddress(encryptedAddressId){
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '400px',
+      data: { action: 'deleteaddress', title: 'Delete Address',encryptedAddressId:encryptedAddressId }
+    });
   }
-  ShowEdit_DeliveryButton(encryptedAddressId) {
-    this.ngOnInit();
-    this.isbuttonVisibleId = encryptedAddressId;
-  }
-  SetAddressId(encryptedAddressId) {
-    this.spinner.show();
-    this.userService.setAddressId(encryptedAddressId);
-    this.selectedEncryptedId = encryptedAddressId;
-    this.userService.getAddressDetails(this.selectedEncryptedId) .subscribe(
-      result => {
-        if (result.IsSuccess) {
-          this.selectedAddressDetails = result.Data;
-          
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
-        else {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
 
-      },
-      error => {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000)
-      });
-  }
-  ShowAddress()
-  {
-    this.userService.setAddressId('');
-    this.selectedEncryptedId = '';
-    this.ngOnInit();
-  }
 }

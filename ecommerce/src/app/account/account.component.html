@@ -35,9 +35,10 @@
                     </mat-form-field>
                   </div>
                   <div class="col-sm-4">
-                    <mat-radio-group aria-label="Select an option" [(ngModel)]="profileModel.GenderId"  name="genderId" #genderId="ngModel">
-                      <mat-radio-button value="1"  checked="checked" >Male</mat-radio-button>
-                      <mat-radio-button value="2" >Female</mat-radio-button>
+                      <mat-radio-group aria-label="Select an option" [disabled]="!isEditable"
+                      [(ngModel)]="profileModel.GenderIdWithFormat" name="genderId" #genderId="ngModel">
+                      <mat-radio-button value="1">Male</mat-radio-button>
+                      <mat-radio-button value="2">Female</mat-radio-button>
                     </mat-radio-group>
                   </div>
 
@@ -84,7 +85,7 @@
                   <p>Flipkart has a 'single sign-on' policy. Any changes will reflect in your Seller account also.</p>
                 </div>
               </div>
-              <div class="_3uzK7o">Deactivate Account</div>
+              <div class="_3uzK7o" (click)="DeactivateUserAccount()">Deactivate Account</div>
             </div>
             <div><img width="100%" height="auto"
                 src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/myProfileFooter_0cedbe.png"

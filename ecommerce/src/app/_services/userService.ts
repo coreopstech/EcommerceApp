@@ -118,6 +118,13 @@ export class UserService {
                 return result;
             }));
     }
+    DeleteAddressDetails(EncryptedAddressId: string) {
+        return this.http.get<any>(this.baseUrl + `User/DeleteAddress/` + EncryptedAddressId)
+            .pipe(map(result => {
+
+                return result;
+            }));
+    }
     getCityList(stateId: string) {
         return this.http.get<any>(this.baseUrl + `Product/GetCityList/` + stateId)
             .pipe(map(result => {
@@ -153,6 +160,20 @@ export class UserService {
     //
     getUserAddressDetailsList(userEncryptedId: string) {
         return this.http.get<any>(this.baseUrl + `User/GetUserAddressDetails/` + userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    DeactiveUserAccount()
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `User/DeactiveUserAccount/` + userEncryptedId)
             .pipe(map(result => {
                 return result;
             }));
