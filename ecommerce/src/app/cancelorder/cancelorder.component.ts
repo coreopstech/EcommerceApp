@@ -109,7 +109,7 @@ export class CancelOrderComponent implements OnInit {
     this.orderService.saveOrderCancelDetails(encryptedOrderDetailsId,encryptedOrderId,this.reasonId,this.remarkText).subscribe(
       result => {
         if (result.IsSuccess === true) {
-          this.router.navigate(['order_details'],{ queryParams: { order_Id:this.productOrderDetails.OrderNumber } });
+          this.router.navigate(['order_details'],{ queryParams: { order_id:this.productOrderDetails.OrderNumber } });
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)

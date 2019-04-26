@@ -48,7 +48,7 @@ export class OrderDetailsComponent implements OnInit {
       result => {
         if (result.IsSuccess === true) {
           this.orderData=result.Data;
-          console.log(this.orderData);
+            
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)

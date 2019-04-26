@@ -26,6 +26,7 @@ import { PaymentsComponent } from './payments/payments.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'productdetails/id',
+    path: 'productdetails/:id',
     component: ProductDetailsComponent,
     resolve: {
       productDetails: ProductDetailsResolve
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path: 'write-reviews/:id', component: WriteReviewsComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'account/reviews',
+    component: ReviewsComponent
   },
   {
     path: 'listing',

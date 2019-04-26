@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="_1VD0UF">
+    <div class="_1b9jby row">
+      <app-accountmenu></app-accountmenu>
+      <div class="_5tT1ZC">
+        <div class="bfHz-X">
+          <div>
+            <div class="_1GRhLX _3aJbzZ">
+              <div class="row">
+                <div class="EOcsOD">
+                  <div>
+                    <div class="ppwh0b">
+                      <div class="_1zdYIq"><span>My Reviews </span><span class="_3nCce6">({{totalReviews}})</span></div>
+                      <div class="_1I6kUh" *ngFor="let review of reviewRatingList">
+                        <div class="_2s5KOn">
+                          <div class="_3BTv9X" style="height: 70px; width: 70px;"><img class="_1Nyybr _30XEf0"
+                              alt="{{review.ProductName}}" src="{{review.ImageUrl}}">
+                          </div>
+                        </div>
+                        <div class="col _2ZRGw2" style="padding-left:50px;">
+                          <div class="_2jQViS">{{review.ProductName}}</div>
+                          <div class="_2sq4-A">
+                            <div class="row">
+                              <div class="hGSR34 _3yeWg3" *ngIf="review.ReviewRating>0">{{review.ReviewRating}}<img
+                                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
+                                  class="_2lQ_WZ"></div>
+                              <p class="_3yYOd2">{{review.ReviewTitle}}</p>
+                            </div>
+                            <div class="row">
+                              <div class="_1JIVPz">
+                                <div>{{review.ReviewDescription}}</div><span class="_2im5Gh"></span>
+                              </div>
+                            </div>
+                            <div class="row _3WQ2CU">
+                              <p class="dNmCY8">{{review.UserName}}</p>
+                              <div class="_3u1MqM"><img
+                                  src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAnIGhlaWdodD0nMjAnIHZpZXdCb3g9JzAgMCAyMCAyMCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz4KCTxnPgoJCTxwYXRoIGQ9J00tMi0yaDI0djI0SC0yeicgZmlsbD0nbm9uZScvPgoJCTxwYXRoIGQ9J00xMCAwQzQuNDggMCAwIDQuNDggMCAxMHM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTUuNTIgMCAxMCAwek04IDE1bC01LTUgMS40MS0xLjQxTDggMTIuMTdsNy41OS03LjU5TDE3IDZsLTkgOXonIGZpbGw9JyMyNkJDNEUnLz4KCTwvZz4KPC9zdmc+Cg=="
+                                  class="_3eQL1z">
+                                <p id="review-9fa94dbf-fa05-45a9-906b-7e3ab39598ec" class="_2HwDDC"><span>Certified
+                                    Buyer</span></p>
+                              </div>
+                              <p class="dNmCY8">{{review.ReviewDateWithFormat}}</p>
+                              <div class="row _2lgYqq">
+                                <div class="_1QKMJv"><svg width="20" height="15" xmlns="http://www.w3.org/2000/svg"
+                                    class="_3uLugd">
+                                    <path fill="#fff" class="_93Sdgm"
+                                      d="M9.58.006c-.41.043-.794.32-1.01.728-.277.557-2.334 4.693-2.74 5.1-.41.407-.944.6-1.544.6v8.572h7.5c.45 0 .835-.28 1.007-.665 0 0 2.207-6.234 2.207-6.834 0-.6-.47-1.072-1.07-1.072h-3.216c-.6 0-1.07-.535-1.07-1.07 0-.537.835-3.387 1.006-3.944.17-.557-.107-1.157-.664-1.35-.15-.043-.257-.086-.407-.064zM0 6.434v8.572h2.143V6.434H0z"
+                                      fill-rule="evenodd"></path>
+                                  </svg><span class="_3taD3K">{{review.ReviewLike}}</span></div>
+                                <div class="_1QKMJv"><svg width="20" height="15" xmlns="http://www.w3.org/2000/svg"
+                                    class="_3uLugd _2v5VU-">
+                                    <path fill="#fff" class="_93Sdgm"
+                                      d="M9.58.006c-.41.043-.794.32-1.01.728-.277.557-2.334 4.693-2.74 5.1-.41.407-.944.6-1.544.6v8.572h7.5c.45 0 .835-.28 1.007-.665 0 0 2.207-6.234 2.207-6.834 0-.6-.47-1.072-1.07-1.072h-3.216c-.6 0-1.07-.535-1.07-1.07 0-.537.835-3.387 1.006-3.944.17-.557-.107-1.157-.664-1.35-.15-.043-.257-.086-.407-.064zM0 6.434v8.572h2.143V6.434H0z"
+                                      fill-rule="evenodd"></path>
+                                  </svg><span class="_3taD3K">{{review.ReviewUnLike}}</span></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="kafrgw"><a routerLink="/write-reviews/{{review.EncryptedOrderDetailsId}}"
+                              [queryParams]="{pId:review.EncryptedReviewRatingId}" class="kRuXvT"> Edit </a><span
+                              (click)="openDeletePopUp(review.EncryptedOrderDetailsId)" class="dSL8Hv"> Delete </span>
+                            <div class="_20yN1P _20yN1P" style="display:none;" id="Del{{review.EncryptedOrderDetailsId}}"><span class=""> </span>
+                              <div>
+                                <div class="_2iz2Ct _3t79Hj S8RRjl _1WTi3x">
+                                  <div class="_1g1qL6"></div>
+                                  <div class="M-og0Q">
+                                    <div class="_3SOooe">
+                                      <div><span class="_1a8Iiu">Are you sure you want to delete this review?</span>
+                                        <div><button class="_2AkmmA _2wOsLg">CANCEL</button><button
+                                            class="_2AkmmA _3U9rJ5">YES, DELETE</button></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="_3Ilug0"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

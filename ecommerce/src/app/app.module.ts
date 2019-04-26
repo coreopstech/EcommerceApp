@@ -78,6 +78,7 @@ import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
 import { AccountmenuComponent } from './accountmenu/accountmenu.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { CustomerlistComponent } from './customerlist/customerlist.component';
     ContactusComponent,
     AccountComponent,
     AccountmenuComponent,
-    CustomerlistComponent
+    CustomerlistComponent,
+    ReviewsComponent
   ],
   imports: [
 

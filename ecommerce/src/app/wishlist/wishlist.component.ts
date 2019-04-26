@@ -3,6 +3,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { WishListService } from '../_services/wishListService';
+import { UserService } from '../_services/userService';
 
 @Component({
   selector: 'app-wishlist',
@@ -15,6 +16,7 @@ export class WishListComponent implements OnInit {
   isRemoveModelVisible=false;
   constructor(private toastr: ToastrManager,
     private spinner: NgxSpinnerService,
+    private userService:UserService,
     private route: ActivatedRoute, private router: Router, private wishlistService: WishListService) {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -88,13 +90,14 @@ export class WishListComponent implements OnInit {
   }
   MoveToCart(encryptedId)
   {
-    alert("move to cart");
+    
     this.spinner.show();
     if (localStorage.getItem("currentidentity")) {
       this.wishlistService.moveProductIntoCart(encryptedId).subscribe(
         result => {
           if (result.IsSuccess === true) {
             this.toastr.successToastr("Product moved to your cart");
+            this.userService.changeCartValue(0);
             this.ngOnInit();
             setTimeout(() => {
               this.spinner.hide();

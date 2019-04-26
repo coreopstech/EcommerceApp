@@ -5,7 +5,8 @@
   <div class="_1GRhLX _38vNoF" *ngIf="encryptedAddressId!=''">
     <h3 class="_1fM65H _2RMAtd"><span class="_1Tmvyj">4</span><span class="_1_m52b">Payment Options</span></h3>
     <div class="_1GRhLX _17_fE5">
-      <div><label for="CREDIT" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
+      <div>
+        <!-- <label for="CREDIT" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
             readonly="" id="CREDIT" value="on">
           <div class="_6ATDKp"></div>
           <div class="_2o59RR _27CukN">
@@ -13,7 +14,8 @@
               <div class="_3i_pKg">Credit / Debit / ATM Card</div>
             </div>
           </div>
-        </label><label for="PHONEPE" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
+        </label>
+        <label for="PHONEPE" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
             readonly="" id="PHONEPE" value="on">
           <div class="_6ATDKp"></div>
           <div class="_2o59RR _27CukN">
@@ -24,7 +26,8 @@
               </div>
             </div>
           </div>
-        </label><label for="NET_OPTIONS" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
+        </label>
+        <label for="NET_OPTIONS" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
             readonly="" id="NET_OPTIONS" value="on">
           <div class="_6ATDKp"></div>
           <div class="_2o59RR _27CukN">
@@ -32,7 +35,8 @@
               <div class="_3i_pKg">Net Banking</div>
             </div>
           </div>
-        </label><label for="EMI_OPTIONS" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
+        </label>
+        <label for="EMI_OPTIONS" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS"
             readonly="" id="EMI_OPTIONS" value="on">
           <div class="_6ATDKp"></div>
           <div class="_2o59RR _27CukN">
@@ -40,7 +44,8 @@
               <div class="_3i_pKg">EMI (Easy Installments)</div>
             </div>
           </div>
-        </label><label for="COD" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS" (change)="OpenCashOnDelivery()"
+        </label> -->
+        <label for="COD" class="_8J-bZE _3C6tOa _2i24Q8"><input type="radio" class="_2haq-9" name="OTHERS" (change)="OpenCashOnDelivery()"
             readonly="" id="COD" value="on">
           <div class="_6ATDKp"></div>
           <div class="_2o59RR _27CukN">
@@ -53,14 +58,14 @@
                       <div class="Pu8Eh8">
                         <div class="Th26Zc"></div>
                       </div>
-                    </div><button class="_2AkmmA _23FrK1 _7UHT_c" tabindex="2" type="button" (click)="SaveOrderDetails()" ><span>Confirm
-                        Order</span></button>
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-        </label><label for="FLIPKART_CREDIT" class="_8J-bZE _3C6tOa _2pmKiA _2i24Q8"><input type="radio" disabled=""
+        </label>
+        <!-- <label for="FLIPKART_CREDIT" class="_8J-bZE _3C6tOa _2pmKiA _2i24Q8"><input type="radio" disabled=""
             class="_2haq-9" name="OTHERS" readonly="" id="FLIPKART_CREDIT" value="on"
             (click)="OpenCashOnDelivery($event)">
           <div class="_6ATDKp"></div>
@@ -75,11 +80,14 @@
               </div>
             </div>
           </div>
-        </label></div>
+        </label> -->
+      </div>
   
   
-        <button class="_2AkmmA _23FrK1 _7UHT_c" tabindex="2" type="button" (click)="DoPayment()" ><span>Confirm
-          Order</span></button>
+        <!-- <button class="_2AkmmA _23FrK1 _7UHT_c" tabindex="2" type="button" (click)="DoPayment()" ><span>Confirm
+          Order</span></button> -->
+          <button class="_2AkmmA _23FrK1 _7UHT_c" tabindex="2" type="button" (click)="SaveOrderDetails()" ><span>Confirm
+              Order</span></button>
   
           
     </div>

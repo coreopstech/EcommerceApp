@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment.prod';
 import { BulkOrder } from './../_models/bulkOrder';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 var token = '';
@@ -18,11 +19,10 @@ const httpOptions = {
 @Injectable()
 export class ProductDetailService {
     baseUrl = environment.baseUrl;
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,private spinner:NgxSpinnerService) {
     }
 
     getProductDetails(productId, productDetailId) {
-
         var userEncryptedId = '';
         if (localStorage.getItem("currentidentity") != null) {
             var user = JSON.parse(localStorage.getItem("currentidentity"));
@@ -30,7 +30,6 @@ export class ProductDetailService {
                 userEncryptedId = user.id;
             }
         }
-
         var cartData = localStorage.getItem("cartList");
         var body = {
             EncryptedProductId: productId,
@@ -40,6 +39,7 @@ export class ProductDetailService {
         }
         return this.http.post<any>(this.baseUrl + 'Product/GetProductDetail/', body)
             .pipe(map(result => {
+                
                 return result;
             }));
     }
@@ -49,7 +49,7 @@ export class ProductDetailService {
                 return result;
             }));
     }
-    getProductVariantList(productId, productDetailId) {
+        getProductVariantList(productId, productDetailId) {
         return this.http.get<any>(this.baseUrl + `Product/GetProductVariantList/` + productId + '/' + productDetailId)
             .pipe(map(result => {
                 return result;

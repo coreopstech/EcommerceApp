@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-4-12 _3FXQ6P _1MoCT-"><span class="_1CWg6K">More actions</span>
+            <div class="col-4-12 _3FXQ6P _1MoCT-"  *ngIf="orderData.InvoiceGenerate"><span class="_1CWg6K">More actions</span>
               <div class="row _3xbQnf">
                 <div class="_3PNaZO"><img
                     src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/downloadInvoice_686685.png"
@@ -59,13 +59,23 @@
               <div class="row x77_9t" *ngFor="let orderDetails of orderData.orderDetailsList" style="margin-left:0px;">
                 <div class="col-3-12 _22pgKz">
                   <div class="row" style="position: relative;">
-                    <div class="col-3-12 _2eFO7I"><a
-                        routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
+                    <div class="col-3-12 _2eFO7I"><a *ngIf="orderDetails.ProductSEOUrl!=''"
+                      routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+                      [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailId}"
                         target="_blank" rel="noopener noreferrer">
                         <div class="_3BTv9X" style="height: 75px; width: 75px;"><img class="_1Nyybr  _30XEf0" alt=""
                             src="{{orderDetails.ProductImage}}">
                         </div>
-                      </a></div>
+                        <a *ngIf="orderDetails.ProductSEOUrl==''"
+                        routerLink="/productdetails"
+                        [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailId}"
+                          target="_blank" rel="noopener noreferrer">
+                          <div class="_3BTv9X" style="height: 75px; width: 75px;"><img class="_1Nyybr  _30XEf0" alt=""
+                              src="{{orderDetails.ProductImage}}">
+                          </div>
+                        </a>  </a>
+                    
+                    </div>
                     <div class="col-8-12"><a class="_2AkmmA row NPoy5u"
                         routerLink="/productdetails/{{orderDetails.EncryptedProductId}}/{{orderDetails.EncryptedProductDetailsId}}"
                         target="_blank">{{orderDetails.ProductName}}</a>
