@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "app/@theme/_theme.scss";
 html, body { height: 100%; background: #f7f7f7;font-weight: 300;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @media (min-width: 1200px){
@@ -164,4 +164,94 @@ mat-accordion{
     border-radius: 50%;
     background: rgba(52, 158, 158, 0.6);
     padding: 8px;
+}
+.inner_layout{
+    background: #fff;
+    margin-top: 15px;
+    padding: 20px;
+}
+.mb_30{
+    margin-bottom: 30px;
+}
+
+body{
+    padding-top:64px;
+}
+
+
+
+
+@media(max-width: 1199px){
+    
+}
+
+@media(max-width: 991px){
+    .top-toolbar .form-control{
+        min-width: 330px;
+    }
+}
+
+@media(max-width: 767px) {
+    body{
+        font-size: 14px;
+    }
+    h1{
+        font-size: 16px;
+    }
+
+    .view_all{
+        font-size: 13px !important;
+        margin-left: 10px !important;
+        padding-left: 10px !important;
+        &:after{
+            height: 16px !important;
+        }
+    }
+    .banner_list{
+        img{
+            height: 150px !important;
+        }
+    }
+
+    .top-toolbar{
+        align-items: unset;
+        flex-direction: column;
+    }
+    .mat-toolbar-row, .mat-toolbar-single-row {
+        height: 106px !important;
+    }
+}
+
+.btn_green{
+    background: $bg;
+    color: #fff;
+}
+.btn_blue{
+    background: #0685d2;
+    color: #fff;
+}
+
+.add_to_cartlist{
+	list-style: none;
+	display: flex;
+	padding: 0;
+
+	li{
+		min-width: 50%;
+		&:first-child{
+			padding-right: 10px;
+		}		
+    }
+    
+    .mat-button{
+        width: 100%;
+        color: #fff;
+        line-height: 50px;
+        border-radius: 3px;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+}
+.p-0{
+    padding: 0;
 }

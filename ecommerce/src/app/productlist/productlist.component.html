@@ -4,14 +4,15 @@
     <div class="listing_wrapper">
       <aside class="left_sidebar">
         <div class="left_filter_area">
-          <h4>Filters</h4>
-          <div class="mat_slider" *ngIf="filterAttributes!=null && filterAttributes.length>0">
-            <mat-chip-list aria-label="Fish selection">
-              <mat-chip *ngFor="let filter of filterAttributes"
-                (removed)="removeFilter(filter.AttributeId,filter.FilterType)">{{filter.AttributeName}}
-                <mat-icon matChipRemove>cancel</mat-icon>
-              </mat-chip>
-            </mat-chip-list>
+          <div class="mat_slider">
+            <h4>Filters</h4>
+            <div *ngIf="filterAttributes!=null && filterAttributes.length>0">
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip *ngFor="let filter of filterAttributes" (removed)="removeFilter(filter.AttributeId,filter.FilterType)">{{filter.AttributeName}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+              </mat-chip-list>
+            </div>
           </div>
         </div>
         <!-- <div class="d-flex clear_filter justify-content-between">
@@ -20,7 +21,8 @@
         </div> -->
         <div class="left_filter_area">
           <div class="mat_slider">
-            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000" (change)="onPriceChange($event)">
+            <mat-slider thumbLabel [displayWith]="formatLabel" #matslider tickInterval="100" min="200" max="100000"
+              (change)="onPriceChange($event)">
             </mat-slider>
             <p>Rs. {{matslider.value}}.00</p>
           </div>
@@ -32,12 +34,10 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div *ngFor="let colorName of getColorList()">
-                <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
+                <mat-checkbox *ngIf="colorName.IsChecked==false" [checked]="colorName.IsChecked" (change)="getColorFilterProductList(colorName.ColorId,!colorName.IsChecked,colorName.ColorValue)"
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
-                <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked"
-                  (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
+                <mat-checkbox *ngIf="colorName.IsChecked==true" [checked]="colorName.IsChecked" (change)="getColorFilterProductList(colorName.ColorId,false,colorName.ColorValue)"
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
               </div>
@@ -50,20 +50,17 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div *ngFor="let variantValue of getVariantValueListByGroup(variantGroup.VariantGroupId)">
-                  <mat-checkbox *ngIf="variantValue.IsChecked==false" value="{{variantValue.VariantValueId}}"
-                    [checked]="variantValue.IsChecked"
+                  <mat-checkbox *ngIf="variantValue.IsChecked==false" value="{{variantValue.VariantValueId}}" [checked]="variantValue.IsChecked"
                     (change)="getVariantFilterProductList(variantValue.ColorId,true,variantValue.VariantValue)">
                     {{variantValue.VariantValue}}</mat-checkbox>
-                  <mat-checkbox *ngIf="variantValue.IsChecked==true" value="{{variantValue.VariantValueId}}"
-                    [checked]="variantValue.IsChecked"
+                  <mat-checkbox *ngIf="variantValue.IsChecked==true" value="{{variantValue.VariantValueId}}" [checked]="variantValue.IsChecked"
                     (change)="getVariantFilterProductList(variantValue.ColorId,false,variantValue.VariantValue)">
                     {{variantValue.VariantValue}}</mat-checkbox>
                 </div>
               </mat-expansion-panel>
             </div>
             <div *ngIf="filterProductAttributeGroupList!=null && filterProductAttributeGroupList.length>0">
-              <mat-expansion-panel class="mat-elevation-z"
-                *ngFor="let attributeGroup of filterProductAttributeGroupList">
+              <mat-expansion-panel class="mat-elevation-z" *ngFor="let attributeGroup of filterProductAttributeGroupList">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     {{attributeGroup.AttributeGroupName}}
@@ -71,12 +68,10 @@
                 </mat-expansion-panel-header>
                 <div *ngFor="let attributeValue of getAtttributeValueListByGroup(attributeGroup.AttributeGroupId)">
                   <mat-checkbox *ngIf="attributeValue.IsChecked==false" value="{{attributeValue.AttributeValueId}}"
-                    [checked]="attributeValue.IsChecked"
-                    (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,true,attributeValue.AttributeValue)">
+                    [checked]="attributeValue.IsChecked" (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,true,attributeValue.AttributeValue)">
                     {{attributeValue.AttributeValue}}</mat-checkbox>
                   <mat-checkbox *ngIf="attributeValue.IsChecked==true" value="{{attributeValue.AttributeValueId}}"
-                    [checked]="attributeValue.IsChecked"
-                    (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,false,attributeValue.AttributeValue)">
+                    [checked]="attributeValue.IsChecked" (change)="getAttributeFilterProductList(attributeValue.AttributeValueId,false,attributeValue.AttributeValue)">
                     {{attributeValue.AttributeValue}}</mat-checkbox>
                 </div>
               </mat-expansion-panel>
@@ -91,8 +86,7 @@
               <a routerLink="/home">Home </a>
             </li>
             <li class="breadcrumb-item">
-              <a [routerLink]="['/productlist']"
-                [queryParams]="{categoryId:encryptedCategoryId,subcategoryId:encryptedSubCategoryId,brandId:encryptedBrandId}">{{categoryName}}</a>
+              <a [routerLink]="['/productlist']" [queryParams]="{categoryId:encryptedCategoryId,subcategoryId:encryptedSubCategoryId,brandId:encryptedBrandId}">{{categoryName}}</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">{{subCategoryName}}</li>
           </ol>
@@ -112,7 +106,7 @@
           </div>
         </div>
         <div class="row slider_list " *ngIf="dataSource!=null && dataSource.length>0">
-          <div class="col-6 col-sm-4" *ngFor="let product of dataSource">
+          <div class="col-6 col-sm-4 mb_30" *ngFor="let product of dataSource">
             <div class="list_item">
               <div class="ps_rl">
                 <div class="list_header">
@@ -121,8 +115,7 @@
                   <div class="_3gDSOa _32A6AP">
                     <div class="DsQ2eg"><svg xmlns="http://www.w3.org/2000/svg" class="_2oLiqr" width="16" height="16"
                         viewBox="0 0 20 16">
-                        <path
-                          d="M8.695 16.682C4.06 12.382 1 9.536 1 6.065 1 3.219 3.178 1 5.95 1c1.566 0 3.069.746 4.05 1.915C10.981 1.745 12.484 1 14.05 1 16.822 1 19 3.22 19 6.065c0 3.471-3.06 6.316-7.695 10.617L10 17.897l-1.305-1.215z"
+                        <path d="M8.695 16.682C4.06 12.382 1 9.536 1 6.065 1 3.219 3.178 1 5.95 1c1.566 0 3.069.746 4.05 1.915C10.981 1.745 12.484 1 14.05 1 16.822 1 19 3.22 19 6.065c0 3.471-3.06 6.316-7.695 10.617L10 17.897l-1.305-1.215z"
                           fill="#2874F0" class="_35Y7Yo" stroke="#FFF" fill-rule="evenodd" opacity=".9"></path>
                       </svg></div>
                   </div>
@@ -135,15 +128,13 @@
                       <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
                       <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
                           aria-hidden="true"></i>{{product.ProductMRP}}</span>
-                      <span class="p_off"
-                        *ngIf="product.ProductDiscount!=null && product.ProductDiscount>0">{{product.ProductDiscount}}
+                      <span class="p_off" *ngIf="product.ProductDiscount!=null && product.ProductDiscount>0">{{product.ProductDiscount}}
                         off</span>
                     </p>
                     <button mat-button class="buy_now">Buy</button>
                   </div>
                 </div>
-                <a class="anchor" *ngIf="product.ProductSEOUrl!=''" class="anchor"
-                  routerLink="/productdetails/{{product.ProductSEOUrl}}"
+                <a class="anchor" *ngIf="product.ProductSEOUrl!=''" class="anchor" routerLink="/productdetails/{{product.ProductSEOUrl}}"
                   [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailId}"></a>
                 <a class="anchor" *ngIf="product.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
                   [queryParams]="{p:product.EncryptedProductId,pd:product.EncryptedProductDetailId}"></a>
@@ -151,10 +142,12 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-12" *ngIf="dataSource!=null && dataSource.length>0">
-          <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[9, 12, 24]" [showFirstLastButtons]="true"
-            [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
-          </mat-paginator>
+        <div class="row">
+          <div class="col-sm-12" *ngIf="dataSource!=null && dataSource.length>0">
+            <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[9, 12, 24]" [showFirstLastButtons]="true"
+              [length]="totalSize" [pageIndex]="currentPage" (page)="pageEvent = handlePage($event)">
+            </mat-paginator>
+          </div>
         </div>
       </div>
 

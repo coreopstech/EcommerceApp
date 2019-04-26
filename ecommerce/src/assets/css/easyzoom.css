@@ -1,10 +1,10 @@
 /**
  * EasyZoom core styles
  */
+ .product_details{
+	 position: relative;
+ }
 .easyzoom {
-	position: relative;
-
-	/* 'Shrink-wrap' the element */
 	display: inline-block;
 	*display: inline;
 	*zoom: 1;
@@ -31,7 +31,6 @@
 	top: 50%;
 	left: 50%;
 	z-index: 150;
-	width: 10em;
 	margin: -1em 0 0 -5em;
 	line-height: 2em;
 	text-align: center;
@@ -40,10 +39,20 @@
 }
 
 .easyzoom-flyout {
+	right: 0;
+	left: 100% !important;
 	position:absolute;
 	z-index: 100;
-	overflow: hidden;
 	background: #FFF;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	background: #fff;
+	box-shadow: 0 4px 20px 0 rgba(0,0,0, .2);
+}
+.easyzoom-flyout img{
+	padding: 20px;
+	overflow: hidden;
 }
 
 /**

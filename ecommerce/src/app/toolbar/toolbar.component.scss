@@ -22,6 +22,9 @@
 }
 
 .top-toolbar {
+    position: fixed;
+    z-index: 9999;
+    top:0;
     &.mat-toolbar {
         background: $bg;
     }

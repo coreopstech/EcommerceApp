@@ -17,6 +17,10 @@ declare var jQuery: any;
 })
 
 export class ProductDetailsComponent implements OnInit {
+  slideConfig = {
+    slidesToShow: 6,
+    slidesToScroll: 6,
+  };
   loading = false;
   submitted = false;
   bulkOrderData: BulkOrder;
@@ -84,6 +88,21 @@ export class ProductDetailsComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000)
+
+    $('.slider-for').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.slider-nav'
+    });
+    $('.slider-nav').slick({
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      asNavFor: '.slider-for',
+      dots: true,
+      focusOnSelect: true
+    });
   }
   getColorList(productId: string, productDetailId: string): any {
     this.productDetailService.getProductColorList(productId, productDetailId).subscribe(

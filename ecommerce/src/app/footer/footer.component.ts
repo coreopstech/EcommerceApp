@@ -26,11 +26,11 @@ export class FooterComponent implements OnInit {
     this.spinner.show();
 
     this.list=JSON.parse(localStorage.getItem('homedetails'));
-     this.footerMenuList=this.list.HomeFooterList;
-     this.settingModel=this.list.CommonSettingDetails;
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000)
+    this.footerMenuList=this.list.HomeFooterList;
+    this.settingModel = this.list.CommonSettingDetails;
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000)
       
       
       return this.parentMenuList = this.footerMenuList.filter((x) => x.ParentId === 0);

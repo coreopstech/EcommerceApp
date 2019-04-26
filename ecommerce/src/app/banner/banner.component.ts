@@ -20,8 +20,8 @@ export class BannerComponent implements OnInit {
   slideConfig = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    /* autoplay: true,
-    autoplaySpeed: 2000, */
+    autoplay: true,
+    autoplaySpeed: 2000,
   };
   constructor(private homeService:HomeService,
     private spinner:NgxSpinnerService) { }

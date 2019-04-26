@@ -7,12 +7,12 @@ import { UserAddress } from '../_models/userAddress';
 
 
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-    })
-};
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//         'Content-Type': 'application/json',
+//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
+//     })
+// };
 @Injectable()
 export class UserService {
     baseUrl = environment.baseUrl;

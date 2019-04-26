@@ -4,12 +4,12 @@ import { map } from 'rxjs/operators';
 import { environment } from './../../environments/environment.prod';
 import { User } from './../_models/user';
 
-const httpOptions = {
-    headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        //   'Authorization': 'my-auth-token'
-    })
-};
+// const httpOptions = {
+//     headers: new HttpHeaders({
+//         'Content-Type': 'application/x-www-form-urlencoded',
+//         //   'Authorization': 'my-auth-token'
+//     })
+// };
 @Injectable()
 export class AuthenticationService {
     customerName: string;

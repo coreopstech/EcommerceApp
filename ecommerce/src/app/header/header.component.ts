@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       }, 1000)
       return this.parentMenuList = this.headerMenuList.filter((x) => x.ParentId === 0);
   }
-  GetLevel1sList(id): any {
+  GetLevel1sList(id: any) {
     return this.headerMenuList.filter((x) => x.ParentId === id);
   }
 }
