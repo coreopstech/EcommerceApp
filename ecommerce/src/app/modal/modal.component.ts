@@ -6,6 +6,7 @@ import { AuthenticationService } from './../_services/authentication.service';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { UserService } from '../_services/userService';
+import { ToastrManager } from 'ng6-toastr-notifications';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -14,14 +15,15 @@ import { UserService } from '../_services/userService';
 export class ModalComponent implements OnInit {
   modalData: any;
   loginModel: User;
-  registerModel:User;
-  submitted=false;
+  registerModel: User;
+  submitted = false;
   returnUrl: string;
   constructor(
     private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private toast:ToastrManager,
     private route: ActivatedRoute,
     private router: Router,
     public dialogRef: MatDialogRef<ModalComponent>,
@@ -43,29 +45,29 @@ export class ModalComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-    this.registerModel=new User();
-    this.loginModel=new User();
+    this.registerModel = new User();
+    this.loginModel = new User();
   }
   createAccount() {
     this.modalData.action = 'register';
     this.modalData.title = 'Create New Account';
-    this.registerModel=new User();
+    this.registerModel = new User();
   }
 
   doLogin() {
+
     this.modalData.action = 'login';
     this.modalData.title = 'Login';
     this.loginModel = new User();
     this.loginModel.EmailModile = "";
     this.loginModel.Password = "";
+
   }
 
   close() {
     this.dialogRef.close();
   }
   onLogin() {
-    console.log(this.loginModel);
-    alert(this.loginModel.EmailModile);
     this.spinner.show();
     this.submitted = true;
     this.authenticationService.login(this.loginModel)
@@ -80,8 +82,7 @@ export class ModalComponent implements OnInit {
             this.router.navigate([this.returnUrl]);
           }
           else {
-
-            this.snackBar.open(result.Message, '', {
+            this.toast.successToastr(result.Message, '', {
               duration: 3000,
             });
             setTimeout(() => {
@@ -100,10 +101,9 @@ export class ModalComponent implements OnInit {
         });
   }
   onRegister() {
-    
+
     this.spinner.show();
-    if(this.registerModel.Password.trim().toLowerCase()!=this.registerModel.ConfirmPassword.trim().toLowerCase())
-    {
+    if (this.registerModel.Password.trim().toLowerCase() != this.registerModel.ConfirmPassword.trim().toLowerCase()) {
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
@@ -144,4 +144,41 @@ export class ModalComponent implements OnInit {
           }, 1000)
         });
   }
+  DeleteAddress(encryptedAddressId) {
+    this.spinner.show();
+    this.userService.DeleteAddressDetails(encryptedAddressId)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.dialogRef.close();
+            this.toast.successToastr(result.Message, '', {
+              duration: 3000,
+            });
+            this.router.navigate([this.returnUrl]);
+          }
+          else {
+
+            this.toast.errorToastr(result.Message, '', {
+              duration: 3000,
+            });
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toast.errorToastr(error, '', {
+            duration: 3000,
+          });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+  }
+
 }

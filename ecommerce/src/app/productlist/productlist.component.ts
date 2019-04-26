@@ -51,6 +51,8 @@ export class ProductListComponent implements OnInit {
   isB2B = false;
   isBulkOrder = false;
   isPriceVisible = true;
+  isColorListVisible=0;
+  isVariantListVisible=0;
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -111,9 +113,9 @@ export class ProductListComponent implements OnInit {
 
   }
   onPriceChange(event: any) {
-    
+
     this.filterProductsByPrice(event.value);
-    
+
   }
   findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
     this.spinner.show();
@@ -238,6 +240,7 @@ export class ProductListComponent implements OnInit {
       });
 
     }
+
     return this.filterProductColorList;
   }
   getAtttributeValueListByGroup(id): any {
@@ -297,7 +300,7 @@ export class ProductListComponent implements OnInit {
     }
     this.filterProducts();
   }
-  getProductPriceChange(price:number): void {
+  getProductPriceChange(price: number): void {
     this.filterProducts();
   }
   getColorFilterProductList(id: number, isChecked: boolean, color: string): void {
@@ -355,9 +358,9 @@ export class ProductListComponent implements OnInit {
 
       });
   }
-  filterProductsByPrice(price:number) {
+  filterProductsByPrice(price: number) {
     this.spinner.show();
-    this.productService.getProductByPriceFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes,price).subscribe(
+    this.productService.getProductByPriceFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes, price).subscribe(
       result => {
         if (result.IsSuccess) {
           this.dataSource = new MatTableDataSource<Element>(result.Data);
@@ -378,6 +381,12 @@ export class ProductListComponent implements OnInit {
 
       });
   }
+  ShowColorList(isShowMore: number) {
+    
+    this.isColorListVisible=isShowMore;
+    //this.getColorList();
+  }
+
 
 }
 export class FilterAttributeItems {

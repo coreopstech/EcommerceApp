@@ -14,7 +14,6 @@ export class CustomerAddressComponent implements OnInit {
 
   isLogged = false;
   customerAddressList: any;
-  addressForm: FormGroup;
   customerAddress= new UserAddress();
   isAddEdit = false;
   submitted = false;
@@ -96,7 +95,7 @@ export class CustomerAddressComponent implements OnInit {
         });
 
   }
-  get f() { return this.addressForm.controls; }
+
 
   onSubmit() {
     this.spinner.show();
@@ -156,7 +155,6 @@ export class CustomerAddressComponent implements OnInit {
 
   }
   ResetAddressList() {
-    this.addressForm.reset();
     this.loading = false;
     this.isAddEdit = false;
     this.editRecordId = "";

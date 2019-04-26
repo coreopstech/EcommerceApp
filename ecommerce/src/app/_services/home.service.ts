@@ -6,6 +6,7 @@ import { environment } from './../../environments/environment.prod';
 @Injectable()
 export class HomeService {
     baseUrl=environment.baseUrl;
+    private data : any;  
     constructor(private http: HttpClient) {
     }
     getBannerList():any {
@@ -27,4 +28,7 @@ export class HomeService {
                 return result;
             }));
     }
+   
+  
+   
 }

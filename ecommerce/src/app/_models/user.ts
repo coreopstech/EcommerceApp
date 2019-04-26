@@ -10,5 +10,6 @@
     Mobile:string;
     Email:string;
     GenderId:number;
+    GenderIdWithFormat:string;
     EmailModile:string;
 }

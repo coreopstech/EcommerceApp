@@ -55,10 +55,10 @@ export class ViewCartComponent implements OnInit {
         }
         else {
           this.productData = result.Data;
-          return this.productCartList = result.Data.productList;
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
+          return this.productCartList = result.Data.productList;
         }
       },
       (err) => {
@@ -81,10 +81,11 @@ export class ViewCartComponent implements OnInit {
         }
         else {
           this.savedProductData = result.Data;
-          return this.productSavedForLaterList = result.Data.productList;
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
+          return this.productSavedForLaterList = result.Data.productList;
+          
         }
       },
       (err) => {

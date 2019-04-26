@@ -41,6 +41,7 @@
                   [value]="colorName.ColorId">
                   {{colorName.ColorValue}}</mat-checkbox>
               </div>
+
             </mat-expansion-panel>
             <div *ngIf="filterProductVariantGroupList!=null && filterProductVariantGroupList.length>0">
               <mat-expansion-panel class="mat-elevation-z" *ngFor="let variantGroup of filterProductVariantGroupList">

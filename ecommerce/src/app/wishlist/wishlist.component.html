@@ -1,82 +1,88 @@
 <div class="container">
-  <div class="_5tT1ZC">
-    <div class="bfHz-X">
-      <div class="_1GRhLX HOy7kc">
-        <div class="_210VZM" *ngIf="wishList==null "><img
-            src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/mywishlist-empty_346219.png"><span
-            class="_3Lk2d2">Empty Wishlist</span><span class="_3uF3Z6">You have no items in your wishlist. Start
-            adding!</span></div>
-        <div class="_210VZM" *ngIf="wishList!=null && !wishList.length>0"><img
-            src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/mywishlist-empty_346219.png"><span
-            class="_3Lk2d2">Empty Wishlist</span><span class="_3uF3Z6">You have no items in your wishlist. Start
-            adding!</span></div>
-        <div *ngIf="wishList!=null && wishList.length>0">
-          <div class="_3oWply"><span>My Wishlist ({{totalWishCount}})</span></div>
-          <div class="_2W9EDl" *ngFor="let wish of wishList">
-            <a *ngIf="wish.ProductSEOUrl!=''" routerLink="/productdetails/{{wish.ProductSEOUrl}}"
-              [queryParams]="{p:wish.EncryptedProductId,pd:wish.EncryptedProductDetailsId}" target="_blank"
-              rel="noopener noreferrer" class="_3rAVLS">
-              <div class="_3Qz99L">
-                <div class="_3Gd3Ff">
-                  <div>
-                    <div class="_3BTv9X" style="height: 100px; width: 100px;"><img class="_1Nyybr  _30XEf0"
-                        alt="wish.ProductName" src="{{wish.ImageUrl}}">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="_5MNM30 row">
-                <div class="col col-10-12">
-                  <div class="TLVGit">{{wish.ProductName}}</div>
-                  <div class="niH0FQ _36Fcw_"><span id="productRating_LSTMOBF944XVM3EMXTVYGI7ZM_MOBF944XVM3EMXTV_"
-                      class="_2_KrJI">
-                      <div class="hGSR34">{{wish.AverageRating}}<img
-                          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
-                          class="_2lQ_WZ"></div>
-                    </span><span class="_38sUEc">({{wish.TotalRating}})</span></div>
-                  <div class="IU4905"><img height="21"
-                      src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/fa_8b4b59.png"></div>
-                  <div class="_2UOma9">
-                    <div class="_1uv9Cb">
-                      <div class="_1vC4OE iljvCk">₹{{wish.PriceWithFormat}}</div>
-                      <div class="_3auQ3N _2kFYng">₹{{wish.MRPWithFormat}}</div>
-                      <div class="VGWI6T"><span>{{wish.DiscountPercentage}}% off</span></div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </a>
-
-            <div class="col col-2-12 _1uJCYU">
-              <div class="_20yN1P _3FfcKU _3piyP1">
-
-                <div class="col-md-6"><button (click)="MoveToCart(wish.EncryptedId)" class="_2AkmmA _3mTmRq">Move To
-                    Cart</button></div>
-                <div class="col-md-6"><button (click)="ShowRemoveModel(wish.EncryptedId)"
-                    class="_2AkmmA _3mTmRq">Remove</button></div>
-
-
-                <div id="{{wish.EncryptedId}}" style="display: none;">
-                  <div class="_2iz2Ct _3Zqph8 U_Sam7 _1WTi3x">
-                    <div class="_1g1qL6"></div>
-                    <div class="M-og0Q">
-                      <div class="_3SOooe">
-                        <div><span class="_1uJQ0D">Are you sure you want to remove this product?</span>
-                          <div><button (click)="HideRemoveModel(wish.EncryptedId)"
-                              class="_2AkmmA _3mTmRq">CANCEL</button><button
-                              (click)="RemoveToWishList(wish.EncryptedId)" class="_2AkmmA _1WPB7I">YES,
-                              REMOVE</button></div>
+  <div class="_1VD0UF">
+    <div class="_1b9jby row">
+      <app-accountmenu></app-accountmenu>
+      <div class="_5tT1ZC">
+        <div class="bfHz-X">
+          <div class="_1GRhLX HOy7kc">
+            <div class="_210VZM" *ngIf="wishList==null "><img
+                src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/mywishlist-empty_346219.png"><span
+                class="_3Lk2d2">Empty Wishlist</span><span class="_3uF3Z6">You have no items in your wishlist. Start
+                adding!</span></div>
+            <div class="_210VZM" *ngIf="wishList!=null && !wishList.length>0"><img
+                src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/mywishlist-empty_346219.png"><span
+                class="_3Lk2d2">Empty Wishlist</span><span class="_3uF3Z6">You have no items in your wishlist. Start
+                adding!</span></div>
+            <div *ngIf="wishList!=null && wishList.length>0">
+              <div class="_3oWply"><span>My Wishlist ({{totalWishCount}})</span></div>
+              <div class="_2W9EDl" *ngFor="let wish of wishList">
+                <a *ngIf="wish.ProductSEOUrl!=''" routerLink="/productdetails/{{wish.ProductSEOUrl}}"
+                  [queryParams]="{p:wish.EncryptedProductId,pd:wish.EncryptedProductDetailsId}" target="_blank"
+                  rel="noopener noreferrer" class="_3rAVLS">
+                  <div class="_3Qz99L">
+                    <div class="_3Gd3Ff">
+                      <div>
+                        <div class="_3BTv9X" style="height: 100px; width: 100px;"><img class="_1Nyybr  _30XEf0"
+                            alt="wish.ProductName" src="{{wish.ImageUrl}}">
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="_3Ilug0"></div>
+                  <div class="_5MNM30 row">
+                    <div class="col col-10-12">
+                      <div class="TLVGit">{{wish.ProductName}}</div>
+                      <div class="niH0FQ _36Fcw_"><span id="productRating_LSTMOBF944XVM3EMXTVYGI7ZM_MOBF944XVM3EMXTV_"
+                          class="_2_KrJI">
+                          <div class="hGSR34">{{wish.AverageRating}}<img
+                              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
+                              class="_2lQ_WZ"></div>
+                        </span><span class="_38sUEc">({{wish.TotalRating}})</span></div>
+                      <div class="IU4905"><img height="21"
+                          src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/fa_8b4b59.png"></div>
+                      <div class="_2UOma9">
+                        <div class="_1uv9Cb">
+                          <div class="_1vC4OE iljvCk">₹{{wish.PriceWithFormat}}</div>
+                          <div class="_3auQ3N _2kFYng">₹{{wish.MRPWithFormat}}</div>
+                          <div class="VGWI6T"><span>{{wish.DiscountPercentage}}% off</span></div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </a>
+
+                <div class="col col-2-12 _1uJCYU">
+                  <div class="_20yN1P _3FfcKU _3piyP1">
+
+                    <div class="col-md-6"><button (click)="MoveToCart(wish.EncryptedId)" class="_2AkmmA _3mTmRq">Move To
+                        Cart</button></div>
+                    <div class="col-md-6"><button (click)="ShowRemoveModel(wish.EncryptedId)"
+                        class="_2AkmmA _3mTmRq">Remove</button></div>
+
+
+                    <div id="{{wish.EncryptedId}}" style="display: none;">
+                      <div class="_2iz2Ct _3Zqph8 U_Sam7 _1WTi3x">
+                        <div class="_1g1qL6"></div>
+                        <div class="M-og0Q">
+                          <div class="_3SOooe">
+                            <div><span class="_1uJQ0D">Are you sure you want to remove this product?</span>
+                              <div><button (click)="HideRemoveModel(wish.EncryptedId)"
+                                  class="_2AkmmA _3mTmRq">CANCEL</button><button
+                                  (click)="RemoveToWishList(wish.EncryptedId)" class="_2AkmmA _1WPB7I">YES,
+                                  REMOVE</button></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="_3Ilug0"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

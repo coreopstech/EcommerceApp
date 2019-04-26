@@ -1,0 +1,98 @@
+<div id="container">
+  <div class="_1VD0UF">
+    <div class="_1b9jby row">
+      <app-accountmenu></app-accountmenu>
+      <div class="_5tT1ZC">
+        <div class="bfHz-X">
+          <div class="_1GRhLX">
+            <div class="_1JMKW3">
+              <div class="l022CW">
+                <div class="_2aK_Hc"><span class="_10it6k">Personal Information</span>
+                  <span *ngIf="!isEditable" class="_1x4IU1" (click)="EditUserDetails(true)">Edit</span>
+                </div>
+                <form (ngSubmit)="profileForm.form.valid && onRegister()" #profileForm="ngForm"
+                  *ngIf="profileModel!=null">
+
+                  <div class="col-sm-4">
+                    <mat-form-field class="example-full-width" >
+                      <input matInput placeholder="First Name"  [disabled]="!isEditable" [(ngModel)]="profileModel.FirstName" name="firstName"
+                        #firstName="ngModel" [ngClass]="{ 'is-invalid': profileForm.submitted && firstName.invalid }"
+                        required />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-4">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Middle Name" [disabled]="!isEditable" [(ngModel)]="profileModel.MiddleName" name="middleName"
+                        #middleName="ngModel"
+                        [ngClass]="{ 'is-invalid': profileForm.submitted && middleName.invalid }" />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-4">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Last Name" [disabled]="!isEditable" [(ngModel)]="profileModel.LastName" name="lastName"
+                        #lastName="ngModel" [ngClass]="{ 'is-invalid': profileForm.submitted && lastName.invalid }"
+                        required />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-4">
+                      <mat-radio-group aria-label="Select an option" [disabled]="!isEditable"
+                      [(ngModel)]="profileModel.GenderIdWithFormat" name="genderId" #genderId="ngModel">
+                      <mat-radio-button value="1">Male</mat-radio-button>
+                      <mat-radio-button value="2">Female</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Mobile" [disabled]="!isEditable" [(ngModel)]="profileModel.Mobile" name="mobile" maxlength="10"
+                        #mobile="ngModel" [ngClass]="{ 'is-invalid': profileForm.submitted && mobile.invalid }"
+                        required />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-4">
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Email" type="email" [disabled]="!isEditable" [(ngModel)]="profileModel.Email" name="email"
+                        #email="ngModel" [ngClass]="{ 'is-invalid': profileForm.submitted && email.invalid }"
+                        required />
+                    </mat-form-field>
+                  </div>
+                
+                  <button *ngIf="isEditable" type="submit" class="bg_green" color="primary" mat-button>Register</button>
+                </form>
+              </div>
+              <div class="_1StnW- _2MZYr7">
+                <div class="_27biyA">FAQs</div>
+                <div>
+                  <h4 id="what-happens-when-i-update-my-email-address-or-mobile-number-">What happens when I update my
+                    email address (or mobile number)?</h4>
+                  <p>Your login email id (or mobile number) changes, likewise. You'll receive all your account related
+                    communication on your updated email address (or mobile number).</p>
+                  <h4 id="when-will-my-flipkart-account-be-updated-with-the-new-email-address-or-mobile-number-">When
+                    will
+                    my Flipkart account be updated with the new email address (or mobile number)?</h4>
+                  <p>It happens as soon as you confirm the verification code sent to your email (or mobile) and save the
+                    changes.</p>
+                  <h4
+                    id="what-happens-to-my-existing-flipkart-account-when-i-update-my-email-address-or-mobile-number-">
+                    What happens to my existing Flipkart account when I update my email address (or mobile number)?</h4>
+                  <p>Updating your email address (or mobile number) doesn't invalidate your account. Your account
+                    remains
+                    fully functional. You'll continue seeing your Order history, saved information and personal details.
+                  </p>
+                  <h4 id="does-my-seller-account-get-affected-when-i-update-my-email-address-">Does my Seller account
+                    get
+                    affected when I update my email address?</h4>
+                  <p>Flipkart has a 'single sign-on' policy. Any changes will reflect in your Seller account also.</p>
+                </div>
+              </div>
+              <div class="_3uzK7o" (click)="DeactivateUserAccount()">Deactivate Account</div>
+            </div>
+            <div><img width="100%" height="auto"
+                src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/myProfileFooter_0cedbe.png"
+                style="vertical-align: middle;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,12 +7,17 @@ import { UserAddress } from '../_models/userAddress';
 
 
 
-// const httpOptions = {
-//     headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-//     })
-// };
+var token = '';
+if (localStorage.getItem("currentidentity") != null) {
+    token = JSON.parse(localStorage.getItem("currentidentity")).token;
+}
+const httpOptions = {
+    headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    })
+};
+
 @Injectable()
 export class UserService {
     baseUrl = environment.baseUrl;
@@ -53,8 +58,40 @@ export class UserService {
                 return result;
             }));
     }
+    saveUserDetails(user: User) {
+        return this.http.post<any>(this.baseUrl + `User/SaveUserDetails`, user)
+            .pipe(map(result => {
+                if (result.IsSuccess) {
+                    
+                }
+                return result;
+            }));
+    }
+    saveUserData(user: User) {
+        return this.http.post<any>(this.baseUrl + `Product/UpdateUserDetails`, user)
+            .pipe(map(result => {
+                if (result.IsSuccess) {
+                    
+                }
+                return result;
+            }));
+    }
     getUserDetails(userEncryptedId: string) {
         return this.http.get<any>(this.baseUrl + `Product/GetUserDetails/` + userEncryptedId)
+            .pipe(map(result => {
+
+                return result;
+            }));
+    }
+    getUserData() {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `User/GetUserDetail/` + userEncryptedId)
             .pipe(map(result => {
 
                 return result;
@@ -80,6 +117,13 @@ export class UserService {
                 return result;
             }));
     }
+    DeleteAddressDetails(EncryptedAddressId: string) {
+        return this.http.get<any>(this.baseUrl + `User/DeleteAddress/` + EncryptedAddressId)
+            .pipe(map(result => {
+
+                return result;
+            }));
+    }
     getCityList(stateId: string) {
         return this.http.get<any>(this.baseUrl + `Product/GetCityList/` + stateId)
             .pipe(map(result => {
@@ -97,8 +141,13 @@ export class UserService {
             }));
     }
     getTotalCartItems() {
-        var user = JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId = user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `Product/GetTotalCartItmes/` + userEncryptedId)
             .pipe(map(result => {
                 return result;
@@ -110,6 +159,20 @@ export class UserService {
     //
     getUserAddressDetailsList(userEncryptedId: string) {
         return this.http.get<any>(this.baseUrl + `User/GetUserAddressDetails/` + userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    DeactiveUserAccount()
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `User/DeactiveUserAccount/` + userEncryptedId)
             .pipe(map(result => {
                 return result;
             }));

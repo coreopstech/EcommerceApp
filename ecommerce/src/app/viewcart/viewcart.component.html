@@ -129,10 +129,21 @@
             </div>
           </div>
         </div>
-        <div class="_2qUgWb _3uHNGv _3CKRe3" style="height: auto;" *ngIf="productCartList!=null && productCartList.length>0">
-
-        </div>
-        <div class="_2qUgWb _3uHNGv _3CKRe3">
+      </div>
+      <div class="_2qUgWb _3uHNGv _3CKRe3" style="height: auto;"
+        *ngIf="productCartList!=null && productCartList.length>0">
+        <div class="_2zqhDs _1lD380" style="left: auto; top: 248.6px;">
+          <div class="_13wOiu"><span class="_2huYiT">Price details</span>
+            <div class="_2twTWD">
+              <div class="hJYgKM">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
+              <div class="hJYgKM">Delivery Charges<span><span class="_27kB8M _3Oa-sk">Free</span></span></div>
+              <div class="_3xFQAD">
+                <div class="hJYgKM">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
+              </div>
+            </div>
+            <div class="_34jRkt"><span class="_27kB8M">Your Total Savings on this order <div class="QE-hRv">
+                  ₹<span>{{productData.DiscountPriceWithFormat}}</span></div></span></div>
+          </div>
         </div>
       </div>
 

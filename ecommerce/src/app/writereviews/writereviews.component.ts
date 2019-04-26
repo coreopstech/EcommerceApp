@@ -50,8 +50,11 @@ export class WriteReviewsComponent implements OnInit {
         this.encryptedReviewRatingId=params.pId;      
       });
     this.getReviewDetails();
+    
   }
-  getReviewDetails() {
+  getReviewDetails():any {
+    this.spinner.show();
+    
     this.reviewRatingService.getReviewRatingDetails(this.orderDetailsId, this.reviewRatingId)
       .subscribe(
         result => {
@@ -61,14 +64,16 @@ export class WriteReviewsComponent implements OnInit {
               this.productData = result.Data.ProductDetails;
             if (result.Data.ProductDetails != null && result.Data.ProductDetails.ProductDetailsList.length > 0)
               this.productDetails = result.Data.ProductDetails.ProductDetailsList[0];
-              
             if (result.Data.ProductDetails.ProductImagesList != null && result.Data.ProductDetails.ProductImagesList.filter((x) => x.ImageType == 1).length > 0) {
               this.productImageList = result.Data.ProductDetails.ProductImagesList.filter((x) => x.ImageType == 1);
               this.productImageList = this.productImageList[0];
             }
+    
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
+    
+            return this.reviewModel;
           }
           else {
             this.reviewModel.ReviewDescription='';

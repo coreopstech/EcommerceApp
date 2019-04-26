@@ -104,7 +104,7 @@ export class ToolbarComponent implements OnInit {
     }
   }
   logout() {
-    alert('logout');
+    
     this.authenticationService.logout();
     this.router.navigate(["/home"]);
   }

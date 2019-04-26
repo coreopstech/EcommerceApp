@@ -7,11 +7,14 @@ export class UserAddress {
     MobileNumber:string;
     PinCode:string;
     Address:string;
-    CityId:string;
-    StateId:string;
+    CityId:number;
+    StateId:number;
+    StateIdWithFormat:string;
+    CityIdWithFormat:string;
     Landmark:string;
     AlternateMobileNumber:string;
     AddressType:number;
+    AddressTypeWithFormat:string;
     CityList:any;
     StateList:any;
 }

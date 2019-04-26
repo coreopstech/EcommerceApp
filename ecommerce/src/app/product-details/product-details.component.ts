@@ -8,6 +8,7 @@ import { UserService } from '../_services/userService';
 import { FormBuilder } from '@angular/forms';
 import { WishListService } from '../_services/wishListService';
 import { ProductDetailService } from '../_services/productDetailsService';
+import { ToastrManager } from 'ng6-toastr-notifications';
 declare const $;
 declare var jQuery: any;
 @Component({
@@ -39,9 +40,10 @@ export class ProductDetailsComponent implements OnInit {
   imagesUrl: any;
   myCart: Cart[] = new Array();
   buyNowCart: Cart;
+  maximumQuantity = 0;
   constructor(private route: ActivatedRoute, private router: Router, private productDetailService: ProductDetailService,
-    private spinner: NgxSpinnerService, 
-    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
+    private toast: ToastrManager,
     private userService: UserService,
     private wishlistService: WishListService,
     private formBuilder: FormBuilder,
@@ -60,12 +62,12 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
-    this.route.queryParams
-    .subscribe(params => {
-      this.productId = params.p;
-      this.productDetailId =  params.pd;
-    });
+        this.route.queryParams
+      .subscribe(params => {
+        this.productId = params.p;
+        this.productDetailId = params.pd;
+      });
+
     this.products = this.route.snapshot.data['productDetails'];
     this.productDetails = this.products.Data;
     this.productImageList = this.productDetails.ProductImagesList;
@@ -85,62 +87,75 @@ export class ProductDetailsComponent implements OnInit {
         api1.swap($this.data('standard'), $this.attr('href'));
       });
     });
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000)
-
-    $('.slider-for').slick({
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: false,
-      fade: true,
-      asNavFor: '.slider-nav'
-    });
-    $('.slider-nav').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      asNavFor: '.slider-for',
-      dots: true,
-      focusOnSelect: true
-    });
+    
   }
   getColorList(productId: string, productDetailId: string): any {
+    this.spinner.show();
     this.productDetailService.getProductColorList(productId, productDetailId).subscribe(
       result => {
         if (result.IsSuccess === true) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
           return this.productColorList = result.Data;
         }
         else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
         }
       },
       (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
 
       });
   }
 
   getVariantList(productId: string, productDetailId: string): any {
+    this.spinner.show();
     this.productDetailService.getProductVariantList(productId, productDetailId).subscribe(
       result => {
         if (result.IsSuccess === true) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
           return this.productVariantList = result.Data;
         }
         else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
         }
       },
       (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
 
       });
   }
   getVariantGroupList(productId: string, productDetailId: string): any {
+    this.spinner.show();
     this.productDetailService.getProductVariantGroupList(productId, productDetailId).subscribe(
       result => {
         if (result.IsSuccess === true) {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
           return this.productVariantGroupList = result.Data;
         }
         else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
         }
       },
       (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
 
       });
   }
@@ -160,24 +175,25 @@ export class ProductDetailsComponent implements OnInit {
       this.productDetailService.saveProductIntoCart(encryptedproductDetailsId, encryptedProductId).subscribe(
         result => {
           if (result.IsSuccess === true) {
-            this.snackBar.open('Added to bag', '', {
-              duration: 3000,
-            });
+            this.toast.successToastr('Added to bag', '');
             setTimeout(() => {
               this.spinner.hide();
+              
             }, 1000)
           }
           else {
             setTimeout(() => {
               this.spinner.hide();
+              
             }, 1000)
           }
         },
         (err) => {
           setTimeout(() => {
             this.spinner.hide();
+            
           }, 1000)
-
+          
         });
     }
     else {
@@ -185,35 +201,27 @@ export class ProductDetailsComponent implements OnInit {
         this.myCart = JSON.parse(localStorage.getItem("cartList"));
       if (this.myCart != null && this.myCart.length > 0 && this.myCart.filter((x) => x.IsSavedForLater == false).length > 0) {
         var totalProduct = this.myCart.filter((x) => x.ProductDetailsId === productDetailsId && x.IsSavedForLater == false).length;
-        if (totalProduct == 4) {
-          this.snackBar.open("Only 4 items allowed", '', {
-            duration: 3000,
-          });
+        if (totalProduct == this.maximumQuantity) {
+          this.toast.infoToastr("Only" + this.maximumQuantity + "items allowed", '');
         }
         else {
           this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
           localStorage.setItem("cartList", JSON.stringify(this.myCart));
-          this.snackBar.open("Added to bag", '', {
-            duration: 3000,
-          });
+          this.toast.successToastr("Added to bag");
         }
       }
       else {
         this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
         localStorage.setItem("cartList", JSON.stringify(this.myCart));
-        this.snackBar.open("Added to bag", '', {
-          duration: 3000,
-        });
+        this.toast.successToastr("Added to bag");
       }
       setTimeout(() => {
         this.spinner.hide();
+        
       }, 1000)
     }
-    setTimeout(() => {
-      this.spinner.hide();
-      this.router.navigate(["/viewcart"]);
-    }, 1000)
     this.userService.changeCartValue(0);
+    this.router.navigate(["/viewcart"]);
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {
     this.spinner.show();
@@ -225,8 +233,8 @@ export class ProductDetailsComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000)
-    localStorage.setItem('buynow', JSON.stringify({ itemId: encryptedproductDetailsId, quantity:1 }));
-    this.router.navigate(['checkout'],{ queryParams: { otracker:"BuyNow_Click" } });
+    localStorage.setItem('buynow', JSON.stringify({ itemId: encryptedproductDetailsId, quantity: 1 }));
+    this.router.navigate(['checkout'], { queryParams: { otracker: "BuyNow_Click" } });
   }
   AddToWishList(encryptedproductDetailsId, encryptedProductId) {
     this.spinner.show();
@@ -234,35 +242,23 @@ export class ProductDetailsComponent implements OnInit {
       this.wishlistService.saveProductIntoWishList(encryptedproductDetailsId, encryptedProductId).subscribe(
         result => {
           if (result.IsSuccess === true) {
-            this.snackBar.open("Added to your WishList", '', {
-              duration: 3000,
-            });
-            setTimeout(() => {
-              this.spinner.hide();
-            }, 1000)
+            this.toast.successToastr("Added to your WishList");
           }
           else {
-            setTimeout(() => {
-              this.spinner.hide();
-            }, 1000)
+     
           }
         },
         (err) => {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
+     
 
         });
     }
     else {
-      this.snackBar.open("Please login for wishlisting a product", '', {
-        duration: 3000,
-      });
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 1000)
-
+      this.toast.infoToastr("Please login for wishlisting a product");
     }
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000)
   }
   RemoveToWishList(encryptedproductDetailsId, encryptedProductId) {
     this.spinner.show();
@@ -270,10 +266,7 @@ export class ProductDetailsComponent implements OnInit {
       this.wishlistService.removeProductIntoWishList(encryptedproductDetailsId, encryptedProductId).subscribe(
         result => {
           if (result.IsSuccess === true) {
-            this.snackBar.open("Removed from your Wishlist", '', {
-              duration: 3000,
-            });
-            
+            this.toast.successToastr("Removed from your Wishlist");
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -297,22 +290,15 @@ export class ProductDetailsComponent implements OnInit {
     this.bulkOrderData = new BulkOrder();
     this.bulkOrderData.EncryptedProductDetailsId = encryptedproductDetailsId;
     this.bulkOrderData.EncryptedProductId = encryptedProductId;
-    this.bulkOrderData.MobileNumber="";
-    this.bulkOrderData.Email="";
-    this.bulkOrderData.ProductQuantity=0;
+    this.bulkOrderData.MobileNumber = "";
+    this.bulkOrderData.Email = "";
+    this.bulkOrderData.ProductQuantity = 0;
     jQuery('#BulkOrderModel').modal('show');
   }
   onSubmit() {
     this.spinner.show();
     this.submitted = true;
 
-    // stop here if form is invalid
-    // if (this.bulkForm.invalid) {
-    //   setTimeout(() => {
-    //     this.spinner.hide();
-    //   }, 1000)
-    //   return;
-    // }
 
     this.loading = true;
     this.productDetailService.saveBulkOrder(this.bulkOrderData)
@@ -326,17 +312,13 @@ export class ProductDetailsComponent implements OnInit {
 
             //this.router.navigate([this.returnUrl]);
             jQuery('#BulkOrderModel').modal('hide');
-            this.snackBar.open("Your Order has been Confirmed. Will connect with you soon!", '', {
-              duration: 3000,
-            });
-           // this.toast.success("Your Order has been Confirmed. Will connect with you soon!");
+            this.toast.successToastr("Your Order has been Confirmed. Will connect with you soon!");
+            // this.toast.success("Your Order has been Confirmed. Will connect with you soon!");
             this.loading = false;
           }
           else {
-            this.snackBar.open(result.Message, '', {
-              duration: 3000,
-            });
-            
+            this.toast.errorToastr(result.Message, '');
+
             this.loading = false;
             setTimeout(() => {
               this.spinner.hide();
@@ -345,9 +327,7 @@ export class ProductDetailsComponent implements OnInit {
 
         },
         error => {
-          this.snackBar.open(error, '', {
-            duration: 3000,
-          });
+          this.toast.errorToastr(error, '')
           this.loading = false;
           setTimeout(() => {
             this.spinner.hide();

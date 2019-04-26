@@ -24,7 +24,7 @@
             <a [routerLink]="">My Account</a>
             <ul class="my_account">
               <li>
-                <a href="javascript:void(0);">
+                <a routerLink="/account">
                    My Profile</a>
               </li>
               <li>
@@ -35,7 +35,7 @@
                 <a routerLink="/wishlist"> Whislist</a>
               </li>
               <li>
-                <a href="javascript:void(0);">  Notificatins
+                <a href="javascript:void(0);">  Notifications
                   <span class="badge badge-pill badge-light pull-right">2</span>
                 </a>
               </li>
@@ -45,7 +45,6 @@
               </li>
             </ul>
           </li>
-          <li  *ngIf="isUserLogged()"><a [routerLink]="">Whislist</a></li>
           <li>
             <a routerLink="/viewcart">
               <button mat-icon-button matBadge="{{totalItems}}" matBadgePosition="after" matBadgeColor="primary">
