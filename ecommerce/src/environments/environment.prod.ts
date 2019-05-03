@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl:"http://192.168.1.60/PublishEcommerceWebAPI/",
-  baseImageUrl:"http://192.168.1.60/PublishEcommerceWeb/Upload/ProductImages/",
+  baseUrl:"http://localhost/Ecommerce.WebApi/",
+  baseImageUrl:"http://localhost/Ecommerce.Web/Upload/ProductImages/",
 };

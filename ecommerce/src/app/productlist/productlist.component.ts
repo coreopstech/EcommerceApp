@@ -113,9 +113,7 @@ export class ProductListComponent implements OnInit {
 
   }
   onPriceChange(event: any) {
-
     this.filterProductsByPrice(event.value);
-
   }
   findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
     this.spinner.show();

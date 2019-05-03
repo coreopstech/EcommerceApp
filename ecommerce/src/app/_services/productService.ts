@@ -122,6 +122,13 @@ export class ProductService {
                 return result;
             }));
     }
+    getHomeProductList(encryptedSliderId)
+    {
+        return this.http.get<any>(this.baseUrl + `Product/GetHomeProductList/`+encryptedSliderId)
+        .pipe(map(result => {
+            return result;
+        }));
+    }
 
 
 }

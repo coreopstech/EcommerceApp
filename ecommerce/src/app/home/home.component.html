@@ -1,25 +1,50 @@
 <app-banner></app-banner>
 
-<section *ngIf="homeProductList!=null && homeProductList.length>0">
-    <div class="feature_list" *ngFor="let slides of homeProductList">
-        <div class="container">
-            <h1>{{slides.Title}}  <a routerLink="/productlist" class="view_all">View All</a></h1>
-            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
-                <div ngxSlickItem *ngFor="let slide of slides.HomeProductList" class="slide slider_list">
-                    <div class="list_item">
-                        <div class="list_header">
-                            <img src="{{ slide.ImageUrl }}" alt="" width="100%">
-                        </div>
-                        <div class="list_footer">
-                            <p class="list_heading">{{slide.ProductName}} </p>
-                            <p class="list_offer" *ngIf="slide.DiscountPercentage>0.00">Min {{slide.DiscountPercentageWithFormat}} off</p>
-                            <p class="buy_now">Buy Now</p>
+<section >
+    <div *ngIf="homeProductList!=null && homeProductList.length>0">
+        <div class="feature_list" *ngFor="let slides of homeProductList">
+            <div class="container">
+                <h1>{{slides.Title}} <a routerLink="/productlist" class="view_all">View All</a></h1>
+                <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+                    <div ngxSlickItem *ngFor="let slide of slides.HomeProductList" class="slide slider_list">
+                        <div class="list_item">
+                            <div class="list_header">
+                                <img src="{{ slide.ImageUrl }}" alt="" width="100%">
+                            </div>
+                            <div class="list_footer">
+                                <p class="list_heading">{{slide.ProductName}} </p>
+                                <p class="list_offer" *ngIf="slide.DiscountPercentage>0.00">Min
+                                    {{slide.DiscountPercentageWithFormat}} off</p>
+                                <p class="buy_now">Buy Now</p>
+                            </div>
+
+                            <a *ngIf="slide.ProductSEOUrl!=''" class="anchor"
+                                routerLink="/productdetails/{{slide.ProductSEOUrl}}"
+                                [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
+                            <a *ngIf="slide.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
+                                [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
                         </div>
 
-                        <a *ngIf="slide.ProductSEOUrl!=''" class="anchor" routerLink="/productdetails/{{slide.ProductSEOUrl}}"
-                        [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}" ></a>
-                        <a *ngIf="slide.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
-                        [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+    <div class="feature_list">
+        <div class="container">
+            <h1>Featured Marble Art Design <a routerLink="/productlist" class="view_all">View All</a></h1>
+            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+                <div ngxSlickItem *ngFor="let slide of slides" class="slide slider_list">
+                    <div class="list_item">
+                        <div class="list_header">
+                            <img src="{{ slide.img }}" alt="" width="100%">
+                        </div>
+                        <div class="list_footer">
+                            <p class="list_heading">Aquamarine </p>
+                            <p class="list_offer">Min 35% off</p>
+                            <p class="buy_now">Buy Now</p>
+                        </div>
+                        <a class="anchor" routerLink="/listing"></a>
                     </div>
 
                 </div>
@@ -37,7 +62,7 @@
                         </div>
                         <div class="list_footer">
                             <p class="list_heading">Aquamarine </p>
-                            <p class="list_offer" >Min 35% off</p>
+                            <p class="list_offer">Min 35% off</p>
                             <p class="buy_now">Buy Now</p>
                         </div>
                         <a class="anchor" routerLink="/listing"></a>

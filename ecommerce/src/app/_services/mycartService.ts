@@ -5,14 +5,6 @@ import { User } from './../_models/user';
 import { Cart } from './../_models/cart';
 import { environment } from './../../environments/environment.prod';
 
-<<<<<<< HEAD
-// const httpOptions = {
-//     headers: new HttpHeaders({
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem("currentidentity")).token
-//     })
-// };
-=======
 var token = '';
 if (localStorage.getItem("currentidentity") != null) {
     token = JSON.parse(localStorage.getItem("currentidentity")).token;
@@ -23,7 +15,6 @@ const httpOptions = {
         'Authorization': 'Bearer ' + token
     })
 };
->>>>>>> e453c59f4d3453565341ed4e15f20ea5ddd1186d
 @Injectable()
 export class MyCartService {
     baseUrl = environment.baseUrl;
