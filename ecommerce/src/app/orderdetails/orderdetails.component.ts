@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-orderdetails',
   templateUrl: './orderdetails.component.html',
-  styleUrls: ['./orderdetails.component.scss']
+  styleUrls: ['../orders/orders.component.scss','./orderdetails.component.scss']
 })
 export class OrderDetailsComponent implements OnInit {
   orderNumber:string;

@@ -29,12 +29,11 @@
 				<div class="bhgxx2">
 					<ul class="add_to_cartlist">
 						<li *ngIf="!productDetails.IsAvailableInCart">
-							<button mat-button class="btn_blue"
-							(click)="AddToCart(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">ADD
+							<button mat-button class="btn_blue" (click)="AddToCart(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">ADD
 								TO CART</button>
 						</li>
 						<li>
-							<button mat-button  class="btn_green" (click)="BuyNow(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">BUY
+							<button mat-button class="btn_green" (click)="BuyNow(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">BUY
 								NOW</button>
 						</li>
 						<li *ngIf="productDetails.IsAvailableInCart">
@@ -44,196 +43,115 @@
 							<button mat-button (click)="OpenBulkOrderModal(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">BULK
 								ORDER</button></li>
 
-						</ul>
-					</div>
+					</ul>
 				</div>
 			</div>
 			<div class="col-md-7 single-right-left simpleCart_shelfItem">
 				<h3>{{productDetails.ProductName}}</h3>
-				<p *ngIf="commanSetting!=null && commanSetting.IsPriceVisible"><span class="item_price">₹{{productDescription.Price}}</span>
-					<del>- ₹{{productDescription.MRP}}</del>
+				<!-- *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" -->
+				<p><span class="item_price">₹{{productDescription.Price}}</span> <span class="_dash">-</span>
+					<del>₹{{productDescription.MRP}}</del>
 				</p>
-				<div class="">
-					<div class="_3ors59">
-						<div class="niH0FQ _2nc08B"><span id="productRating_LSTMOBF85SCHG5ZFYF8AU5QSY_MOBF85SCHG5ZFYF8_" class="_2_KrJI">
-								<div class="hGSR34">{{productDescription.RatingAverage}}<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
-									 class="_2lQ_WZ"></div>
-							</span><span class="_38sUEc"><span><span>{{productDescription.TotalRating}}
-										Ratings&nbsp;</span><span class="_1VpSqZ">&amp;</span><span>&nbsp;{{productDescription.TotalReview}}
-										Reviews</span></span></span></div>
+				<div class="total_rating_review">
+					<div class="niH0FQ _2nc08B">
+						<span class="avg_rating">
+							{{productDescription.RatingAverage}} <mat-icon>star_rate</mat-icon>
+						</span>
+						<span class="r_rreview">
+							<span>
+								<span>{{productDescription.TotalRating}}
+									Ratings&nbsp;
+								</span>
+								<span class="_1VpSqZ">&amp;</span>
+								<span>&nbsp;{{productDescription.TotalReview}}
+									Reviews</span>
+							</span>
+						</span>
 					</div>
 				</div>
-				<div class="bhgxx2 col-12-12">
-					<div class="rPoo01">
-						<div class="_37KLG6 _3K7Qff col col-12-12">
-							<div class="_2a2WU_"><span id="Size" class="_1lwQLq _3K7Qff">Color</span>
-								<ul class="fUBI-_">
+				<div class="color_list">
+					<h4>Color</h4>
+					<ul>
+						<li *ngFor="let productColor of productColorList" id="swatch-{{productColor.ColorId}}-size">
+							<a *ngIf="productColor.IsSelected" [style.background-color]="productColor.ColorCode" title="{{productColor.ColorName}}"
+							 routerLink="/productdetails/{{productColor.Url}}">
+								<!-- {{productColor.ColorSingleAlphabet}} --></a>
+							<a *ngIf="!productColor.IsSelected" [style.background-color]="productColor.ColorCode" title="{{productColor.ColorName}}"
+							 routerLink="/productdetails/{{productColor.Url}}">
+								<!-- {{productColor.ColorSingleAlphabet}} --></a>
+						</li>
+					</ul>
+				</div>
+				<div class="variant_list" *ngFor="let productVariantGroup of productVariantGroupList">
+					<h3>{{productVariantGroup.VaraintGroupName}}</h3>
+					<ul>
+						<li *ngFor="let productVariant of getVariantValueList(productVariantGroup.VariantGroupId)" id="swatch-{{productVariant.VariantValueId}}-size">
+							<a *ngIf="productVariant.IsSelected" title="{{productVariant.VariantValueName}}" routerLink="/productdetails/{{productVariant.Url}}">{{productVariant.VariantValueName}}</a>
+							<a *ngIf="!productVariant.IsSelected" title="{{productVariant.VariantValueName}}" routerLink="/productdetails/{{productVariant.Url}}">{{productVariant.VariantValueName}}</a>
+						</li>
+					</ul>
+				</div>
+				<div class="highlights">
+					<h4>Highlights</h4>
+					<div class="highlight_dt" [innerHTML]="productDescription.ProductHighlitedDescription"></div>
+				</div>
 
-									<li *ngFor="let productColor of productColorList" class="_3hSwtk _2UBURg" id="swatch-{{productColor.ColorId}}-size">
+				<div class="highlights specifications" *ngIf="productDetails!=null && productDetails.ProductDetailsSpecificationList!=null && productDetails.ProductDetailsSpecificationList.length>0">
+					<h4>Specifications</h4>
+					<ul class="p-15">
+						<li *ngFor="let specification of productDetails.ProductDetailsSpecificationList"><span>{{specification.Key}}</span>
+							<b>{{specification.Value}}</b> </li>
+					</ul>
+				</div>
 
-										<a *ngIf="productColor.IsSelected" [style.background-color]="productColor.ColorCode" title="{{productColor.ColorName}}"
-										 class="_1TJldG _3c2Xi9 _2I_hq9 _2UBURg" routerLink="/productdetails/{{productColor.Url}}">{{productColor.ColorSingleAlphabet}}</a>
-										<a *ngIf="!productColor.IsSelected" [style.background-color]="productColor.ColorCode" title="{{productColor.ColorName}}"
-										 class="_1TJldG _2I_hq9 _2UBURg" routerLink="/productdetails/{{productColor.Url}}">{{productColor.ColorSingleAlphabet}}</a>
-										<div class="_11cw91 _1-fCbU E753YP DgCx9f">
-											<div class="_2h52bo _15sV4W _3xOS0O _2UBURg">
-												{{productColor.ColorSingleAlphabet}}</div>
-										</div>
-									</li>
-								</ul>
+				<div class="highlights specifications rw_rating" *ngIf="productDetails!=null && productDetails.ProductDetailsSpecificationList!=null && productDetails.ProductDetailsSpecificationList.length>0">
+					<h4>Ratings &amp; Reviews
+						<div class="total_rating_review rt_dt">
+							<div class="niH0FQ _2nc08B">
+								<span class="avg_rating">
+									{{productDescription.RatingAverage}} <mat-icon>star_rate</mat-icon>
+								</span>
+								<span class="r_rreview">
+									<span>
+										<span>{{productDescription.TotalRating}}
+											Ratings&nbsp;
+										</span>
+										<span class="_1VpSqZ">&amp;</span>
+										<span>&nbsp;{{productDescription.TotalReview}}
+											Reviews</span>
+									</span>
+								</span>
 							</div>
 						</div>
-
-					</div>
-				</div>
-				<div *ngFor="let productVariantGroup of productVariantGroupList" class="bhgxx2 col-12-12">
-					<div class="rPoo01">
-						<div class="_37KLG6 _3K7Qff col col-12-12">
-							<div class="_2a2WU_"><span id="Size" class="_1lwQLq _3K7Qff">{{productVariantGroup.VaraintGroupName}}</span>
-								<ul class="fUBI-_">
-									<li *ngFor="let productVariant of getVariantValueList(productVariantGroup.VariantGroupId)" class="_3hSwtk _2UBURg"
-									 id="swatch-{{productVariant.VariantValueId}}-size">
-
-										<a *ngIf="productVariant.IsSelected" class="_1TJldG _3c2Xi9 _2I_hq9 _2UBURg" title="{{productVariant.VariantValueName}}"
-										 routerLink="/productdetails/{{productVariant.Url}}">{{productVariant.VariantValueName}}</a>
-										<a *ngIf="!productVariant.IsSelected" class="_1TJldG _2I_hq9 _2UBURg" title="{{productVariant.VariantValueName}}"
-										 routerLink="/productdetails/{{productVariant.Url}}">{{productVariant.VariantValueName}}</a>
-										<div class="_11cw91 _1-fCbU E753YP DgCx9f">
-											<div class="_2h52bo _15sV4W _3xOS0O _2UBURg">{{productVariant.VariantValueName}}
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-
-					</div>
-				</div>
-				<div class="_1HmYoV hCUpcT" style="padding: 24px 0px 0px;">
-					<div class="bhgxx2 col-12-12">
-						<div class="g2dDAR flex">
-							<div class="_2hqjdd">Highlights</div>
-							<div class="_3WHvuP">
-								<div [innerHTML]="productDescription.ProductHighlitedDescription"></div>
-
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="bhgxx2 col-12-12" *ngIf="productDetails!=null && productDetails.ProductDetailsSpecificationList!=null && productDetails.ProductDetailsSpecificationList.length>0">
-					<div class="MocXoX">
-						<div class="_2GiuhO">Specifications</div>
-						<div>
-							<div class="_3Rrcbo">
-								<div class="_2RngUh">
-									<table class="_3ENrHu">
-										<tbody>
-											<tr class="_3_6Uyw row" *ngFor="let specification of productDetails.ProductDetailsSpecificationList">
-												<td *ngIf="specification.Value" class="_3-wDH3 col col-4-12">
-													{{specification.Key}}</td>
-												<td *ngIf="specification.Value" class="_2k4JXJ col col-6-12">
-													<ul>
-														<li class="_3YhLQA">{{specification.Value}}</li>
-													</ul>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="bhgxx2 col-12-12">
-					<div class="col _39LH-M">
-						<div class="_1B7BXc">
-							<div class="_3unCI7">Ratings &amp; Reviews</div>
-						</div>
-						<div class="row _1Ahy2t _2aFisS">
-							<div class="ebepc- _2eB0mV">
-								<div class="row" style="margin-left:0px;">
-									<div class="col-3-12">
-										<div class="col">
-											<div class="row">
-												<div class="col-12-12 _11EBw0">
-													<div class="_1i0wk8">{{productDescription.RatingAverage}}</div>
-													<div class="_2txNna">★</div>
-												</div>
-											</div>
-											<div class="row _2yc1Qo">
-												<div class="col-12-12"><span>{{productDescription.TotalRatingWithFormat}}
-														Ratings &amp;</span></div>
-											</div>
-											<div class="row _2yc1Qo">
-												<div class="col-12-12"><span>{{productDescription.TotalReviewWithFormat}}
-														Reviews</span></div>
-											</div>
-										</div>
+					</h4>
+					<div class="p-15">
+						<ul *ngIf="productDescription.ReviewRatingList!=null && productDescription.ReviewRatingList.length > 0">
+							<li *ngFor="let review of productDescription.ReviewRatingList">
+								<div class="total_rating_review">
+									<div class="niH0FQ _2nc08B">
+										<span class="avg_rating">
+											{{review.ReviewRating}} <mat-icon>star_rate</mat-icon>
+										</span>
+										<span class="r_rreview">
+											<span>
+												<span>{{review.ReviewTitle}}</span>
+											</span>
+										</span>
 									</div>
 								</div>
-							</div>
-						</div>
+								<p class="desc">{{review.ReviewDescription}}</p>
 
-						<div class="_2aFisS" *ngIf="productDescription.ReviewRatingList!=null && productDescription.ReviewRatingList.length>0">
-							<div class="_3nrCtb" *ngFor="let review of productDescription.ReviewRatingList">
-								<div class="col">
-									<div class="col _390CkK">
-										<div class="row" style="margin-left:0px;">
-											<div class="hGSR34 E_uFuv" style="height:25px;">{{review.ReviewRating}}<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg=="
-												 class="_2lQ_WZ"></div>
-											<p class="_2xg6Ul">{{review.ReviewTitle}}</p>
-										</div>
-										<div class="row" style="margin-left:0px;">
-											<div class="qwjRop">
-												<div>
-													<div class="">{{review.ReviewDescription}}</div>
-												</div>
-											</div>
-										</div>
-										<div class="row _2pclJg">
-											<div class="row" style="margin-left:0px;">
-												<p class="_3LYOAd _3sxSiS">{{review.UserName}}</p><svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"
-												 class="_3Zp_NJ">
-													<g>
-														<circle cx="6" cy="6" r="6" fill="#878787"></circle>
-														<path stroke="#FFF" stroke-width="1.5" d="M3 6l2 2 4-4" fill="#878787"></path>
-													</g>
-												</svg>
-												<p id="review-34264d1b-b0db-4bb7-9b21-863356776635" class="_19inI8">
-													<span>Certified Buyer</span></p>
-												<p class="_3LYOAd">{{review.ReviewRatingDateWithFormat}}</p>
-											</div>
-											<div class="_3KBEVV">
-												<div class="row" style="margin-left:0px;">
-													<div class="NIDnsQ">
-														<div class="_2ZibVB"><svg width="20" height="15" xmlns="http://www.w3.org/2000/svg" class="yW9s2v">
-																<path fill="#fff" class="_3Xc5dR" d="M9.58.006c-.41.043-.794.32-1.01.728-.277.557-2.334 4.693-2.74 5.1-.41.407-.944.6-1.544.6v8.572h7.5c.45 0 .835-.28 1.007-.665 0 0 2.207-6.234 2.207-6.834 0-.6-.47-1.072-1.07-1.072h-3.216c-.6 0-1.07-.535-1.07-1.07 0-.537.835-3.387 1.006-3.944.17-.557-.107-1.157-.664-1.35-.15-.043-.257-.086-.407-.064zM0 6.434v8.572h2.143V6.434H0z"
-																 fill-rule="evenodd"></path>
-															</svg><span class="_1_BQL8">{{review.ReviewLike}}</span></div>
-														<div class="_2ZibVB _1FP7V7"><svg width="20" height="15" xmlns="http://www.w3.org/2000/svg" class="yW9s2v _1FP7V7">
-																<path fill="#fff" class="_3Xc5dR" d="M9.58.006c-.41.043-.794.32-1.01.728-.277.557-2.334 4.693-2.74 5.1-.41.407-.944.6-1.544.6v8.572h7.5c.45 0 .835-.28 1.007-.665 0 0 2.207-6.234 2.207-6.834 0-.6-.47-1.072-1.07-1.072h-3.216c-.6 0-1.07-.535-1.07-1.07 0-.537.835-3.387 1.006-3.944.17-.557-.107-1.157-.664-1.35-.15-.043-.257-.086-.407-.064zM0 6.434v8.572h2.143V6.434H0z"
-																 fill-rule="evenodd"></path>
-															</svg><span class="_1_BQL8">{{review.ReviewUnLike}}</span></div>
-													</div>
-												</div>
-											</div>
-										</div>
+								<div class="certified_buyer">
+									<div>
+										<p>{{review.UserName}} <span>Certified Buyer</span> {{review.ReviewRatingDateWithFormat}}</p>
+										<span class="l_d"> <mat-icon>thumb_up</mat-icon>&nbsp; {{review.ReviewLike}} <mat-icon>thumb_down</mat-icon>&nbsp; {{review.ReviewUnLike}}</span>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class=""></div>
-						<div class="_2aFisS" *ngIf="productDescription.TotalReview>5"><span class="_1TQw_X">+</span></div><a *ngIf="productDescription.TotalReview>5"
-						 routerLink="/product-reviews/{{productDescription.EncryptedProductDetailsId}}">
-							<div class="swINJg _3nrCtb"><span class="">All {{productDescription.TotalReview}} reviews</span>
-							</div>
-						</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
