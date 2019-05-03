@@ -71,82 +71,65 @@
             <div class="price_description">
               <div class="price_dt">
                 <div class="price">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
-                <div class="delivery">Delivery Charges<span><span class="_27kB8M _3Oa-sk">Free</span></span></div>
+                <div class="delivery">Delivery Charges<span>Free</span></div>
                 <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
-              </div>              
+              </div>
             </div>
             <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>1,140</span></span></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="_4dkTmQ">
-      <div class="_1368i6">
-        <div class="riAgLt">
 
-          <div class="TFpAof" *ngIf="productCartList==null">
-            <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
-                class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a routerLink="/wishlist"><span
-                  class="_3RKxAZ">+ Add
-                  items from wishlist</span></a></div>
-          </div>
-          <div class="TFpAof" *ngIf="!productCartList.length>0">
-            <div class="_3S8e8n"><img src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/empty-cart_ee6141.png"
-                class="_1rdTO5"><span class="_61Ylla">Your Shopping Cart is empty</span><a href="/wishlist"><span class="_3RKxAZ">+
-                  Add items from wishlist</span></a></div>
-          </div>
-          <div class="TFpAof IlFCEW" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
-            <div class="_3zo6mW"><span class="K9IlAR">Saved for Later ({{savedProductData.TotalItems}})</span></div>
-            <div>
-              <div class="_3ycxrs" *ngFor="let saved of productSavedForLaterList">
-                <div class="PaJLWc"><a class="_2u3tZM" routerLink="/productdetails/{{saved.EncryptedProductId}}/{{saved.EncryptedProductDetailsId}}"><img
-                      src="{{saved.ProductImageUrl}}"></a>
-                  <div class="_3vIvU_">
-                    <div class="_1Ox9a7"><a class="_325-ji _3ROAwx" routerLink="/productdetails/{{saved.EncryptedProductId}}/{{saved.EncryptedProductDetailsId}}">{{saved.ProductName}}</a>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="inner_layout">
+          <div class="cart_list" *ngIf="productCartList!=null && productCartList.length>0">
+            <h4 class="_3YIJgh"><span class="_1WMqsr">SAVED FOR LATER (1) ({{productData.TotalItems}})</span> </h4>
+            <div *ngFor="let cart of productCartList" class="_3ycxrs">
+              <div class="cart_item">
+                <div class="cart_d">
+                  <a routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}">
+                    <img src="{{cart.ProductImageUrl}}"></a>
+                  <div class="cart_item_details">
+                    <div class="cart_item_name">
+                      <a *ngIf="cart.ProductSEOUrl!=''" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                        [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                      <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>
-                    <div class="v7-Wbf"> 6 GB RAM </div>
-                    <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p XU9vZa">₹{{saved.Price}}</span>
-                    <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="pMSy0p LYRnr_">₹{{saved.MRP}}</span>
-                    <span *ngIf="commanSetting!=null && commanSetting.IsPriceVisible" class="hMGTLH">17% Off</span>
+                    <span class="cart_price">₹{{cart.Price}}</span>
+                    <span class="cart_mrp">₹{{cart.MRP}}</span>
                   </div>
                 </div>
-                <div class="_3cto0P">
-                  <div class="_3RkJty">
-                    <div class="_3md1dr"><button class="wNrY5O" disabled=""> – </button>
-                      <div class="_2zH4zg _3jYsHz"><input type="text" value="{{saved.ProductQuantity}}" class="_2csFM9"
-                          disabled=""></div><button class="wNrY5O" disabled=""> + </button>
-                    </div>
+              </div>
+              <div class="_3cto0P">
+                <div class="_3RkJty">
+                  <div class="_3md1dr">
+
+                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="cart_desc"> –
+                    </button>
+
+                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                      class="cart_desc" disabled="disabled"> – </button>
+                    <div class="no_of_product">
+                      <input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly=""></div>
+                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="cart_desc"> +</button>
+                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                      class="cart_desc" disabled="disabled"> +</button>
                   </div>
-                  <div class="_3IO2ev _2K02N8 _2x63a8">
-                    <div class="gdUKd9" tabindex="12" (click)="MoveProductIntoCart(saved.EncryptedProductDetailsId,saved.ProductDetailsId)"><span>Move
-                        to
-                        Cart</span></div>
-                    <div class="gdUKd9" tabindex="13" (click)="RemoveProductSavedLater(saved.EncryptedProductDetailsId,saved.ProductDetailsId)">
-                      <span>Remove</span></div>
-                  </div>
+                </div>
+                <div class="save_for_later">
+                  <button mat-button (click)="MoveProductIntoSavedLater(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">MOVE TO CART</button>
+                  <button mat-button (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">REMOVE
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="_2qUgWb _3uHNGv _3CKRe3" style="height: auto;"
-        *ngIf="productCartList!=null && productCartList.length>0">
-        <div class="_2zqhDs _1lD380" style="left: auto; top: 248.6px;">
-          <div class="_13wOiu"><span class="_2huYiT">Price details</span>
-            <div class="_2twTWD">
-              <div class="hJYgKM">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
-              <div class="hJYgKM">Delivery Charges<span><span class="_27kB8M _3Oa-sk">Free</span></span></div>
-              <div class="_3xFQAD">
-                <div class="hJYgKM">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
-              </div>
-            </div>
-            <div class="_34jRkt"><span class="_27kB8M">Your Total Savings on this order <div class="QE-hRv">
-                  ₹<span>{{productData.DiscountPriceWithFormat}}</span></div></span></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

@@ -1,0 +1,76 @@
+<h4>Manage Addresses</h4>
+<div class="row">
+
+  <div class="col-sm-6">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name">
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-6">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Mobile">
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-6">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Pincode">
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-6">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Locality">
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-12">
+    <mat-form-field class="example-full-width">
+      <textarea matInput placeholder="Locality"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-6">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="City">
+    </mat-form-field>
+  </div>
+
+  <div class="col-sm-6">
+    <mat-form-field>
+      <mat-label>State</mat-label>
+      <select matNativeControl required>
+        <option value="">Rajasthan</option>
+      </select>
+    </mat-form-field>
+  </div>
+
+</div>
+<div class="form-group my-20">
+  <label>Address Type</label>
+  <div class="mt-10">
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button class="mr-15" value="1">Home</mat-radio-button>
+      <mat-radio-button value="2">Work</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <button mat-button class="btn_green">Save</button>
+  </div>
+</div>
+
+<div class="address_details" *ngFor="let address of [0, 1]">
+  <div class="address">
+    <p class="label">Work</p>
+    <p><b>Lalan Kumar Pandit</b></p>
+    <p>5th floor, Room No-11 Ridhi Sidhi Circle, Manglam Electronic market, Jaipur - 302018, Rajasthan</p>
+    <p><b>Phone</b> 9887816444</p>
+  </div>
+  <div class="r_invoice">
+    <button mat-icon-button> <mat-icon>edit</mat-icon> </button>
+    <button mat-icon-button> <mat-icon>delete</mat-icon> </button>
+  </div>
+</div>

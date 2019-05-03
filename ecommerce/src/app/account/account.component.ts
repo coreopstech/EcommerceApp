@@ -12,7 +12,9 @@ import { ToastrManager } from 'ng6-toastr-notifications';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
+
 export class AccountComponent implements OnInit {
+  currentPage = 'profile';
   profileModel: User;
   isEditable=false;
   constructor(private spinner: NgxSpinnerService,
@@ -25,6 +27,10 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.getUserDetails();
+  }
+
+  changeView(value: string) {
+    this.currentPage = value;
   }
   onRegister() {
 

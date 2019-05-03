@@ -8,7 +8,7 @@ import { UserService } from '../_services/userService';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
-  styleUrls: ['./wishlist.component.scss']
+  styleUrls: ['../orders/orders.component.scss', './wishlist.component.scss']
 })
 export class WishListComponent implements OnInit {
   wishList: any;

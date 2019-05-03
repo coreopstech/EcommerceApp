@@ -79,7 +79,8 @@ import { AccountComponent } from './account/account.component';
 import { AccountmenuComponent } from './accountmenu/accountmenu.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
 import { ReviewsComponent } from './reviews/reviews.component';
-import { HomeProductListComponent } from './home-product-list/home-product-list.component';
+import { ManageAddressComponent } from './manage-address/manage-address.component';
+import { ProfileInformationComponent } from './profile-information/profile-information.component';
 
 
 @NgModule({
@@ -119,7 +120,8 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
     AccountmenuComponent,
     CustomerlistComponent,
     ReviewsComponent,
-    HomeProductListComponent
+    ManageAddressComponent,
+    ProfileInformationComponent
   ],
   imports: [
 
