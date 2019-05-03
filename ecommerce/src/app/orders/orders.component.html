@@ -2,43 +2,68 @@
   <div class="inner_layout">
     <div class="row">
       <div class="col-12">
-        <div class="order_list" *ngFor="let order of [1,2,3,4,5,6]">
+        <div class="order_list" *ngFor="let order of orderList">
           <div class="order_header">
             <ul>
               <li>
-                <button mat-button class="btn_green" routerLink="/order_details"> OD114260415236745000</button>
+                <button mat-button class="btn_green" routerLink="/order_details"
+                  [queryParams]="{order_id:order.OrderNumber}"> {{order.OrderNumber}}</button>
               </li>
               <li>
-                <button class="green_c" mat-stroked-button routerLink="/order_details">Track</button>
+                <button class="green_c" mat-stroked-button routerLink="/order_details"
+                  [queryParams]="{order_id:order.OrderNumber}">Track</button>
               </li>
             </ul>
           </div>
-          <div class="order_body">
-            <div class="item_details">
-              <div class="id_img">
-                <img src="/assets/images/f1.jpg" alt="">
+          <div *ngIf="orderDetailsList!=null && orderDetailsList.length>0">
+            <div class="order_body" *ngFor="let orderDetails of getOrderDetails(order.EncryptedOrderId)">
+              <div class="item_details" *ngIf="orderDetails.ProductSEOUrl!=''"
+                routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+                [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+                <div class="id_img">
+                  <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+                </div>
+                <div class="id_details">
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                </div>
               </div>
-              <div class="id_details">
-                <h4>Aquamarine</h4>
-                <p><span class="cart_price">₹800</span></p>
-                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+              <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
+                [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+                <div class="id_img">
+                  <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+                </div>
+                <div class="id_details">
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                </div>
               </div>
-            </div>
-            <div class="dl_details">
-              <p>Delivered on Sat, May 5th '18</p>
-              <span>Your item has been delivered</span>
-            </div>
-            <div class="w_areview">
-              <a class="green_c" mat-button routerLink=".">RATE & REVIEW PRODUCT</a>
+              <div class="dl_details">
+                <p>{{orderDetails.OrderStatusTitle}}</p>
+                <span>{{orderDetails.OrderStatusSubTitle}}</span>
+              </div>
+              <div class="w_areview">
+                <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
+                  routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
+                  [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}">RATE & REVIEW PRODUCT</a>
+                <a *ngIf="orderDetails.IsCancelButtonVisible" class="green_c" mat-button
+                  [routerLink]="['/orders/cancel-order']"
+                  [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:order.OrderNumber}">CANCEL ITEM</a>
+                <a *ngIf="orderDetails.IsReturnButtonVisible" class="green_c" mat-button
+                  [routerLink]="['/orders/return-order']"
+                  [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:order.OrderNumber}">RETURN ITEM</a>
+              </div>
             </div>
           </div>
           <div class="order_footer">
             <ul>
               <li>
-                <p><span>Ordered On</span> Thu, May 3rd '18</p>
+                <p><span>Ordered On</span> {{order.OrderDateWithFormat}}</p>
               </li>
               <li>
-                  <p><span>Order Total </span> ₹4,999</p>
+                <p><span>Order Total </span> ₹{{order.OrderTotalAmount}}</p>
               </li>
             </ul>
           </div>
@@ -49,7 +74,7 @@
 </div>
 
 
-<div class="container">
+<!-- <div class="container">
   <div class="_3OCeCw">
     <div class="_2S2DLT">
       <div class="_1eq_ut">
@@ -180,4 +205,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

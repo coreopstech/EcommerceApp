@@ -12,7 +12,7 @@ export class OrdersComponent implements OnInit {
   orderList: any;
   orderDetailsList: any;
   constructor(private spinner: NgxSpinnerService,
-    private snackBar:MatSnackBar,
+    private snackBar: MatSnackBar,
     private orderService: OrderService
   ) { }
 
@@ -37,7 +37,7 @@ export class OrdersComponent implements OnInit {
         }
       },
       (err) => {
-        this.snackBar.open(err,'');
+        this.snackBar.open(err, '');
         setTimeout(() => {
           this.spinner.hide();
         }, 1000)
@@ -61,15 +61,18 @@ export class OrdersComponent implements OnInit {
         }
       },
       (err) => {
-        this.snackBar.open(err,'');
+        this.snackBar.open(err, '');
         setTimeout(() => {
           this.spinner.hide();
         }, 1000)
 
       });
   }
-  getOrderDetails(encryptedOrderId){
-    return this.orderDetailsList.filter((x)=>x.EncryptedOrderId==encryptedOrderId);
+  getOrderDetails(encryptedOrderId) {
+    if (this.orderDetailsList != null && this.orderDetailsList.length > 0)
+      return this.orderDetailsList.filter((x) => x.EncryptedOrderId == encryptedOrderId);
+    else
+      return this.orderDetailsList;
   }
 
 }

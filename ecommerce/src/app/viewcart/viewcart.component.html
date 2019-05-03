@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container"  >
   <div class="cart_i_list">
-    <div class="row">
+    <div class="row" *ngIf="productData!=null && productCartList!=null && productCartList.length>0">
       <div class="col-md-8">
         <div class="inner_layout">
           <div class="cart_list" *ngIf="productCartList!=null && productCartList.length>0">
@@ -21,10 +21,11 @@
                   </div>
                   <div class="delivery_details">
                     <ul>
-                      <li>
-                        Delivery by, Sun Feb 17 | <span class="_3o5jSD">Free</span> <span class="_3ACFa6 _1wJt4G">₹40</span>
+                      <li *ngIf="cart.ExpectedDelivaryDateWithFormat!=''">
+                        Delivery by, {{cart.ExpectedDelivaryDateWithFormat}} 
+                        <!-- | <span class="_3o5jSD">Free</span> <span class="_3ACFa6 _1wJt4G">₹40</span> -->
                       </li>
-                      <li><span>10 Days Replacement Policy</span></li>
+                      <li *ngIf="cart.ReplacementDays>0 && cart.IsReplacementAvailable==true"><span>{{cart.ReplacementDays}} Days Replacement Policy</span></li>
                     </ul>
                   </div>
                 </div>
@@ -75,18 +76,18 @@
                 <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
               </div>
             </div>
-            <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>1,140</span></span></div>
+            <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="savedProductData!=null">
       <div class="col-md-12">
         <div class="inner_layout">
-          <div class="cart_list" *ngIf="productCartList!=null && productCartList.length>0">
-            <h4 class="_3YIJgh"><span class="_1WMqsr">SAVED FOR LATER (1) ({{productData.TotalItems}})</span> </h4>
-            <div *ngFor="let cart of productCartList" class="_3ycxrs">
+          <div class="cart_list" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
+            <h4 class="_3YIJgh"><span class="_1WMqsr">SAVED FOR LATER ({{savedProductData.TotalItems}})</span> </h4>
+            <div *ngFor="let cart of productSavedForLaterList" class="_3ycxrs">
               <div class="cart_item">
                 <div class="cart_d">
                   <a routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}">
@@ -106,22 +107,14 @@
                 <div class="_3RkJty">
                   <div class="_3md1dr">
 
-                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
-                      class="cart_desc"> –
-                    </button>
-
-                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
-                      class="cart_desc" disabled="disabled"> – </button>
+                    <button class="cart_desc" disabled="disabled"> – </button>
                     <div class="no_of_product">
                       <input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly=""></div>
-                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
-                      class="cart_desc"> +</button>
-                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
-                      class="cart_desc" disabled="disabled"> +</button>
+                    <button class="cart_desc" disabled="disabled"> +</button>
                   </div>
                 </div>
                 <div class="save_for_later">
-                  <button mat-button (click)="MoveProductIntoSavedLater(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">MOVE TO CART</button>
+                  <button mat-button (click)="MoveProductIntoCart(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">MOVE TO CART</button>
                   <button mat-button (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">REMOVE
                   </button>
                 </div>

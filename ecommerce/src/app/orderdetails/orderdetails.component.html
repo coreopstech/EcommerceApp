@@ -1,16 +1,16 @@
 
-<div class="container inner_container">
+<div class="container inner_container" *ngIf="orderData!=null">
   <div class="inner_layout">
     <div class="row">
       <div class="col-12">
         <div class="address_details">
           <div class="address">
             <h4>Delivery Address</h4>
-            <p><b>Lalan Kumar Pandit</b></p>
-            <p>5th floor, Room No-11 Ridhi Sidhi Circle, Manglam Electronic market, Jaipur - 302018, Rajasthan</p>
-            <p><b>Phone</b> 9887816444</p>
+            <p *ngIf="orderData.userAddressDetails.Name!=''"><b>{{orderData.userAddressDetails.Name}}</b></p>
+            <p *ngIf="orderData.userAddressDetails.FullAddress!=''">{{orderData.userAddressDetails.FullAddress}}</p>
+            <p *ngIf="orderData.userAddressDetails.MobileNumber!=''"><b>Phone</b> {{orderData.userAddressDetails.MobileNumber}}</p>
           </div>
-          <div class="r_invoice">
+          <div class="r_invoice" *ngIf="orderData.InvoiceGenerate">
               <button class="green_c" mat-stroked-button>Request Invoice</button>
           </div>
         </div>
@@ -21,15 +21,29 @@
     <div class="row">
       <div class="col-12">
         <div class="order_list track_item">
-          <div class="order_body">
-            <div class="item_details">
+          <div class="order_body" *ngFor="let orderDetails of orderData.orderDetailsList">
+            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl!=''"
+            routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+            [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
               <div class="id_img">
-                <img src="/assets/images/f1.jpg" alt="">
+                <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
               </div>
               <div class="id_details">
-                <h4>Aquamarine</h4>
-                <p><span class="cart_price">₹800</span></p>
-                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+              </div>
+            </div>
+            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''"
+            routerLink="/productdetails"
+            [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+              <div class="id_img">
+                <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+              </div>
+              <div class="id_details">
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
               </div>
             </div>
             <div class="track_details">
@@ -41,16 +55,24 @@
               </ul>
             </div>
             <div class="w_areview">
-              <a class="green_c" mat-button routerLink=".">RATE & REVIEW PRODUCT</a>
+                <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
+                routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
+                [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}">RATE & REVIEW PRODUCT</a>
+              <a *ngIf="orderDetails.IsCancelButtonVisible" class="green_c" mat-button
+                [routerLink]="['/orders/cancel-order']"
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">CANCEL ITEM</a>
+              <a *ngIf="orderDetails.IsReturnButtonVisible" class="green_c" mat-button
+                [routerLink]="['/orders/return-order']"
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">RETURN ITEM</a>
             </div>
           </div>
           <div class="order_footer">
             <ul>
               <li>
-                <p><span>Ordered On</span> Thu, May 3rd '18</p>
+                <p><span>Ordered On</span>  {{orderData.OrderDateWithFormat}}</p>
               </li>
               <li>
-                <p><span>Order Total </span> ₹4,999</p>
+                <p><span>Order Total </span> ₹{{orderData.OrderTotalAmountWithFormat}}</p>
               </li>
             </ul>
           </div>
@@ -61,7 +83,7 @@
 </div>
 
 
-<div class="container" style="width:100%">
+<!-- <div class="container" style="width:100%">
   <div class="_2kIypH" *ngIf="orderData!=null">
     <div class="_1VV5Cf _1QHAXj">
       <div class="_1SFos- " style="transform: scaleX(1);"></div>
@@ -221,14 +243,7 @@
 
                   </div>
                 </div>
-                <!-- <div class="col-7-12">
-                  <ol class="progtrckr" data-progtrckr-steps="5">
-                    <li class="progtrckr-done">Ordered</li>
-                    <li class="progtrckr-done">Packed</li>
-                    <li class="progtrckr-done">Shipped</li>
-                    <li class="progtrckr-todo">Delivered</li>
-                  </ol>
-                </div> -->
+              
                 <div class="_2HvExN col-4-12">
                   <div class="f3C4Tt">₹{{orderDetails.TotalAmountWithFormat}}<div class="_20yN1P"></div>
                   </div>
@@ -287,4 +302,4 @@
         </span></div>
     </div>
   </div>
-</div>
+</div> -->
