@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { User } from './../_models/user';
 import { environment } from './../../environments/environment.prod';
 import { UserAddress } from '../_models/userAddress';
+import { EmailChange } from '../_models/emailChange';
 
 
 
@@ -73,6 +74,20 @@ export class UserService {
                 if (result.IsSuccess) {
                     
                 }
+                return result;
+            }));
+    }
+    sendEmailChangeOTP(emailChange: EmailChange) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        emailChange.EncryptedId=userEncryptedId;
+        return this.http.post<any>(this.baseUrl + `User/SendEmailChangeOTP`, emailChange)
+            .pipe(map(result => {
                 return result;
             }));
     }
@@ -173,6 +188,21 @@ export class UserService {
             }
         }
         return this.http.get<any>(this.baseUrl + `User/DeactiveUserAccount/` + userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    ChangeUserEmail(emailChangeModel:EmailChange)
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        emailChangeModel.EncryptedId=userEncryptedId;
+        return this.http.post<any>(this.baseUrl + `User/ChangeUserEmail`, emailChangeModel)
             .pipe(map(result => {
                 return result;
             }));

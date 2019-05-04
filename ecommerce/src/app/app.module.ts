@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
- import { ToastrModule } from 'ng6-toastr-notifications';
+import { ToastrModule } from 'ng6-toastr-notifications';
 
 import {
   MatToolbarModule,
@@ -20,11 +20,11 @@ import {
   MatChipsModule,
   MatPaginatorModule,
   MatRadioModule
-  } from '@angular/material';
+} from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { RatingModule } from'ngx-rating';
+import { RatingModule } from 'ngx-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Component
@@ -81,7 +81,8 @@ import { CustomerlistComponent } from './customerlist/customerlist.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { ManageAddressComponent } from './manage-address/manage-address.component';
 import { ProfileInformationComponent } from './profile-information/profile-information.component';
-
+import { MatStepperModule } from '@angular/material/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,7 @@ import { ProfileInformationComponent } from './profile-information/profile-infor
 
 
 
-BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -151,25 +152,31 @@ BrowserModule,
     MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-     ToastrModule.forRoot(),
-     RatingModule
-     
-   
+    MatStepperModule,
+    ToastrModule.forRoot(),
+    RatingModule
+
+
   ],
   providers: [
-     //By Ajeet //
-     HeaderMenuService,
-     AuthenticationService,
-     UserService,
-     HomeService,
-     ProductService,
-     PagerService,
-     WishListService,
-     ProductDetailsResolve,
-     ProductDetailService,
-     OrderService,
-     ReviewRatingService,
-     MyCartService
+    //By Ajeet //
+    HeaderMenuService,
+    AuthenticationService,
+    UserService,
+    HomeService,
+    ProductService,
+    PagerService,
+    WishListService,
+    ProductDetailsResolve,
+    ProductDetailService,
+    OrderService,
+    ReviewRatingService,
+    MyCartService,
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+    
 
   ],
   entryComponents: [ModalComponent],
