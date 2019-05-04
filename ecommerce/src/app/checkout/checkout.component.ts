@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckOutComponent implements OnInit {
+  isLinear = false;
   loginForm: FormGroup;
   loading = false;
   submitted = false;

@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { UserService } from '../_services/userService';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { EmailChange } from './../_models/emailChange';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -15,9 +16,12 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 export class ModalComponent implements OnInit {
   modalData: any;
   loginModel: User;
+  emailModel:EmailChange;
   registerModel: User;
   submitted = false;
   returnUrl: string;
+  previousOtp:string;
+  newOtp:string;
   constructor(
     private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
@@ -41,6 +45,16 @@ export class ModalComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
+    console.log(this.modalData.emailChangeModel);
+    
+    this.previousOtp=this.modalData.emailChangeModel.PreviousEmailOtp;
+    this.newOtp=this.modalData.emailChangeModel.NewEmailOtp;
+    
+    this.emailModel=new EmailChange();
+    this.emailModel=this.modalData.emailChangeModel;
+    this.emailModel.NewEmailOtp="";
+    this.emailModel.PreviousEmailOtp="";
+    this.emailModel.Password="";
   }
 
   ngOnInit() {
@@ -174,6 +188,47 @@ export class ModalComponent implements OnInit {
         error => {
           this.toast.errorToastr(error, '', {
             duration: 3000,
+          });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+  }
+  onEmailChange()
+  {
+    if(this.emailModel.NewEmailOtp!=this.newOtp)
+    {
+       this.toast.errorToastr("OTP of "+this.emailModel.NewEmail+ " incorrect! Please enter valid OTP");
+       return;
+    }
+    if(this.emailModel.PreviousEmailOtp!=this.previousOtp)
+    {
+      this.toast.errorToastr("OTP of "+this.emailModel.PreviousEmail+ " incorrect! Please enter valid OTP");
+       return;
+    }
+    this.spinner.show();
+    this.userService.ChangeUserEmail(this.emailModel)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.dialogRef.close();
+            this.router.navigate([this.returnUrl]);
+          }
+          else {
+           this.toast.errorToastr(result.Data);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.snackBar.open(error, '', {
+            duration: 2000,
           });
           setTimeout(() => {
             this.spinner.hide();

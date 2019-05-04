@@ -7,9 +7,9 @@
           <aside class="side_bar_nav">
             <div class="sidebar_item">
               <ul>
-                <li><a class="active" (click)="changeView('profile')">Profile Information</a></li>
-                <li><a (click)="changeView('address')">Manage Address</a></li>
-                <li><a (click)="changeView('wishlist')">Wishlist</a></li>
+                <li><a [class.active]="currentPage=='profile'" (click)="changeView('profile')">Profile Information</a></li>
+                <li><a [class.active]="currentPage=='address'" (click)="changeView('address')">Manage Address</a></li>
+                <li><a [class.active]="currentPage=='wishlist'" (click)="changeView('wishlist')">Wishlist</a></li>
                 <li><a routerLink="/account/orders">Orders</a></li>
               </ul>
             </div>
