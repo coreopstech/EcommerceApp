@@ -5,6 +5,7 @@ import { User } from './../_models/user';
 import { environment } from './../../environments/environment.prod';
 import { UserAddress } from '../_models/userAddress';
 import { EmailChange } from '../_models/emailChange';
+import { MobileChange } from './../_models/mobileChange';
 
 
 
@@ -87,6 +88,20 @@ export class UserService {
         }
         emailChange.EncryptedId=userEncryptedId;
         return this.http.post<any>(this.baseUrl + `User/SendEmailChangeOTP`, emailChange)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    sendMobileChangeOTP(mobileChange: MobileChange) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        mobileChange.EncryptedId=userEncryptedId;
+        return this.http.post<any>(this.baseUrl + `User/SendMobileChangeOTP`, mobileChange)
             .pipe(map(result => {
                 return result;
             }));
@@ -203,6 +218,21 @@ export class UserService {
         }
         emailChangeModel.EncryptedId=userEncryptedId;
         return this.http.post<any>(this.baseUrl + `User/ChangeUserEmail`, emailChangeModel)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    ChangeUserMobile(mobileChangeModel:MobileChange)
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        mobileChangeModel.EncryptedId=userEncryptedId;
+        return this.http.post<any>(this.baseUrl + `User/ChangeUserMobile`, mobileChangeModel)
             .pipe(map(result => {
                 return result;
             }));
