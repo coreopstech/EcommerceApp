@@ -4,8 +4,13 @@
 
 export const environment = {
   production: false,
-  baseUrl:"http://150.107.189.25/PublishEcommerceWeb.WebAPI/",
-  baseImageUrl:"http://150.107.189.25/PublishEcommerceWeb.WebAPI/Upload/ProductImages/",
+  // publish url
+  baseUrl:"http://192.168.1.60/PublishEcommerceWebAPI/",
+  baseImageUrl:"http://192.168.1.60/PublishEcommerceWeb/Upload/ProductImages/",
+
+    // debug url
+    /* baseUrl:"http://192.168.1.60/Ecommerce.WebAPI/",
+    baseImageUrl:"http://192.168.1.60/EcommerceWeb/Upload/ProductImages/", */
 };
 
 /*
