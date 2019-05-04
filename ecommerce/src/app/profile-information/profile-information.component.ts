@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../_models/user';
 import { ModalComponent } from './../modal/modal.component';
 import { EmailChange } from '../_models/emailChange';
+import { MobileChange } from '../_models/mobileChange';
 
 @Component({
   selector: 'app-profile-information',
@@ -17,6 +18,7 @@ import { EmailChange } from '../_models/emailChange';
 export class ProfileInformationComponent implements OnInit {
   profileModel: User;
   emailChangeModel: EmailChange;
+  mobileChangeModel: MobileChange;
   isPersonalInfoEditable = false;
   isEmailAddressEditable = false;
   isMobileEditable = false;
@@ -109,11 +111,10 @@ export class ProfileInformationComponent implements OnInit {
       .subscribe(
         result => {
           if (result.IsSuccess) {
-            this.isMobileEditable = false;
+            this.isEmailAddressEditable = false;
             this.emailChangeModel = result.Data;
-            this.emailChangeModel.NewEmailOtp=result.Data.NewEmailOtp;
-            this.emailChangeModel.PreviousEmailOtp=result.Data.PreviousEmailOtp;
-            console.log(this.emailChangeModel);
+            this.emailChangeModel.NewEmailOtp = result.Data.NewEmailOtp;
+            this.emailChangeModel.PreviousEmailOtp = result.Data.PreviousEmailOtp;
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -145,7 +146,48 @@ export class ProfileInformationComponent implements OnInit {
   }
 
   onMobileChange() {
+    if (this.profileModel.Mobile == this.previousMobile)
+      return;
+    this.spinner.show();
+    this.mobileChangeModel = new mobileChange();
+    this.mobileChangeModel.NewMobile = this.profileModel.Mobile;
+    this.mobileChangeModel.PreviousMobile = this.previousMobile;
+    this.userService.sendMobileChangeOTP(this.mobileChangeModel)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+            this.isMobileEditable = false;
+            this.mobileChangeModel = result.Data;
+            this.mobileChangeModel.NewMobileOtp = result.Data.NewMobileOtp;
+            this.mobileChangeModel.PreviousMobileOtp = result.Data.PreviousMobileOtp;
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
 
+            const dialogRef = this.dialog.open(ModalComponent, {
+              width: '400px',
+              data: { action: 'emailChange', title: 'Verify OTP', mobileChangeModel: this.mobileChangeModel }
+            });
+
+          }
+          else {
+            this.toast.errorToastr(result.Message, '', {
+              duration: 3000,
+            });
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toast.errorToastr(error, '', {
+            duration: 2000,
+          });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
   }
   onProfileEdit() {
     this.isPersonalInfoEditable = true;
