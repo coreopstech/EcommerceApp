@@ -149,7 +149,7 @@ export class ProfileInformationComponent implements OnInit {
     if (this.profileModel.Mobile == this.previousMobile)
       return;
     this.spinner.show();
-    this.mobileChangeModel = new mobileChange();
+    this.mobileChangeModel = new MobileChange();
     this.mobileChangeModel.NewMobile = this.profileModel.Mobile;
     this.mobileChangeModel.PreviousMobile = this.previousMobile;
     this.userService.sendMobileChangeOTP(this.mobileChangeModel)
