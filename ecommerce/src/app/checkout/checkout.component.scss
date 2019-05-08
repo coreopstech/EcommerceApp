@@ -1,5 +1,135 @@
-:ng-deep{
-    .mat-step-header[ng-reflect-selected='true']{
-        background: red;
+::ng-deep {
+    .mat-step-header[ng-reflect-selected='true'] {
+        background: #e0e0e0;
     }
+
+    .mat-radio-label {
+        display: flex !important;
+        align-items: self-start !important;
+    }
+
+    .mat-step-header {
+        padding: 15px 24px !important;
+    }
+}
+
+
+.address_details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 15px;
+
+    h4 {
+        font-weight: 500;
+        margin: 0;
+        font-size: 16px;
+        opacity: .9;
+        margin-bottom: 7px;
+    }
+
+    p {
+        font-size: 15px;
+        margin: 8px 0;
+
+        b {
+            font-weight: 500;
+            opacity: .8;
+        }
+
+        &.pt-0 {
+            margin-top: 0;
+        }
+    }
+
+    .r_invoice {
+        display: flex;
+
+        mat-icon {
+            font-size: 20px;
+            opacity: .7;
+        }
+    }
+}
+
+.add_address {
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .my-20 {
+        margin: 20px 0;
+    }
+
+    .mr-15 {
+        margin-right: 15px;
+    }
+
+    .mt-10 {
+        margin-top: 10px;
+    }
+
+    h4 {
+        font-weight: 500;
+        font-size: 20px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+
+    .address_details {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+        padding: 15px;
+
+        h4 {
+            font-weight: 500;
+            margin: 0;
+            font-size: 16px;
+            opacity: .9;
+            margin-bottom: 7px;
+        }
+
+        p {
+            font-size: 15px;
+            margin: 8px 0;
+
+            b {
+                font-weight: 500;
+                opacity: .8;
+            }
+        }
+
+        .r_invoice {
+            display: flex;
+
+            mat-icon {
+                font-size: 20px;
+                opacity: .7;
+            }
+        }
+    }
+
+    .label {
+        text-transform: uppercase;
+        font-size: 11px !important;
+        color: #878787;
+        vertical-align: middle;
+        padding: 4px 7px;
+        border-radius: 2px;
+        background-color: #f0f0f0;
+        font-weight: 400;
+        margin-right: 15px;
+        display: inline-block;
+    }
+}
+
+.mt-20{
+    margin-top:20px;
+}
+.border_0{
+    border-top: 0 !important;
 }

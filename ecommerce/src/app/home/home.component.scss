@@ -1,3 +1,4 @@
+@import "../@theme/_theme.scss";
 .carousel{
     margin:0 -15px;
 }
@@ -6,7 +7,7 @@
     font-weight: 400;
     display: flex;
     margin-top: 6px;
-    color: #00b2b2;
+    color: $bg;
     text-decoration: none;
     position: relative;
     margin-left: 25px;
