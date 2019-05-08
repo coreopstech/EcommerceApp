@@ -37,6 +37,7 @@ export class WishListComponent implements OnInit {
     this.getProductWishList();
   }
   getProductWishList() {
+    this.spinner.show();
     this.wishlistService.getWishList()
       .subscribe(
         result => {

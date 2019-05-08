@@ -1,4 +1,7 @@
-<h4>Personal Information <span *ngIf="!isPersonalInfoEditable" (click)="onProfileEdit()">Edit</span></h4>
+<h4>Personal Information 
+  <div class="r_invoice">
+    <button mat-icon-button *ngIf="!isPersonalInfoEditable" (click)="onProfileEdit()"> <mat-icon>edit</mat-icon> </button>
+  </div></h4>
 <form (ngSubmit)="profileForm.form.valid && onRegister()" #profileForm="ngForm" *ngIf="profileModel!=null">
   <div class="row">
     <div class="col-sm-6">
@@ -32,7 +35,11 @@
     </div>
   </div>
 </form>
-<h4>Email Address <span *ngIf="!isEmailAddressEditable" (click)="onEmailEdit()">Edit</span></h4>
+<h4>Email Address 
+  <div class="r_invoice">
+    <button mat-icon-button *ngIf="!isEmailAddressEditable" (click)="onEmailEdit()"> <mat-icon>edit</mat-icon> </button>
+    
+  </div></h4>
 <form (ngSubmit)="profileForm.form.valid && onEmailChange()" #profileForm="ngForm" *ngIf="profileModel!=null">
   <div class="row">
     <div class="col-sm-6">
@@ -51,13 +58,17 @@
     </div>
   </div>
 </form>
-<h4>Mobile <span *ngIf="!isMobileEditable" (click)="onMobileEdit()">Edit</span></h4>
+<h4>Mobile <div class="r_invoice">
+  <button mat-icon-button *ngIf="!isMobileEditable" (click)="onMobileEdit()"> <mat-icon>edit</mat-icon> </button>
+  
+</div></h4>
+
 <form (ngSubmit)="profileForm.form.valid && onMobileChange()" #profileForm="ngForm" *ngIf="profileModel!=null">
   <div class="row">
     <div class="col-sm-6">
       <div class="form-group">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Mobile" [disabled]="!isMobileEditable" maxlength="10"
+          <input matInput AllowNumeric="true" placeholder="Mobile" [disabled]="!isMobileEditable" minlength="10" maxlength="10"
             [(ngModel)]="profileModel.Mobile" name="mobile" #mobile="ngModel"
             [ngClass]="{ 'is-invalid': profileForm.submitted && mobile.invalid }" required>
         </mat-form-field>

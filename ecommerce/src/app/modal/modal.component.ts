@@ -51,6 +51,7 @@ export class ModalComponent implements OnInit {
     });
     if(this.modalData.emailChangeModel!=null && this.modalData.emailChangeModel.PreviousEmailOtp!='')
     {
+      console.log(this.modalData.emailChangeModel);
       this.previousOtp=this.modalData.emailChangeModel.PreviousEmailOtp;
       this.newOtp=this.modalData.emailChangeModel.NewEmailOtp;
       
@@ -62,6 +63,7 @@ export class ModalComponent implements OnInit {
     }
     if(this.modalData.mobileChangeModel!=null && this.modalData.mobileChangeModel.PreviousMobileOtp!='')
     {
+      console.log(this.modalData.mobileChangeModel);
       this.previousMobileOtp=this.modalData.mobileChangeModel.PreviousMobileOtp;
       this.newMobileOtp=this.modalData.mobileChangeModel.NewMobileOtp;
       
@@ -232,7 +234,7 @@ export class ModalComponent implements OnInit {
               this.spinner.hide();
             }, 1000)
             this.dialogRef.close();
-            this.router.navigate([this.returnUrl]);
+            //this.router.navigate([this.returnUrl]);
           }
           else {
            this.toast.errorToastr(result.Data);
@@ -273,7 +275,7 @@ export class ModalComponent implements OnInit {
               this.spinner.hide();
             }, 1000)
             this.dialogRef.close();
-            this.router.navigate([this.returnUrl]);
+            //this.router.navigate([this.returnUrl]);
           }
           else {
            this.toast.errorToastr(result.Data);

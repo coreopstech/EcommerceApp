@@ -8,11 +8,16 @@
             <div *ngFor="let cart of productCartList" class="_3ycxrs">
               <div class="cart_item">
                 <div class="cart_d">
-                  <a routerLink="/productdetails/{{cart.EncryptedProductId}}/{{cart.EncryptedProductDetailsId}}">
+                    <a *ngIf="cart.ProductSEOUrl!=''" target="_blank" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                    [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
+                      <img src="{{cart.ProductImageUrl}}"></a>
+
+
+                  <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
                     <img src="{{cart.ProductImageUrl}}"></a>
                   <div class="cart_item_details">
                     <div class="cart_item_name">
-                      <a *ngIf="cart.ProductSEOUrl!=''" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                      <a *ngIf="cart.ProductSEOUrl!=''" target="_blank" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
                         [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                       <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>

@@ -38,9 +38,7 @@
 						<li *ngIf="productDetails.IsAvailableInCart">
 							<button class="btn_blue" mat-button (click)="router.navigate(['/viewcart']);">Go TO CART</button>
 						</li>
-						<li *ngIf="commanSetting!=null && commanSetting.IsBulkOrder">
-							<button mat-button (click)="OpenBulkOrderModal(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">BULK
-								ORDER</button></li>
+						
 
 					</ul>
 				</div>

@@ -46,6 +46,7 @@ export class ProfileInformationComponent implements OnInit {
           if (result.IsSuccess) {
             this.profileModel = result.Data;
             this.previousEmail = this.profileModel.Email;
+            this.previousMobile = this.profileModel.Mobile;
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -166,7 +167,7 @@ export class ProfileInformationComponent implements OnInit {
 
             const dialogRef = this.dialog.open(ModalComponent, {
               width: '400px',
-              data: { action: 'emailChange', title: 'Verify OTP', mobileChangeModel: this.mobileChangeModel }
+              data: { action: 'mobileChange', title: 'Verify OTP', mobileChangeModel: this.mobileChangeModel }
             });
 
           }

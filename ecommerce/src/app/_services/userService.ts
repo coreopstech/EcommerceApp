@@ -133,7 +133,14 @@ export class UserService {
                 return result;
             }));
     }
-    getUserAddressDetails(userEncryptedId: string) {
+    getUserAddressDetails() {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         return this.http.get<any>(this.baseUrl + `Product/GetUserAddressDetails/` + userEncryptedId)
             .pipe(map(result => {
 
@@ -162,8 +169,13 @@ export class UserService {
             }));
     }
     saveUserAddressDetails(userAddress: UserAddress) {
-        var user = JSON.parse(localStorage.getItem("currentidentity"));
-        var userEncryptedId = user.id;
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
         userAddress.EncryptedUserId = userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveUserAddressDetails`, userAddress)
             .pipe(map(result => {
@@ -217,7 +229,7 @@ export class UserService {
             }
         }
         emailChangeModel.EncryptedId=userEncryptedId;
-        return this.http.post<any>(this.baseUrl + `User/ChangeUserEmail`, emailChangeModel)
+        return this.http.post<any>(this.baseUrl + `User/UpdateUserEmail`, emailChangeModel)
             .pipe(map(result => {
                 return result;
             }));
@@ -232,7 +244,7 @@ export class UserService {
             }
         }
         mobileChangeModel.EncryptedId=userEncryptedId;
-        return this.http.post<any>(this.baseUrl + `User/ChangeUserMobile`, mobileChangeModel)
+        return this.http.post<any>(this.baseUrl + `User/UpdateUserMobile`, mobileChangeModel)
             .pipe(map(result => {
                 return result;
             }));

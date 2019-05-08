@@ -83,9 +83,14 @@ import { ManageAddressComponent } from './manage-address/manage-address.componen
 import { ProfileInformationComponent } from './profile-information/profile-information.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { OnlyNumber } from './validator/onlunumber';
+import { AllowNumeric } from './validator/allownumeric';
+import { HomeProductListComponent } from './home-product-list/home-product-list.component';
 
 @NgModule({
   declarations: [
+    OnlyNumber,
+    AllowNumeric,
     AppComponent,
     ToolbarComponent,
     HeaderComponent,
@@ -122,7 +127,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     CustomerlistComponent,
     ReviewsComponent,
     ManageAddressComponent,
-    ProfileInformationComponent
+    ProfileInformationComponent,
+    HomeProductListComponent
   ],
   imports: [
 

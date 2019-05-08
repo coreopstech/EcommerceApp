@@ -75,20 +75,20 @@
     <div *ngIf="modalData.action == 'emailChange'">
       <form (ngSubmit)="emailForm.form.valid && onEmailChange()" #emailForm="ngForm" *ngIf="emailModel!=null">
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="6" placeholder="{{emailModel.NewEmailOtpMessage}}" [(ngModel)]="emailModel.NewEmailOtp" name="newEmailOtp"
+          <input matInput minlength="6" maxlength="6" maxlength="20" placeholder="{{emailModel.NewEmailOtpMessage}}" [(ngModel)]="emailModel.NewEmailOtp" name="newEmailOtp"
             #newEmailOtp="ngModel" [ngClass]="{ 'is-invalid': emailForm.submitted && newEmailOtp.invalid }" required />
           <div *ngIf="emailForm.submitted && newEmailOtp.invalid" class="invalid-feedback">
           </div>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="6" placeholder="{{emailModel.PreviousEmailOtpMessage}}" [(ngModel)]="emailModel.PreviousEmailOtp" name="previousEmailOtp"
+          <input matInput minlength="6" maxlength="6" AllowNumeric="true" placeholder="{{emailModel.PreviousEmailOtpMessage}}" [(ngModel)]="emailModel.PreviousEmailOtp" name="previousEmailOtp"
             #previousEmailOtp="ngModel" [ngClass]="{ 'is-invalid': emailForm.submitted && previousEmailOtp.invalid }" required />
           <div *ngIf="emailForm.submitted && previousEmailOtp.invalid" class="invalid-feedback">
           </div>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="20" placeholder="Enter Password" [(ngModel)]="emailModel.Password" name="password"
+          <input matInput type="password"  maxlength="20" placeholder="Enter Password" [(ngModel)]="emailModel.Password" name="password"
             #password="ngModel" [ngClass]="{ 'is-invalid': emailForm.submitted && password.invalid }" required />
           <div *ngIf="emailForm.submitted && password.invalid" class="invalid-feedback">
           </div>
@@ -98,22 +98,22 @@
       </form>
     </div>
     <div *ngIf="modalData.action == 'mobileChange'">
-      <form (ngSubmit)="emailForm.form.valid && onMobileChange()" #mobileForm="ngForm" *ngIf="mobileModel!=null">
+      <form (ngSubmit)="mobileForm.form.valid && onMobileChange()" #mobileForm="ngForm" *ngIf="mobileModel!=null">
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="6" placeholder="{{mobileModel.NewMobileOtpMessage}}" [(ngModel)]="mobileModel.NewMobileOtp" name="newEmailOtp"
+          <input matInput minlength="6" maxlength="6" AllowNumeric="true" placeholder="{{mobileModel.NewMobileOtpMessage}}" [(ngModel)]="mobileModel.NewMobileOtp" name="newMobileOtp"
             #newMobileOtp="ngModel" [ngClass]="{ 'is-invalid': mobileForm.submitted && newMobileOtp.invalid }" required />
-          <div *ngIf="mobileForm.submitted && newEmailOtp.invalid" class="invalid-feedback">
+          <div *ngIf="mobileForm.submitted && newMobileOtp.invalid" class="invalid-feedback">
           </div>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="6" placeholder="{{mobileModel.PreviousMobileOtpMessage}}" [(ngModel)]="mobileModel.PreviousMobileOtp" name="newEmailOtp"
+          <input matInput minlength="6" maxlength="6" AllowNumeric="true" placeholder="{{mobileModel.PreviousMobileOtpMessage}}" [(ngModel)]="mobileModel.PreviousMobileOtp" name="newMobileOtp"
             #previousMobileOtp="ngModel" [ngClass]="{ 'is-invalid': mobileForm.submitted && previousMobileOtp.invalid }" required />
           <div *ngIf="mobileForm.submitted && previousMobileOtp.invalid" class="invalid-feedback">
           </div>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput maxlength="20" placeholder="Enter Password" [(ngModel)]="mobileModel.Password" name="password"
+          <input matInput maxlength="20" type="password"  placeholder="Enter Password" [(ngModel)]="mobileModel.Password" name="password"
             #password="ngModel" [ngClass]="{ 'is-invalid': mobileForm.submitted && password.invalid }" required />
           <div *ngIf="mobileForm.submitted && password.invalid" class="invalid-feedback">
           </div>

@@ -4,39 +4,162 @@
       <div class="col-sm-8">
         <mat-vertical-stepper [linear]="isLinear" #stepper>
           <mat-step label="Login">
-            <p>{{userName}}</p>
-            <div>
+            <div *ngIf="!isLogged">
+              <form (ngSubmit)="loginForm.form.valid && onLogin(stepper)" #loginForm="ngForm" *ngIf="loginModel!=null">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Email Id/ Mobile" [(ngModel)]="loginModel.EmailModile" name="emailMobile"
+                    #emailMobile="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && emailMobile.invalid }"
+                    required />
+                  <div *ngIf="loginForm.submitted && emailMobile.invalid" class="invalid-feedback">
+                  </div>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                  <input matInput type="password" placeholder="Password" [(ngModel)]="loginModel.Password"
+                    name="password" #password="ngModel"
+                    [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required />
+                  <div *ngIf="loginForm.submitted && password.invalid" class="invalid-feedback">
+                  </div>
+                </mat-form-field>
+
+                <button type="submit" mat-button>Next</button>
+              </form>
+
+            </div>
+            <p *ngIf="isLogged">{{userName}}</p>
+            <div *ngIf="isLogged">
               <button mat-button matStepperNext>Next</button>
             </div>
           </mat-step>
           <mat-step label="Delivery Address">
-            <p>Socialize with each other.</p>
             <div>
+              <div class="address_details" *ngFor="let address of customerAddressList">
+                <div class="address">
+                  <p class="label">{{address.AddressTypeName}}</p>
+                  <p><b>{{address.Name}}</b></p>
+                  <p>{{address.Address}} , {{address.CityName}} - {{address.PinCode}} , {{address.StateName}}</p>
+                  <p><b>Phone</b> {{address.MobileNumber}}</p>
+                </div>
+                <div class="r_invoice">
+                  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                    name="address">
+                    <mat-radio-button class="example-radio-button" [value]="address.EncryptedAddressId" name="address"
+                      (click)="SetAddressId(address.EncryptedAddressId)">
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button (click)="OpenOrderSummary(stepper)" type="button"
+                *ngIf="selectedAddressId!=''">Next</button>
             </div>
           </mat-step>
           <mat-step label="Order Summary">
-            <p>You're welcome.</p>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+            <div class="cart_list" *ngIf="productCartList!=null && productCartList.length>0 && isOrderSummaryVisible">
+              <div *ngFor="let cart of productCartList" class="_3ycxrs">
+                <div class="cart_item">
+                  <div class="cart_d">
+                    <a *ngIf="cart.ProductSEOUrl!=''" target="_blank"
+                      routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                      [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
+                      <img src="{{cart.ProductImageUrl}}"></a>
+
+
+                    <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                      [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
+                      <img src="{{cart.ProductImageUrl}}"></a>
+                    <div class="cart_item_details">
+                      <div class="cart_item_name">
+                        <a *ngIf="cart.ProductSEOUrl!=''" target="_blank"
+                          routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                          [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                        <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                          [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                      </div>
+                      <span class="cart_price">₹{{cart.Price}}</span>
+                      <span class="cart_mrp">₹{{cart.MRP}}</span>
+                    </div>
+                    <div class="delivery_details">
+                      <ul>
+                        <li *ngIf="cart.ExpectedDelivaryDateWithFormat!=''">
+                          Delivery by, {{cart.ExpectedDelivaryDateWithFormat}}
+                        </li>
+                        <li *ngIf="cart.ReplacementDays>0 && cart.IsReplacementAvailable==true">
+                          <span>{{cart.ReplacementDays}} Days Replacement Policy</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="_3cto0P">
+                  <div class="_3RkJty">
+                    <div class="_3md1dr">
+
+                      <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity"
+                        (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                        class="cart_desc"> –
+                      </button>
+
+                      <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)"
+                        (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                        class="cart_desc" disabled="disabled"> – </button>
+                      <div class="no_of_product">
+                        <input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly=""></div>
+                      <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)"
+                        (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                        class="cart_desc"> +</button>
+                      <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)"
+                        (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                        class="cart_desc" disabled="disabled"> +</button>
+                    </div>
+                  </div>
+                  <div class="save_for_later">
+                    <button mat-button
+                      (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isOrderSummaryVisible">
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="OpenPaymentOptions(stepper)" type="button">Next</button>
             </div>
           </mat-step>
           <mat-step label="Payment Options">
-            <p>You're welcome.</p>
-            
+            <mat-radio-button *ngIf="isPaymentOptionsVisible" class="example-radio-button" [value]="COD" name="paymentOptions"
+              (click)="SetPaymentOptions(1)">
+            </mat-radio-button>
+            <div *ngIf="isPaymentOptionsVisible">
+                <button mat-button matStepperPrevious>Back</button>
+                <button *ngIf="paymentType>0" mat-button (click)="SaveOrderDetails()" type="button">Next</button>
+              </div>
           </mat-step>
+         
         </mat-vertical-stepper>
         <div class="inner_layout" *ngIf="!isLogged">
           <h3><span class="">1</span><span class="_1_m52b">Login or Signup</span></h3>
         </div>
       </div>
+      <div class="col-md-4" *ngIf="productData!=null">
+          <div class="inner_layout p-0">
+            <div class="price_details">
+              <h4>Price details</h4>
+              <div class="price_description">
+                <div class="price_dt">
+                  <div class="price">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
+                  <div class="delivery">Delivery Charges<span>Free</span></div>
+                  <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
+                </div>
+              </div>
+              <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>
 
-<div class="container inner_container">
+<!-- <div class="container inner_container">
   <div class="row">
     <div class="col-sm-8">
       <div class="_3B4tat">
@@ -119,11 +242,9 @@
                   </svg></div>
                 <div class="_2jDL7w">
                   <div><span class="dNZmcB">{{userName}}</span>
-                    <!-- <span class="_3MeY5j">8560031036</span> -->
                   </div>
                 </div>
               </div>
-              <!-- <button class="_3Jk8fm">Change</button> -->
             </div>
           </div>
         </div>
@@ -158,4 +279,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

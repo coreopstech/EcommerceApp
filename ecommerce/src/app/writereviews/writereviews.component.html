@@ -67,7 +67,7 @@
             <div class="_32o8JY">
               <input type="hidden" [ngModel]="reviewModel.ReviewRatingId" [ngModelOptions]="{standalone: true}">
               <mat-form-field class="example-full-width">
-                <textarea matInput rows="8" placeholder="Description..." [(ngModel)]="reviewModel.ReviewDescription"
+                <textarea matInput  placeholder="Description..." [(ngModel)]="reviewModel.ReviewDescription"
                   name="reviewDescription" #reviewDescription="ngModel"
                   [ngClass]="{ 'is-invalid': reviewForm.submitted && reviewDescription.invalid }" required></textarea>
                 <div *ngIf="reviewForm.submitted && reviewDescription.invalid" class="invalid-feedback">

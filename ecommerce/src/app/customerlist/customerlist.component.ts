@@ -32,7 +32,7 @@ export class CustomerlistComponent implements OnInit {
     this.spinner.show();
     if (localStorage.getItem("currentidentity")) {
 
-      this.userService.getUserAddressDetails(JSON.parse(localStorage.getItem("currentidentity")).id)
+      this.userService.getUserAddressDetails()
         .subscribe(
           result => {
             if (result.IsSuccess) {

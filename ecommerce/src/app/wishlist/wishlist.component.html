@@ -1,24 +1,41 @@
-<div class="wishlist">
-  <h4 class="h_dt">My Wishlist (4)</h4>
-<div class="row">
-  <div class="col-12">
-    <div class="order_list" *ngFor="let order of [1,2,3,4,5,6]">
-      <div class="order_body">
-        <div class="item_details">
-          <div class="id_img">
-            <img src="/assets/images/f1.jpg" alt="">
+<div class="wishlist" *ngIf="wishList!=null && wishList.length>0">
+  <h4 class="h_dt">My Wishlist ({{totalWishCount}})</h4>
+  <div class="row">
+    <div class="col-12">
+      <div class="order_list" *ngFor="let wish of wishList">
+        <div class="order_body">
+          <div class="item_details" *ngIf="wish.ProductSEOUrl!=''" target="_blank"
+            routerLink="/productdetails/{{wish.ProductSEOUrl}}"
+            [queryParams]="{p:wish.EncryptedProductId,pd:wish.EncryptedProductDetailsId}">
+            <div class="id_img">
+              <img src="{{wish.ImageUrl}}" alt="">
+            </div>
+            <div class="id_details">
+              <h4>{{wish.ProductName}}</h4>
+              <p><span class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
+              <p class="item_spc"><b>Color:</b> {{wish.ProductColor}}</p>
+            </div>
           </div>
-          <div class="id_details">
-            <h4>Aquamarine</h4>
-            <p><span class="cart_price">₹800</span></p>
-            <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+          
+          <div class="item_details" *ngIf="wish.ProductSEOUrl===''" target="_blank"
+            routerLink="/productdetails"
+            [queryParams]="{p:wish.EncryptedProductId,pd:wish.EncryptedProductDetailsId}">
+            <div class="id_img">
+              <img src="{{wish.ImageUrl}}" alt="">
+            </div>
+            <div class="id_details">
+              <h4>{{wish.ProductName}}</h4>
+              <p><span class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
+              <p class="item_spc"><b>Color:</b> {{wish.ProductColor}}</p>
+            </div>
           </div>
-        </div>
-        <div class="w_areview">
-            <button mat-icon-button> <mat-icon>delete</mat-icon> </button>
+          <div class="w_areview">
+            <button mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </div>

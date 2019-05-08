@@ -103,6 +103,51 @@ export class CancelOrderComponent implements OnInit {
     }, 1000)
     return;
   }
+  SaveOrderCancelRequest(reasonList,remark,encryptedOrderDetailsId:string,encryptedOrderId:string)
+  {
+    
+    if(parseInt(reasonList.value)<=0)
+    {
+      this.toastr.errorToastr("Please Select Reason for Cancellation!",'Oops!');
+      return;
+    }
+    if(remark.value==null)
+    {
+      this.toastr.errorToastr("Please Enter Cancellation Remark!",'Oops!');
+      return; 
+    }
+    if(remark.value=="")
+    {
+      this.toastr.errorToastr("Please Enter Cancellation Remark!",'Oops!');
+     return;
+    }
+    this.spinner.show()
+    this.reasonId=parseInt(reasonList.value);
+    this.remarkText=remark.value;
+    this.reasonText=this.productOrderDetails.ReasonList.filter((x)=>x.Value==this.reasonId)[0]["Text"];
+
+    this.orderService.saveOrderCancelDetails(encryptedOrderDetailsId,encryptedOrderId,this.reasonId,this.remarkText).subscribe(
+      result => {
+        if (result.IsSuccess === true) {
+          this.router.navigate(['order_details'],{ queryParams: { order_id:this.productOrderDetails.OrderNumber } });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+        else {
+          this.toastr.errorToastr(result.Message);
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+      },
+      (err) => {
+        this.toastr.errorToastr(err);
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      });
+  }
   saveOrderCancel(encryptedOrderDetailsId:string,encryptedOrderId:string)
   {
     this.spinner.show();

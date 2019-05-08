@@ -18,10 +18,10 @@
                                 <!-- <p class="buy_now">Buy Now</p> -->
                             </div>
 
-                            <a *ngIf="slide.ProductSEOUrl!=''" class="anchor"
+                            <a *ngIf="slide.ProductSEOUrl!=''" class="anchor" target="_blank"
                                 routerLink="/productdetails/{{slide.ProductSEOUrl}}"
                                 [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
-                            <a *ngIf="slide.ProductSEOUrl===''" class="anchor" routerLink="/productdetails"
+                            <a *ngIf="slide.ProductSEOUrl===''" class="anchor" target="_blank" routerLink="/productdetails"
                                 [queryParams]="{p:slide.EncryptedProductId,pd:slide.EncryptedProductDetailsId}"></a>
                         </div>
 

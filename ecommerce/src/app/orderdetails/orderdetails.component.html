@@ -48,13 +48,21 @@
             </div>
             <div class="track_details">
               <ul>
-                <li style="background: green;"><div class="cricle" style="background: green;"></div> </li>
-                <li><div class="cricle" style="background: green;"></div></li>
-                <li><div class="cricle"></div></li>
-                <li><div class="cricle"></div></li>
+                
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>1  ? 'green' : '' }"><div class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=1 ? 'green' : '' }" ></div> </li>
+                
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>3  ? 'green' : '' }"><div *ngIf="orderDetails.OrderStatus!=6" class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=3 ? 'green' : '' }"></div></li>
+                
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>4  ? 'green' : '' }"><div *ngIf="orderDetails.OrderStatus!=6" class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=4 ? 'green' : '' }"></div></li>
+                
+                <li ><div class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }"></div></li>
               </ul>
             </div>
             <div class="w_areview">
+              <span  [class.order_cancel]="orderDetails.OrderStatus==6" [class.order_deliver]="orderDetails.OrderStatus!=6">
+                {{orderDetails.OrderStatusTitle}}
+              </span>
+              
                 <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
                 routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
                 [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}">RATE & REVIEW PRODUCT</a>

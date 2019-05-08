@@ -1,4 +1,39 @@
-<div class="container" style="width:100%" *ngIf="productOrderDetails!=null">
+<div class="myprofile">
+  <div class="container inner_container">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="inner_layout">
+          <h4>Easy Cancellation</h4>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field >
+                <mat-label>Reason for Cancellation</mat-label>
+                <mat-select name="reasonList" #reasonList required>
+                  <mat-option value="0" disabled="">Select Reason</mat-option>
+                  <mat-option *ngFor="let reason of productOrderDetails.ReasonList" value="{{reason.Value}}">
+                    {{reason.Text}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-12">
+              <mat-form-field class="example-full-width">
+                <textarea matInput  required maxlength="1000"
+                  placeholder="Cancellation Remark" #remark></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <button mat-button class="btn_green" type="button"
+                (click)="SaveOrderCancelRequest(reasonList,remark,productOrderDetails.EncryptedOrderDetailsId,productOrderDetails.EncryptedOrderId)">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="container" style="width:100%" *ngIf="productOrderDetails!=null">
   <div class="_1joEet _2xhBrK">
     <div class="_1HEvv0"><a class="_1KHd47" routerLink="/home">Home</a><svg width="16" height="27" viewBox="0 0 16 27"
         xmlns="http://www.w3.org/2000/svg" class="_2XP0B_">
@@ -107,4 +142,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

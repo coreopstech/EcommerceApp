@@ -175,11 +175,13 @@ export class ProductDetailsComponent implements OnInit {
       this.productDetailService.saveProductIntoCart(encryptedproductDetailsId, encryptedProductId).subscribe(
         result => {
           if (result.IsSuccess === true) {
-            this.toast.successToastr('Added to bag', '');
             setTimeout(() => {
               this.spinner.hide();
               
             }, 1000)
+            this.toast.successToastr('Added to bag', '');
+            this.userService.changeCartValue(0);
+           
           }
           else {
             setTimeout(() => {
@@ -208,19 +210,20 @@ export class ProductDetailsComponent implements OnInit {
           this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
           localStorage.setItem("cartList", JSON.stringify(this.myCart));
           this.toast.successToastr("Added to bag");
+          this.userService.changeCartValue(0);
         }
       }
       else {
         this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
         localStorage.setItem("cartList", JSON.stringify(this.myCart));
         this.toast.successToastr("Added to bag");
+        this.userService.changeCartValue(0);
       }
       setTimeout(() => {
         this.spinner.hide();
-        
       }, 1000)
     }
-    this.userService.changeCartValue(0);
+    
     this.router.navigate(["/viewcart"]);
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {

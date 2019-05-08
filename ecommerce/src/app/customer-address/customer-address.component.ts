@@ -36,7 +36,7 @@ export class CustomerAddressComponent implements OnInit {
    
     if (localStorage.getItem("currentidentity")) {
       this.isLogged = true;
-      this.userService.getUserAddressDetails(JSON.parse(localStorage.getItem("currentidentity")).id)
+      this.userService.getUserAddressDetails()
         .subscribe(
           result => {
             if (result.IsSuccess) {
