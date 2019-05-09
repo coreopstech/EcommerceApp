@@ -19,7 +19,7 @@ export class CustomerlistComponent implements OnInit {
   isAddNewAddress = false;
   isEditable = false;
   cities: any;
-  encryptedAddressId="";
+  encryptedAddressId = "";
   constructor(private userService: UserService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
@@ -60,19 +60,19 @@ export class CustomerlistComponent implements OnInit {
       this.isEditable = true;
       this.isAddNewAddress = false;
       this.ShowAddressDetails(id);
-      this.encryptedAddressId=id;
+      this.encryptedAddressId = id;
     }
     else {
       this.ShowAddressDetails('');
       this.isEditable = false;
       this.isAddNewAddress = true;
-      this.encryptedAddressId="";
+      this.encryptedAddressId = "";
     }
   }
   closeAddressForm() {
     this.isEditable = false;
     this.isAddNewAddress = false;
-    this.encryptedAddressId="";
+    this.encryptedAddressId = "";
   }
   ShowAddressDetails(addressId) {
     this.spinner.show();
@@ -106,10 +106,10 @@ export class CustomerlistComponent implements OnInit {
         });
 
   }
-  
+
   onSubmit() {
     this.spinner.show();
-    
+
     this.userService.saveUserAddressDetails(this.customerAddress)
       .subscribe(
         result => {
@@ -164,10 +164,10 @@ export class CustomerlistComponent implements OnInit {
         });
 
   }
-  DeleteAddress(encryptedAddressId){
+  DeleteAddress(encryptedAddressId) {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '400px',
-      data: { action: 'deleteaddress', title: 'Delete Address',encryptedAddressId:encryptedAddressId }
+      data: { action: 'deleteaddress', title: 'Delete Address', encryptedAddressId: encryptedAddressId }
     });
   }
 

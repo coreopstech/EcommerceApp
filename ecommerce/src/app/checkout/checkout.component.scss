@@ -1,6 +1,6 @@
-:ng-deep{
-    .mat-step-header[ng-reflect-selected='true']{
-        background: red;
+::ng-deep {
+    .mat-step-header[ng-reflect-selected='true'] {
+        background: #e0e0e0;
     }
 }
 .address_details{
