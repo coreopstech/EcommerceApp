@@ -56,6 +56,8 @@ section{
             max-width: 100%;
             -webkit-transition: opacity 1s, -webkit-transform 1s;
             transition: opacity 1s, transform 1s;
+            margin: 0 auto;
+            max-height: 260px;
         }
         &:hover {
             img{

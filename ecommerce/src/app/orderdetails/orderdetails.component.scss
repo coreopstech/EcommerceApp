@@ -20,13 +20,23 @@
         }
     }
 }
-
+.order_list{
+    .order_footer{
+        border-top: 0;
+    }
+}
 
 .track_item{
     border-top: 1px solid #ddd;
 }
 
 .track_details{
+    margin-top:24px;
+    
+   .track_dt{
+        border-top: 1px solid #ddd;
+        margin-top: 24px;
+    }
     ul{
         list-style: none;
         display: flex;
@@ -36,16 +46,31 @@
             height: 2px;
             background: #ddd;
             min-width: 100px;
-            
+            position: relative;
             .cricle{
                 height: 15px;
                 width: 15px;                
                 border-radius: 50%;
                 background: #ddd;
                 margin-top: -6px;
+                &:hover ~ div span{
+                    display: block;
+                }
+            }
+            .text_label{
+                position: absolute;
+                top: -26px;
+                left: 0;
+                font-weight: 400;
+                font-size: 14px;
             }
             &:last-child{
                 min-width: inherit;
+
+                .text_label{
+                    left: auto;
+                    right: 0;
+                }
             }
         }
     }

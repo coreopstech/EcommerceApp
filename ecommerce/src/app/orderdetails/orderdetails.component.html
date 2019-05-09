@@ -1,4 +1,3 @@
-
 <div class="container inner_container" *ngIf="orderData!=null">
   <div class="inner_layout">
     <div class="row">
@@ -8,10 +7,11 @@
             <h4>Delivery Address</h4>
             <p *ngIf="orderData.userAddressDetails.Name!=''"><b>{{orderData.userAddressDetails.Name}}</b></p>
             <p *ngIf="orderData.userAddressDetails.FullAddress!=''">{{orderData.userAddressDetails.FullAddress}}</p>
-            <p *ngIf="orderData.userAddressDetails.MobileNumber!=''"><b>Phone</b> {{orderData.userAddressDetails.MobileNumber}}</p>
+            <p *ngIf="orderData.userAddressDetails.MobileNumber!=''"><b>Phone</b>
+              {{orderData.userAddressDetails.MobileNumber}}</p>
           </div>
           <div class="r_invoice" *ngIf="orderData.InvoiceGenerate">
-              <button class="green_c" mat-stroked-button>Request Invoice</button>
+            <button class="green_c" mat-stroked-button>Request Invoice</button>
           </div>
         </div>
       </div>
@@ -23,61 +23,99 @@
         <div class="order_list track_item">
           <div class="order_body" *ngFor="let orderDetails of orderData.orderDetailsList">
             <div class="item_details" *ngIf="orderDetails.ProductSEOUrl!=''"
-            routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
-            [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+              routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+              [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
               <div class="id_img">
                 <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
               </div>
               <div class="id_details">
-                  <h4>{{orderDetails.ProductName}}</h4>
-                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                <h4>{{orderDetails.ProductName}}</h4>
+                <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
               </div>
             </div>
-            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''"
-            routerLink="/productdetails"
-            [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
+              [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
               <div class="id_img">
                 <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
               </div>
               <div class="id_details">
-                  <h4>{{orderDetails.ProductName}}</h4>
-                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                <h4>{{orderDetails.ProductName}}</h4>
+                <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
               </div>
             </div>
             <div class="track_details">
               <ul>
-                
-                <li [ngStyle]="{'background': orderDetails.OrderStatus>1  ? 'green' : '' }"><div class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=1 ? 'green' : '' }" ></div> </li>
-                
-                <li [ngStyle]="{'background': orderDetails.OrderStatus>3  ? 'green' : '' }"><div *ngIf="orderDetails.OrderStatus!=6" class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=3 ? 'green' : '' }"></div></li>
-                
-                <li [ngStyle]="{'background': orderDetails.OrderStatus>4  ? 'green' : '' }"><div *ngIf="orderDetails.OrderStatus!=6" class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus>=4 ? 'green' : '' }"></div></li>
-                
-                <li ><div class="cricle" [ngStyle]="{'background':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }"></div></li>
+
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>1  ? 'green' : '' }">
+                  <span class="text_label"
+                    [ngStyle]="{'color':orderDetails.OrderStatus>=1 ? 'green' : '' }">Ordered</span>
+                  <div class="cricle" [mdePopoverTriggerFor]="orderedPopover" [mdePopoverTargetAt]="mainToolbar"
+                    mdePopoverTriggerOn="hover" [ngStyle]="{'background':orderDetails.OrderStatus>=1 ? 'green' : '' }">
+                  </div>
+                </li>
+
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>3  ? 'green' : '' }">
+                  <span *ngIf="orderDetails.OrderStatus!=6" class="text_label"
+                    [ngStyle]="{'color':orderDetails.OrderStatus>=3 ? 'green' : '' }">Packed</span>
+                  <div *ngIf="orderDetails.OrderStatus!=6" class="cricle"
+                    [ngStyle]="{'background':orderDetails.OrderStatus>=3 ? 'green' : '' }"></div>
+                </li>
+
+                <li [ngStyle]="{'background': orderDetails.OrderStatus>4  ? 'green' : '' }">
+                  <span *ngIf="orderDetails.OrderStatus!=6" class="text_label"
+                    [ngStyle]="{'color':orderDetails.OrderStatus>=4 ? 'green' : '' }">Shipped</span>
+                  <div  *ngIf="orderDetails.OrderStatus!=6" class="cricle"
+                    [ngStyle]="{'background':orderDetails.OrderStatus>=4 ? 'green' : '' }"></div>
+                </li>
+
+                <li>
+                  <span class="text_label"
+                    [ngStyle]="{'color':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }">Cancelled</span>
+                  <div class="cricle" [mdePopoverTriggerFor]="orderedPopover1" [mdePopoverTargetAt]="mainToolbar"
+                  mdePopoverTriggerOn="hover"
+                    [ngStyle]="{'background':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }">
+                  </div>
+                </li>
               </ul>
+              <div class="track_dt">
+                  <mde-popover #orderedPopover="mdePopover" [mdePopoverOverlapTrigger]="false" 
+                  [mdePopoverOffsetY]="10" [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000"
+                  [mdePopoverCloseOnClick]="false">
+                  fsdfsdgfd
+                </mde-popover>
+                  <mde-popover #orderedPopover1="mdePopover" [mdePopoverOverlapTrigger]="false" 
+                  [mdePopoverOffsetY]="10" [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000"
+                  [mdePopoverCloseOnClick]="false">
+                  fsdfsdgfd
+                </mde-popover>
+              </div>
             </div>
+
             <div class="w_areview">
-              <span  [class.order_cancel]="orderDetails.OrderStatus==6" [class.order_deliver]="orderDetails.OrderStatus!=6">
+              <span [class.order_cancel]="orderDetails.OrderStatus==6"
+                [class.order_deliver]="orderDetails.OrderStatus!=6">
                 {{orderDetails.OrderStatusTitle}}
               </span>
-              
-                <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
+
+              <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
                 routerLink="/write-reviews/{{orderDetails.EncryptedOrderDetailsId}}"
                 [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}">RATE & REVIEW PRODUCT</a>
               <a *ngIf="orderDetails.IsCancelButtonVisible" class="green_c" mat-button
                 [routerLink]="['/orders/cancel-order']"
-                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">CANCEL ITEM</a>
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">CANCEL
+                ITEM</a>
               <a *ngIf="orderDetails.IsReturnButtonVisible" class="green_c" mat-button
                 [routerLink]="['/orders/return-order']"
-                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">RETURN ITEM</a>
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">RETURN
+                ITEM</a>
             </div>
           </div>
           <div class="order_footer">
             <ul>
               <li>
-                <p><span>Ordered On</span>  {{orderData.OrderDateWithFormat}}</p>
+                <p><span>Ordered On</span> {{orderData.OrderDateWithFormat}}</p>
               </li>
               <li>
                 <p><span>Order Total </span> ₹{{orderData.OrderTotalAmountWithFormat}}</p>

@@ -26,7 +26,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RatingModule } from 'ngx-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MdePopoverModule } from '@material-extended/mde';
 //Component
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -159,6 +159,7 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
     FormsModule,
     ReactiveFormsModule,
     MatStepperModule,
+    MdePopoverModule,
     ToastrModule.forRoot(),
     RatingModule
 
