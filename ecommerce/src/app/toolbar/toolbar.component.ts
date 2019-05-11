@@ -12,25 +12,25 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  isLogged= false;
-  totalItems=0;
+  isLogged = false;
+  totalItems = 0;
   constructor(public dialog: MatDialog,
-    private userService:UserService,
+    private userService: UserService,
     private authenticationService: AuthenticationService,
-    private spinner:NgxSpinnerService,
-    private router: Router) { 
-      this.router.routeReuseStrategy.shouldReuseRoute = function () {
-        return false;
-      }
-      this.router.events.subscribe((evt) => {
-        if (evt instanceof NavigationEnd) {
-          // trick the Router into believing it's last link wasn't previously loaded
-          this.router.navigated = false;
-          // if you need to scroll back to top, here is the right place
-          window.scrollTo(0, 0);
-        }
-      });
+    private spinner: NgxSpinnerService,
+    private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
     }
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 
   ngOnInit() {
     this.isLogged = this.isUserLogged();
@@ -86,7 +86,7 @@ export class ToolbarComponent implements OnInit {
       width: '400px',
       data: { action: 'login', title: 'Login' }
     });
-    
+
   }
 
   createAccount(): void {
@@ -104,10 +104,10 @@ export class ToolbarComponent implements OnInit {
     }
   }
   logout() {
-    
+
     this.authenticationService.logout();
-    this.userService.changeCartValue(0);
-    this.router.navigate(["/home"]);
+    this.totalItems = 0;
+     return this.router.navigate(["/home"]);
   }
 
 }
