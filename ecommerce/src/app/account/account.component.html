@@ -9,7 +9,9 @@
               <ul>
                 <li><a [class.active]="currentPage=='profile'" (click)="changeView('profile')">Profile Information</a></li>
                 <li><a [class.active]="currentPage=='address'" (click)="changeView('address')">Manage Address</a></li>
-                <li><a [class.active]="currentPage=='wishlist'" (click)="changeView('wishlist')">Wishlist</a></li>
+                <li><a [class.active]="currentPage=='wishlist'" (click)="changeView('wishlist')">Wish List</a></li>
+                <li><a [class.active]="currentPage=='reviewlist'" (click)="changeView('reviewlist')">Reviews</a></li>
+                
                 <li><a routerLink="/account/orders">Orders</a></li>
               </ul>
             </div>
@@ -28,6 +30,9 @@
               </div>
                 <div *ngSwitchCase="currentPage == 'profile'">
                   <app-profile-information></app-profile-information>
+                </div>
+                <div *ngSwitchCase="currentPage == 'reviewlist'">
+                  <app-reviews></app-reviews>
                 </div>
           </div>
         </div>

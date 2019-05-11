@@ -6,7 +6,7 @@ declare const $;
 @Component({
   selector: 'app-reviews',
   templateUrl: './reviews.component.html',
-  styleUrls: ['./reviews.component.scss']
+  styleUrls: ['../orders/orders.component.scss', './reviews.component.scss']
 })
 
 export class ReviewsComponent implements OnInit {

@@ -1,7 +1,61 @@
-<div class="container">
+<div class="wishlist" *ngIf="reviewRatingList!=null && reviewRatingList.length>0">
+  <h4 class="h_dt">My Reviews ({{totalReviews}})</h4>
+  <div class="row">
+    <div class="col-12">
+      <div class="order_list" *ngFor="let review of reviewRatingList">
+        <div class="order_body">
+          <div class="item_details" *ngIf="review.ProductSEOUrl!=''" target="_blank"
+            routerLink="/productdetails/{{review.ProductSEOUrl}}"
+            [queryParams]="{p:review.EncryptedProductId,pd:review.EncryptedProductDetailsId}">
+            <div class="id_img">
+              <img src="{{review.ImageUrl}}" alt="">
+            </div>
+            <div class="id_details">
+              <h4>{{review.ProductName}}</h4>
+              <span class="avg_rating">
+                {{review.ReviewRating}} <mat-icon>star_rate</mat-icon>
+              </span>
+              <!-- <p><span class="cart_price">₹ {{wish.PriceWithFormat}}</span></p> -->
+              <!-- <p class="item_spc"><b>Color:</b> {{review.ProductColor}}</p> -->
+              <p class="item_spc" *ngIf="review.ReviewTitle!=''"><b> {{review.ReviewTitle}}</b></p> 
+              <p class="item_spc" *ngIf="review.ReviewDescription!=''"> {{review.ReviewDescription}}</p> 
+              <p class="item_spc" *ngIf="review.UserName!=''"><b>{{review.UserName}} </b><mat-icon>check_circle</mat-icon>  Certified Buyer  {{review.ReviewDateWithFormat}}</p> 
+            </div>
+          </div>
+          
+          <div class="item_details" *ngIf="review.ProductSEOUrl===''" target="_blank"
+            routerLink="/productdetails"
+            [queryParams]="{p:review.EncryptedProductId,pd:review.EncryptedProductDetailsId}">
+            <div class="id_img">
+              <img src="{{review.ImageUrl}}" alt="">
+            </div>
+            <div class="id_details">
+              <h4>{{review.ProductName}}</h4>
+              <span class="avg_rating">
+                {{review.ReviewRating}} <mat-icon>star_rate</mat-icon>
+              </span>
+              <!-- <p><span class="cart_price">₹ {{review.PriceWithFormat}}</span></p> -->
+              <!-- <p class="item_spc"><b>Color:</b> {{review.ProductColor}}</p> -->
+              <p class="item_spc" *ngIf="review.ReviewTitle!=''"><b> {{review.ReviewTitle}}</b></p> 
+              <p class="item_spc" *ngIf="review.ReviewDescription!=''"> {{review.ReviewDescription}}</p> 
+              <p class="item_spc" *ngIf="review.UserName!=''"><b>{{review.UserName}} </b><mat-icon>check_circle</mat-icon>  Certified Buyer  {{review.ReviewDateWithFormat}}</p> 
+            </div>
+          </div>
+          <div class="w_areview">
+            <button mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container">
   <div class="_1VD0UF">
     <div class="_1b9jby row">
-      <app-accountmenu></app-accountmenu>
+      
       <div class="_5tT1ZC">
         <div class="bfHz-X">
           <div>
@@ -89,4 +143,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
