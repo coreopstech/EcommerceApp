@@ -27,7 +27,7 @@ import { ContactusComponent } from './contactus/contactus.component';
 import { AccountComponent } from './account/account.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
 import { ReviewsComponent } from './reviews/reviews.component';
-
+import { HomeProductListComponent } from './home-product-list/home-product-list.component';
 
 const routes: Routes = [
   {
@@ -38,6 +38,12 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     data: { title: 'Home' }
+  },
+  {
+    path: 'homeproducts/:id',
+    component: HomeProductListComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+    
   },
   {
     path: '',
@@ -70,7 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'account/addresses',
-    component: CustomerlistComponent
+    component: AccountComponent
   },
   {
     path: 'order_details',
@@ -102,15 +108,15 @@ const routes: Routes = [
   },
   {
     path: 'account/reviews',
-    component: ReviewsComponent
+    component: AccountComponent
   },
   {
     path: 'listing',
     component: ListingComponent
   },
   {
-    path: 'wishlist',
-    component: WishListComponent
+    path: 'account/wishlist',
+    component: AccountComponent
   },
   {
     path: 'about-us',

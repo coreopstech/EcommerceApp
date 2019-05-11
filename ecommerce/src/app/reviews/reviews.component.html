@@ -42,9 +42,20 @@
             </div>
           </div>
           <div class="w_areview">
-            <button mat-icon-button>
+              <button mat-icon-button routerLink="/write-reviews/{{review.EncryptedOrderDetailsId}}"
+              [queryParams]="{pId:review.EncryptedReviewRatingId}">
+                  <mat-icon>edit</mat-icon>
+                </button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>delete</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+                Are you sure you want to remove this product?
+                <div class="d-flex menu_item">
+                    <button mat-menu-item>CANCLE</button>
+                    <button mat-menu-item style="color: red;" (click)="RemoveReview(review.EncryptedReviewRatingId)">YES,REMOVE</button>
+                </div>
+              </mat-menu>
           </div>
         </div>
       </div>

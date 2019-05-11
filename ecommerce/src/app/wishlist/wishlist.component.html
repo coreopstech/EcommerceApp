@@ -30,9 +30,16 @@
             </div>
           </div>
           <div class="w_areview">
-            <button mat-icon-button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>delete</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+                Are you sure you want to remove this product?
+                <div class="d-flex menu_item">
+                    <button mat-menu-item>CANCLE</button>
+                    <button mat-menu-item style="color: red;" (click)="RemoveToWishList(wish.EncryptedId)">YES,REMOVE</button>
+                </div>
+              </mat-menu>
           </div>
         </div>
       </div>

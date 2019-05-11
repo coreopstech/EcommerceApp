@@ -21,6 +21,7 @@ export class ManageAddressComponent implements OnInit {
 
   ngOnInit() {
     this.getUserAddressList();
+    this.ShowAddressDetails('0');
   }
   getUserAddressList() {
     this.spinner.show();
@@ -153,5 +154,35 @@ export class ManageAddressComponent implements OnInit {
   {
     this.closeAddressForm();
     this.ngOnInit();
+  }
+  DeleteAddress(encryptedAddressId) {
+    this.spinner.show();
+    this.userService.DeleteAddressDetails(encryptedAddressId)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.getUserAddressList();
+            this.toast.successToastr(result.Message, '');
+            
+          }
+          else {
+
+            this.toast.errorToastr(result.Message, '');
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toast.errorToastr(error, '');
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
   }
 }

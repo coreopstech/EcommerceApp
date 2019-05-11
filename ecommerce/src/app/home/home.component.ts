@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.list=JSON.parse(localStorage.getItem('homedetails'));
     this.homeProductList=this.list.HomeProducts;
+    console.log(this.homeProductList);
   }
 
 }

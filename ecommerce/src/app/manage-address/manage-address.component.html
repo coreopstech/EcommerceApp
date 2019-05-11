@@ -34,7 +34,7 @@
 
     <div class="col-sm-6">
       <mat-form-field class="example-full-width">
-          <mat-label>City</mat-label>
+        <mat-label>City</mat-label>
         <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
           <mat-option>None</mat-option>
           <mat-option *ngFor="let city of cities" value="{{city.Value}}">
@@ -69,7 +69,7 @@
   <div class="row">
     <div class="col-sm-12">
       <button mat-button class="btn_green">Save</button>
-      <button mat-button type="button" class="btn_green" (click)="ResetAddress()">Cancel</button>
+      <button mat-button type="button" class="btn_blue" (click)="ResetAddress()">Cancel</button>
     </div>
   </div>
 </form>
@@ -85,9 +85,16 @@
       <button mat-icon-button (click)="openAddressForm(address.EncryptedAddressId)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>delete</mat-icon>
       </button>
+      <mat-menu #menu="matMenu">
+        Are you sure you want to remove this address?
+        <div class="d-flex menu_item">
+            <button mat-menu-item>CANCLE</button>
+            <button mat-menu-item style="color: red;" (click)="DeleteAddress(address.EncryptedAddressId)">YES,REMOVE</button>
+        </div>
+      </mat-menu>
     </div>
   </div>
 </div>

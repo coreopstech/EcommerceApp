@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewRatingService } from '../_services/reviewRatingService';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 declare const $;
 @Component({
@@ -14,7 +15,8 @@ export class ReviewsComponent implements OnInit {
   reviewRatingList:any;
   totalReviews=0;
   constructor(private reviewRatingService:ReviewRatingService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:NgxSpinnerService,
+    private toast:ToastrManager) { }
 
   ngOnInit() {
     this.getReviewRatingList();
@@ -44,14 +46,30 @@ export class ReviewsComponent implements OnInit {
         }, 1000)
       });
   }
-  openDeletePopUp(encryptedReviewId)
+  RemoveReview(encryptedReviewRatingId)
   {
-    alert("#Del"+encryptedReviewId);
-    $("#Del"+encryptedReviewId).css('position', 'absolute');
-    $("#Del"+encryptedReviewId).show();
+    this.spinner.show();
+    this.reviewRatingService.RemoveReviewRating(encryptedReviewRatingId)
+    .subscribe(
+      result => {
+        if (result.IsSuccess) {
+          this.getReviewRatingList();
+          this.toast.successToastr("Removed from your reviews")
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+        else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+      },
+      error => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      });
   }
- hideDeletePopUp(encryptedReviewId)
-  {
-    $("#"+encryptedReviewId).hide();
-  }
+  
 }

@@ -105,7 +105,7 @@ export class WriteReviewsComponent implements OnInit {
               this.spinner.hide();
             }, 1000)
             alert('');
-            return this.router.navigate(["account/reviews"]);
+            return this.router.navigate(["account"]);
           }
           else {
             this.toastr.errorToastr(result.Message);

@@ -8,9 +8,9 @@
             <div class="sidebar_item">
               <ul>
                 <li><a [class.active]="currentPage=='profile'" (click)="changeView('profile')">Profile Information</a></li>
-                <li><a [class.active]="currentPage=='address'" (click)="changeView('address')">Manage Address</a></li>
+                <li><a [class.active]="currentPage=='addresses'" (click)="changeView('addresses')">Manage Address</a></li>
                 <li><a [class.active]="currentPage=='wishlist'" (click)="changeView('wishlist')">Wish List</a></li>
-                <li><a [class.active]="currentPage=='reviewlist'" (click)="changeView('reviewlist')">Reviews</a></li>
+                <li><a [class.active]="currentPage=='reviews'" (click)="changeView('reviews')">Reviews</a></li>
                 
                 <li><a routerLink="/account/orders">Orders</a></li>
               </ul>
@@ -25,13 +25,13 @@
               <div *ngSwitchCase="currentPage == 'wishlist'">
                 <app-wishlist></app-wishlist>
               </div>
-              <div *ngSwitchCase="currentPage == 'address'">
+              <div *ngSwitchCase="currentPage == 'addresses'">
                   <app-manage-address></app-manage-address>
               </div>
                 <div *ngSwitchCase="currentPage == 'profile'">
                   <app-profile-information></app-profile-information>
                 </div>
-                <div *ngSwitchCase="currentPage == 'reviewlist'">
+                <div *ngSwitchCase="currentPage == 'reviews'">
                   <app-reviews></app-reviews>
                 </div>
           </div>

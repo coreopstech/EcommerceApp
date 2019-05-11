@@ -37,6 +37,7 @@ export class CheckOutComponent implements OnInit {
   isPaymentOptionsVisible = false;
   paymentType = 0;
   isAddNewAddress=false;
+  cities:any;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -190,6 +191,7 @@ export class CheckOutComponent implements OnInit {
 
   SetAddressId(encryptedAddressId) {
     this.selectedAddressId = encryptedAddressId;
+    this.isAddNewAddress=false;
   }
   RemoveProduct(encryptedProductDetailsId, ProductDetailsId) {
     this.spinner.show();
@@ -324,8 +326,8 @@ export class CheckOutComponent implements OnInit {
   OpenAddNewAddress()
   {
     this.isAddNewAddress=true;
-    alert(this.isAddNewAddress);
     this.customerAddress=new UserAddress();
+    this.ShowAddressDetails('0');
   }
 
   SetPaymentOptions() {
@@ -383,6 +385,95 @@ export class CheckOutComponent implements OnInit {
           }, 1000)
         });
     }
+  }
+  ShowAddressDetails(addressId) {
+    this.spinner.show();
+
+    if (addressId === '')
+      addressId = 0;
+    this.userService.getAddressDetails(addressId)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+            this.customerAddress = result.Data;
+            if (this.customerAddress.CityList != null && this.customerAddress.CityList.length > 0) {
+              this.cities = this.customerAddress.CityList;
+              this.customerAddress = result.Data;
+            }
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+          else {
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+
+  }
+  SaveAddress(stepper:MatStepper) {
+    this.spinner.show();
+    this.userService.saveUserAddressDetails(this.customerAddress)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.selectedAddressId=result.EncryptedAddressId;
+            this.isAddNewAddress=false;
+            this.getAddressList();
+            this.customerAddress=new UserAddress();
+            this.ShowAddressDetails('0');
+            this.isOrderSummaryVisible = true;
+            stepper.next();
+          }
+          else {
+            this.toastr.errorToastr(result.Message);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toastr.errorToastr(error);
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+
+  }
+  onStateChange(stateId) {
+    this.userService.getCityList(stateId)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+            this.cities = result.Data;
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+          else {
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+
   }
 
   get f() { return this.loginForm.controls; }

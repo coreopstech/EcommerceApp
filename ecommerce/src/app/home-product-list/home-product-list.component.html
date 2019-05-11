@@ -1,9 +1,9 @@
 <section class="section listing_item">
   <div class="container">
-    <div class="listing_wrapper">
+      <h1 *ngIf="productList!=null && productList.length>0">{{productList[0].SliderName}} </h1>
       <div class="listing_content" *ngIf="productList!=null && productList.length>0">
         <div class="row slider_list ">
-          <div class="col-6 col-sm-4 mb_30" *ngFor="let product of productList">
+          <div class="col-12 col-sm-4 mb_30" *ngFor="let product of productList">
             <div class="list_item">
               <div class="ps_rl">
                 <div class="list_header">
@@ -20,7 +20,7 @@
                 <div class="list_footer">
                   <p class="list_heading">{{product.ProductName}}</p>
                   <div class="d-flex justify-content-between">
-                    <p class="list_offer" *ngIf="isPriceVisible">
+                    <p class="list_offer">
                       <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
                       <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
                           aria-hidden="true"></i>{{product.ProductMRP}}</span>
@@ -40,7 +40,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="clearfix">
     </div>
   </div>

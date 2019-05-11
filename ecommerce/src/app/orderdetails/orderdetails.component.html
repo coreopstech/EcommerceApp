@@ -66,28 +66,31 @@
                 <li [ngStyle]="{'background': orderDetails.OrderStatus>4  ? 'green' : '' }">
                   <span *ngIf="orderDetails.OrderStatus!=6" class="text_label"
                     [ngStyle]="{'color':orderDetails.OrderStatus>=4 ? 'green' : '' }">Shipped</span>
-                  <div  *ngIf="orderDetails.OrderStatus!=6" class="cricle"
+                  <div *ngIf="orderDetails.OrderStatus!=6" class="cricle"
                     [ngStyle]="{'background':orderDetails.OrderStatus>=4 ? 'green' : '' }"></div>
                 </li>
 
                 <li>
-                  <span class="text_label"
+                  <span class="text_label" *ngIf="orderDetails.OrderStatus!=6"
+                    [ngStyle]="{'color':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }">Delivered</span>
+                    <span class="text_label"  *ngIf="orderDetails.OrderStatus==6"
                     [ngStyle]="{'color':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }">Cancelled</span>
                   <div class="cricle" [mdePopoverTriggerFor]="orderedPopover1" [mdePopoverTargetAt]="mainToolbar"
-                  mdePopoverTriggerOn="hover"
+                    mdePopoverTriggerOn="hover"
                     [ngStyle]="{'background':orderDetails.OrderStatus==5 ? 'green' : orderDetails.OrderStatus==6?'red':'' }">
                   </div>
                 </li>
               </ul>
               <div class="track_dt">
-                  <mde-popover #orderedPopover="mdePopover" [mdePopoverOverlapTrigger]="false" 
-                  [mdePopoverOffsetY]="10" [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000"
-                  [mdePopoverCloseOnClick]="false">
-                  fsdfsdgfd
+                <mde-popover #orderedPopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverOffsetY]="10"
+                  [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000" [mdePopoverCloseOnClick]="false">
+                  <ul>
+                    <li>Seller has processed your order.</li>
+                    <li>Seller has processed your order.</li>
+                  </ul>
                 </mde-popover>
-                  <mde-popover #orderedPopover1="mdePopover" [mdePopoverOverlapTrigger]="false" 
-                  [mdePopoverOffsetY]="10" [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000"
-                  [mdePopoverCloseOnClick]="false">
+                <mde-popover #orderedPopover1="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverOffsetY]="10"
+                  [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000" [mdePopoverCloseOnClick]="false">
                   fsdfsdgfd
                 </mde-popover>
               </div>

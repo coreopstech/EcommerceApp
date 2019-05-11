@@ -66,3 +66,20 @@ h4{
     margin-right: 15px;
     display: inline-block;
 }
+
+::ng-deep{
+    .mat-menu-panel {
+        max-width: 346px !important;
+        padding: 15px;
+    }
+}
+
+.menu_item{
+    margin-top: 15px;
+    button{
+        width: auto;
+    height: 30px;
+    font-size: 14px;
+    line-height: 30px;
+    }
+}

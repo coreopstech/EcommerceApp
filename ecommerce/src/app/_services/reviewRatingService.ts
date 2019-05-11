@@ -88,4 +88,10 @@ export class ReviewRatingService {
                 return result;
             }));
     }
+    RemoveReviewRating(encryptedReviewRatingId: string) {
+        return this.http.get<any>(this.baseUrl + `ReviewRating/RemoveReviewRating/` + encryptedReviewRatingId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
 }

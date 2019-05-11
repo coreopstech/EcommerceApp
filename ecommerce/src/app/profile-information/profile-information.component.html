@@ -1,6 +1,7 @@
 <h4>Personal Information 
   <div class="r_invoice">
     <button mat-icon-button *ngIf="!isPersonalInfoEditable" (click)="onProfileEdit()"> <mat-icon>edit</mat-icon> </button>
+    <button mat-icon-button *ngIf="isPersonalInfoEditable" (click)="isPersonalInfoEditable=!isPersonalInfoEditable"> <mat-icon>cancel</mat-icon> </button>
   </div></h4>
 <form (ngSubmit)="profileForm.form.valid && onRegister()" #profileForm="ngForm" *ngIf="profileModel!=null">
   <div class="row">
@@ -38,6 +39,7 @@
 <h4>Email Address 
   <div class="r_invoice">
     <button mat-icon-button *ngIf="!isEmailAddressEditable" (click)="onEmailEdit()"> <mat-icon>edit</mat-icon> </button>
+    <button mat-icon-button *ngIf="isEmailAddressEditable" (click)="isEmailAddressEditable=!isEmailAddressEditable"> <mat-icon>cancel</mat-icon> </button>
     
   </div></h4>
 <form (ngSubmit)="profileForm.form.valid && onEmailChange()" #profileForm="ngForm" *ngIf="profileModel!=null">
@@ -60,6 +62,7 @@
 </form>
 <h4>Mobile <div class="r_invoice">
   <button mat-icon-button *ngIf="!isMobileEditable" (click)="onMobileEdit()"> <mat-icon>edit</mat-icon> </button>
+  <button mat-icon-button *ngIf="isMobileEditable" (click)="isMobileEditable=!isMobileEditable"> <mat-icon>cancel</mat-icon> </button>
   
 </div></h4>
 

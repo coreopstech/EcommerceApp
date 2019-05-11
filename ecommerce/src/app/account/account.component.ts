@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from '../_services/userService';
 import { AuthenticationService } from './../_services/authentication.service';
@@ -16,14 +16,28 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 export class AccountComponent implements OnInit {
   currentPage = 'profile';
   profileModel: User;
-  isEditable=false;
+  isEditable = false;
   constructor(private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private snackBar: MatSnackBar,
-    private toast:ToastrManager,
+    private toast: ToastrManager,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    }
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        // if you need to scroll back to top, here is the right place
+        window.scrollTo(0, 0);
+      }
+    })
+  }
+
 
   ngOnInit() {
     this.getUserDetails();
@@ -39,7 +53,7 @@ export class AccountComponent implements OnInit {
       .subscribe(
         result => {
           if (result.IsSuccess) {
-            this.isEditable=false;
+            this.isEditable = false;
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -97,12 +111,10 @@ export class AccountComponent implements OnInit {
           }, 1000)
         });
   }
-  EditUserDetails(isEditable)
-  {
-    this.isEditable=true;
+  EditUserDetails(isEditable) {
+    this.isEditable = true;
   }
-  DeactivateUserAccount()
-  {
+  DeactivateUserAccount() {
     this.spinner.show();
     this.userService.DeactiveUserAccount()
       .subscribe(

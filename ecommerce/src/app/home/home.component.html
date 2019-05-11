@@ -4,7 +4,7 @@
     <div *ngIf="homeProductList!=null && homeProductList.length>0">
         <div class="feature_list" *ngFor="let slides of homeProductList">
             <div class="container">
-                <h1>{{slides.Title}} <a routerLink="/productlist" class="view_all">View All</a></h1>
+                <h1>{{slides.Title}} <a routerLink="/homeproducts/{{slides.EncryptedHomeProductSliderId}}" class="view_all">View All</a></h1>
                 <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
                     <div ngxSlickItem *ngFor="let slide of slides.HomeProductList" class="slide slider_list">
                         <div class="list_item">
@@ -13,7 +13,7 @@
                             </div>
                             <div class="list_footer">
                                 <p class="list_heading">{{slide.ProductName}} </p>
-                                <p class="list_offer" *ngIf="slide.DiscountPercentage>0.00">Min
+                                <p class="list_offer" *ngIf="slide.DiscountPercentage>0">Min
                                     {{slide.DiscountPercentageWithFormat}} off</p>
                                 <!-- <p class="buy_now">Buy Now</p> -->
                             </div>
