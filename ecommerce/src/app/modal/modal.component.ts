@@ -17,21 +17,21 @@ import { MobileChange } from '../_models/mobileChange';
 export class ModalComponent implements OnInit {
   modalData: any;
   loginModel: User;
-  emailModel:EmailChange;
-  mobileModel:MobileChange;
+  emailModel: EmailChange;
+  mobileModel: MobileChange;
   registerModel: User;
   submitted = false;
   returnUrl: string;
-  previousOtp:string;
-  newOtp:string;
-  previousMobileOtp:string;
-  newMobileOtp:string;
+  previousOtp: string;
+  newOtp: string;
+  previousMobileOtp: string;
+  newMobileOtp: string;
   constructor(
     private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private snackBar: MatSnackBar,
-    private toast:ToastrManager,
+    private toast: ToastrManager,
     private route: ActivatedRoute,
     private router: Router,
     public dialogRef: MatDialogRef<ModalComponent>,
@@ -49,29 +49,27 @@ export class ModalComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
-    if(this.modalData.emailChangeModel!=null && this.modalData.emailChangeModel.PreviousEmailOtp!='')
-    {
+    if (this.modalData.emailChangeModel != null && this.modalData.emailChangeModel.PreviousEmailOtp != '') {
       console.log(this.modalData.emailChangeModel);
-      this.previousOtp=this.modalData.emailChangeModel.PreviousEmailOtp;
-      this.newOtp=this.modalData.emailChangeModel.NewEmailOtp;
-      
-      this.emailModel=new EmailChange();
-      this.emailModel=this.modalData.emailChangeModel;
-      this.emailModel.NewEmailOtp="";
-      this.emailModel.PreviousEmailOtp="";
-      this.emailModel.Password="";
+      this.previousOtp = this.modalData.emailChangeModel.PreviousEmailOtp;
+      this.newOtp = this.modalData.emailChangeModel.NewEmailOtp;
+
+      this.emailModel = new EmailChange();
+      this.emailModel = this.modalData.emailChangeModel;
+      this.emailModel.NewEmailOtp = "";
+      this.emailModel.PreviousEmailOtp = "";
+      this.emailModel.Password = "";
     }
-    if(this.modalData.mobileChangeModel!=null && this.modalData.mobileChangeModel.PreviousMobileOtp!='')
-    {
+    if (this.modalData.mobileChangeModel != null && this.modalData.mobileChangeModel.PreviousMobileOtp != '') {
       console.log(this.modalData.mobileChangeModel);
-      this.previousMobileOtp=this.modalData.mobileChangeModel.PreviousMobileOtp;
-      this.newMobileOtp=this.modalData.mobileChangeModel.NewMobileOtp;
-      
-      this.mobileModel=new MobileChange();
-      this.mobileModel=this.modalData.mobileChangeModel;
-      this.mobileModel.NewMobileOtp="";
-      this.mobileModel.PreviousMobileOtp="";
-      this.mobileModel.Password="";
+      this.previousMobileOtp = this.modalData.mobileChangeModel.PreviousMobileOtp;
+      this.newMobileOtp = this.modalData.mobileChangeModel.NewMobileOtp;
+
+      this.mobileModel = new MobileChange();
+      this.mobileModel = this.modalData.mobileChangeModel;
+      this.mobileModel.NewMobileOtp = "";
+      this.mobileModel.PreviousMobileOtp = "";
+      this.mobileModel.Password = "";
     }
   }
 
@@ -106,7 +104,7 @@ export class ModalComponent implements OnInit {
       .subscribe(
         result => {
           if (result.IsSuccess) {
-
+            this.userService.changeCartValue(0);
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -212,17 +210,14 @@ export class ModalComponent implements OnInit {
           }, 1000)
         });
   }
-  onEmailChange()
-  {
-    if(this.emailModel.NewEmailOtp!=this.newOtp)
-    {
-       this.toast.errorToastr("OTP of "+this.emailModel.NewEmail+ " incorrect! Please enter valid OTP");
-       return;
+  onEmailChange() {
+    if (this.emailModel.NewEmailOtp != this.newOtp) {
+      this.toast.errorToastr("OTP of " + this.emailModel.NewEmail + " incorrect! Please enter valid OTP");
+      return;
     }
-    if(this.emailModel.PreviousEmailOtp!=this.previousOtp)
-    {
-      this.toast.errorToastr("OTP of "+this.emailModel.PreviousEmail+ " incorrect! Please enter valid OTP");
-       return;
+    if (this.emailModel.PreviousEmailOtp != this.previousOtp) {
+      this.toast.errorToastr("OTP of " + this.emailModel.PreviousEmail + " incorrect! Please enter valid OTP");
+      return;
     }
     this.spinner.show();
     this.userService.ChangeUserEmail(this.emailModel)
@@ -237,7 +232,7 @@ export class ModalComponent implements OnInit {
             //this.router.navigate([this.returnUrl]);
           }
           else {
-           this.toast.errorToastr(result.Data);
+            this.toast.errorToastr(result.Data);
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
@@ -253,17 +248,14 @@ export class ModalComponent implements OnInit {
           }, 1000)
         });
   }
-  onMobileChange()
-  {
-    if(this.mobileModel.NewMobileOtp!=this.newMobileOtp)
-    {
-       this.toast.errorToastr("OTP of "+this.mobileModel.NewMobile+ " incorrect! Please enter valid OTP");
-       return;
+  onMobileChange() {
+    if (this.mobileModel.NewMobileOtp != this.newMobileOtp) {
+      this.toast.errorToastr("OTP of " + this.mobileModel.NewMobile + " incorrect! Please enter valid OTP");
+      return;
     }
-    if(this.mobileModel.PreviousMobileOtp!=this.previousMobileOtp)
-    {
-      this.toast.errorToastr("OTP of "+this.mobileModel.PreviousMobile+ " incorrect! Please enter valid OTP");
-       return;
+    if (this.mobileModel.PreviousMobileOtp != this.previousMobileOtp) {
+      this.toast.errorToastr("OTP of " + this.mobileModel.PreviousMobile + " incorrect! Please enter valid OTP");
+      return;
     }
     this.spinner.show();
     this.userService.ChangeUserMobile(this.mobileModel)
@@ -278,7 +270,7 @@ export class ModalComponent implements OnInit {
             //this.router.navigate([this.returnUrl]);
           }
           else {
-           this.toast.errorToastr(result.Data);
+            this.toast.errorToastr(result.Data);
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)

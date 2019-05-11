@@ -2,33 +2,36 @@
   <div class="container inner_container">
     <div class="row">
       <div class="col-sm-8">
+
         <mat-vertical-stepper [linear]="isLinear" #stepper>
-          <mat-step label="Login">
+          <mat-step label="Login" [completed]="isLogged">
             <div *ngIf="!isLogged">
               <form (ngSubmit)="loginForm.form.valid && onLogin(stepper)" #loginForm="ngForm" *ngIf="loginModel!=null">
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Email Id/ Mobile" [(ngModel)]="loginModel.EmailModile" name="emailMobile"
-                    #emailMobile="ngModel" [ngClass]="{ 'is-invalid': loginForm.submitted && emailMobile.invalid }"
-                    required />
-                  <div *ngIf="loginForm.submitted && emailMobile.invalid" class="invalid-feedback">
-                  </div>
-                </mat-form-field>
-
-                <mat-form-field class="example-full-width">
-                  <input matInput type="password" placeholder="Password" [(ngModel)]="loginModel.Password"
-                    name="password" #password="ngModel"
-                    [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required />
-                  <div *ngIf="loginForm.submitted && password.invalid" class="invalid-feedback">
-                  </div>
-                </mat-form-field>
-
-                <button type="submit" mat-button>Next</button>
+                <div class="col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Email Id/ Mobile" [(ngModel)]="loginModel.EmailModile"
+                      name="emailMobile" #emailMobile="ngModel"
+                      [ngClass]="{ 'is-invalid': loginForm.submitted && emailMobile.invalid }" required />
+                    <div *ngIf="loginForm.submitted && emailMobile.invalid" class="invalid-feedback">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="password" placeholder="Password" [(ngModel)]="loginModel.Password"
+                      name="password" #password="ngModel"
+                      [ngClass]="{ 'is-invalid': loginForm.submitted && password.invalid }" required />
+                    <div *ngIf="loginForm.submitted && password.invalid" class="invalid-feedback">
+                    </div>
+                  </mat-form-field>
+                </div>
+                <button type="submit" mat-button class="btn_green">Login</button>
               </form>
 
             </div>
             <p *ngIf="isLogged">{{userName}}</p>
             <div *ngIf="isLogged">
-              <button mat-button matStepperNext>Next</button>
+              <button mat-button matStepperNext class="btn_green">Next</button>
             </div>
           </mat-step>
           <mat-step label="Delivery Address">
@@ -49,9 +52,106 @@
                   </mat-radio-group>
                 </div>
               </div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="OpenOrderSummary(stepper)" type="button"
-                *ngIf="selectedAddressId!=''">Next</button>
+              <div class="address_details">
+                <span class="addNewAddress" *ngIf="!isAddNewAddress" (click)="OpenAddNewAddress()">ADD
+                  New Address</span>
+                <div class="add_address" *ngIf="isAddNewAddress">
+                  <div class="address">
+                    <h4>Manage Addresses </h4>
+                  
+                  <div class="r_invoice">
+                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                      name="address">
+                      <mat-radio-button class="example-radio-button" checked>
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                  <form (ngSubmit)="f.form.valid && SaveAddress()" #f="ngForm" class="form-group">
+                    <div class="row">
+                      <input type="hidden" [ngModel]="customerAddress.AddressId"
+                        [ngModelOptions]="{standalone: true}" />
+                      <div class="col-sm-6">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Name" [(ngModel)]="customerAddress.Name" name="Name"
+                            #Name="ngModel" maxlength="50" [ngClass]="{ 'is-invalid': f.submitted && Name.invalid }"
+                            required>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <mat-form-field class="example-full-width">
+                          <input matInput AllowNumeric="true" placeholder="Mobile"
+                            [(ngModel)]="customerAddress.MobileNumber" minlength="10" maxlength="10" name="mobile"
+                            #mobile="ngModel" [ngClass]="{ 'is-invalid': f.submitted && mobile.invalid }" required>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Pincode" [(ngModel)]="customerAddress.PinCode" name="pin"
+                            maxlength="6" #pin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pin.invalid }"
+                            required>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-sm-12">
+                        <mat-form-field class="example-full-width">
+                          <textarea matInput placeholder="Locality" [(ngModel)]="customerAddress.Address"
+                            name="customeraddress" #customeraddress="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && customeraddress.invalid }" required></textarea>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>City</mat-label>
+                          <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let city of cities" value="{{city.Value}}">
+                              {{city.Text}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <mat-form-field>
+                          <mat-label>State</mat-label>
+                          <mat-select [(ngModel)]="customerAddress.StateIdWithFormat" name="state" #state="ngModel"
+                            (selectionChange)="onStateChange(customerAddress.StateIdWithFormat)">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let state of customerAddress.StateList" value="{{state.Value}}">
+                              {{state.Text}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                    <div class="form-group my-20">
+                      <label>Address Type</label>
+                      <div class="mt-10">
+                        <mat-radio-group aria-label="Select an option"
+                          [(ngModel)]="customerAddress.AddressTypeWithFormat" name="addressType" #addressType="ngModel">
+                          <mat-radio-button class="mr-15" value="1">Home</mat-radio-button>
+                          <mat-radio-button value="2">Work</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button mat-button class="btn_green">Save</button>
+                        <button mat-button type="button" class="btn_green" (click)="ResetAddress()">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+              <button mat-button matStepperPrevious class="btn_blue mat-button">Back</button>
+              <button mat-button (click)="OpenOrderSummary(stepper)" class="btn_green" type="button"
+                *ngIf="selectedAddressId!=''">Deliver
+                Here</button>
+
             </div>
           </mat-step>
           <mat-step label="Order Summary">
@@ -93,7 +193,6 @@
                 <div class="_3cto0P">
                   <div class="_3RkJty">
                     <div class="_3md1dr">
-
                       <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity"
                         (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
                         class="cart_desc"> –
@@ -121,37 +220,42 @@
               </div>
             </div>
             <div *ngIf="isOrderSummaryVisible">
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="OpenPaymentOptions(stepper)" type="button">Next</button>
+              <button mat-button matStepperPrevious class="btn_blue mat-button">Back</button>
+              <button mat-button (click)="OpenPaymentOptions(stepper)" type="button" class="btn_green">Continue</button>
             </div>
           </mat-step>
           <mat-step label="Payment Options">
-            <mat-radio-button *ngIf="isPaymentOptionsVisible" class="example-radio-button" [value]="COD" name="paymentOptions"
-              (click)="SetPaymentOptions(1)">
-            </mat-radio-button>
-            <div *ngIf="isPaymentOptionsVisible">
-                <button mat-button matStepperPrevious>Back</button>
-                <button *ngIf="paymentType>0" mat-button (click)="SaveOrderDetails()" type="button">Next</button>
+            <div class="form-group my-20">
+              <mat-radio-button *ngIf="isPaymentOptionsVisible" [value]="COD" name="paymentOptions"
+                (click)="SetPaymentOptions(1)">
+              </mat-radio-button>
+              <label *ngIf=" isLogged && isPaymentOptionsVisible">Cash On Delivery</label>
+              <div *ngIf="isLogged && isPaymentOptionsVisible ">
+                <button mat-button matStepperPrevious class="btn_blue mat-button">Back</button>
+                <button *ngIf="paymentType>0" class="btn_green" mat-button (click)="SaveOrderDetails()"
+                  type="button">Continue</button>
               </div>
+            </div>
           </mat-step>
-         
+
         </mat-vertical-stepper>
       </div>
       <div class="col-md-4" *ngIf="productData!=null">
-          <div class="inner_layout p-0">
-            <div class="price_details">
-              <h4>Price details</h4>
-              <div class="price_description">
-                <div class="price_dt">
-                  <div class="price">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
-                  <div class="delivery">Delivery Charges<span>Free</span></div>
-                  <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
-                </div>
+        <div class="inner_layout p-0">
+          <div class="price_details">
+            <h4>Price details</h4>
+            <div class="price_description">
+              <div class="price_dt">
+                <div class="price">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
+                <div class="delivery">Delivery Charges<span>Free</span></div>
+                <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
               </div>
-              <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
             </div>
+            <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order
+                ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

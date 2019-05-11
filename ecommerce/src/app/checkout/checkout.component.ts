@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './../_services/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../_models/user';
 import { MatStepper } from '@angular/material';
 import { OrderService } from '../_services/orderService';
+import { UserAddress } from '../_models/userAddress';
 
 @Component({
   selector: 'app-checkout',
@@ -17,6 +18,8 @@ import { OrderService } from '../_services/orderService';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckOutComponent implements OnInit {
+  @ViewChild('stepper') stepper;
+  customerAddress:UserAddress;
   isLinear = false;
   loginForm: FormGroup;
   loginModel: User;
@@ -33,6 +36,7 @@ export class CheckOutComponent implements OnInit {
   isOrderSummaryVisible = false;
   isPaymentOptionsVisible = false;
   paymentType = 0;
+  isAddNewAddress=false;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -72,15 +76,8 @@ export class CheckOutComponent implements OnInit {
         this.getBuyNowCartList();
       else
         this.getCartList();
-      // alert(this.productCartList.length);
-      // if (this.productCartList.length === undefined)
-      //   this.router.navigate(['/viewcart']);
-      // if (this.productCartList == null) {
-      //   this.router.navigate(['/viewcart']);
-      // }
-      // if (this.productCartList.length <= 0) {
-      //   this.router.navigate(['/viewcart']);
-      // }
+      this.stepper.completed = true;
+      this.stepper.selectedIndex = 1;
     }
 
   }
@@ -324,6 +321,13 @@ export class CheckOutComponent implements OnInit {
     this.isPaymentOptionsVisible = true;
     stepper.next();
   }
+  OpenAddNewAddress()
+  {
+    this.isAddNewAddress=true;
+    alert(this.isAddNewAddress);
+    this.customerAddress=new UserAddress();
+  }
+
   SetPaymentOptions() {
     this.paymentType = 1;
   }
