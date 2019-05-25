@@ -6,12 +6,11 @@ import { PagerService } from '../_services/pager.service';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
-  selector: 'app-productlist',
-  templateUrl: './productlist.component.html',
-  styleUrls: ['./productlist.component.scss']
+  selector: 'app-searchproductlist',
+  templateUrl: './searchproductlist.component.html',
+  styleUrls: ['./searchproductlist.component.scss']
 })
-export class ProductListComponent implements OnInit {
-
+export class SearchproductlistComponent implements OnInit {
   //----Paging---
   public array: any;
   public displayedColumns = ['', '', '', '', ''];
@@ -22,7 +21,8 @@ export class ProductListComponent implements OnInit {
   public totalSize = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  categoryList: any;
+  subCategoryList: any;
   categoryName: string;
   subCategoryName: string;
   encryptedCategoryId: string;
@@ -44,15 +44,15 @@ export class ProductListComponent implements OnInit {
   filterAttributes: FilterAttributeItems[] = new Array();
   startRecord: number;
   endRecord: number;
-
+  isMultipleCategory = false;
   private sortValue: "default";
   queryString: string;
-
+  searchData: string;
   isB2B = false;
   isBulkOrder = false;
   isPriceVisible = true;
-  isColorListVisible=0;
-  isVariantListVisible=0;
+  isColorListVisible = 0;
+  isVariantListVisible = 0;
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -81,13 +81,80 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        this.queryString = "?CategoryId=" + params.categoryId + "&SubCategoryId=" + params.subcategoryId + "&BrandId=" + params.brandId;
-        this.category_Id = params.categoryId;
-        this.subCategory_Id = params.subcategoryId;
-        this.brand_Id = params.brandId;
+        this.searchData = params['query'];
       });
-    this.bindCategoryAttributeVariantList();
-    this.findProductBySubCategoryId(this.category_Id, this.subCategory_Id, this.brand_Id);
+    this.SerachProductData(this.searchData);
+  }
+  SerachProductData(searchData: string): any {
+    this.spinner.show();
+    this.productService.getProductSearchDataWithoutFilter(searchData).subscribe(
+      result => {
+        if (result.IsSuccess) {
+          if (result.Data.isMultipleCategory == false) {
+            this.isMultipleCategory = false;
+            this.dataSource = new MatTableDataSource<Element>(result.Data.productSearchDataList);
+            this.dataSource.paginator = this.paginator;
+            this.array = result.Data.productSearchDataList;
+            this.totalSize = this.array.length;
+            this.iterator();
+            this.productList = result.Data.productSearchDataList;
+            if (result.Data.categoryFilterList != null && result.Data.categoryFilterList.length > 0) {
+              this.filterProductCategoryList = result.Data.categoryFilterList;
+              this.categoryName = this.filterProductCategoryList[0]["CategoryName"];
+              this.subCategoryName = this.filterProductCategoryList[0]["SubCategoryName"];
+              this.encryptedCategoryId=this.filterProductCategoryList[0]["EncryptedCategoryId"];
+              this.encryptedSubCategoryId=this.filterProductCategoryList[0]["EncryptedSubCategoryId"];
+            }
+            if (result.Data.attributeFilterList != null && result.Data.attributeFilterList.length > 0) {
+              this.filterProductAttributeGroupList = result.Data.attributeFilterList;
+            }
+            if (result.Data.variantFilterList != null && result.Data.variantFilterList.length > 0) {
+              this.filterProductVariantGroupList = result.Data.variantFilterList;
+            }
+            if (result.Data.variantValueFilterList != null && result.Data.variantValueFilterList.length > 0) {
+              this.filterProductVariantValueList = result.Data.variantValueFilterList;
+            }
+            if (result.Data.attributValueFilterList != null && result.Data.attributValueFilterList.length > 0) {
+              this.filterProductAttributeValueList = result.Data.attributValueFilterList;
+            }
+            if (result.Data.colorFilterList != null && result.Data.colorFilterList.length > 0) {
+              this.filterProductColorList = result.Data.colorFilterList;
+            }
+          }
+          else {
+            this.isMultipleCategory = true;
+            this.dataSource = new MatTableDataSource<Element>(result.Data.productSearchDataList);
+            this.dataSource.paginator = this.paginator;
+            this.array = result.Data.productSearchDataList;
+            this.totalSize = this.array.length;
+            this.iterator();
+            this.productList = result.Data.productSearchDataList;
+            if (result.Data.categoryList != null && result.Data.categoryList.length > 0) {
+              this.categoryList = result.Data.categoryList;
+              this.categoryName = this.categoryList[0]["CategoryName"];
+              this.encryptedCategoryId=this.categoryList[0]["EncryptedCategoryId"];
+            }
+            if (result.Data.subCategoryList != null && result.Data.subCategoryList.length > 0) {
+              this.subCategoryList = result.Data.subCategoryList;
+              this.subCategoryName = this.subCategoryList[0]["SubCategoryName"];
+              this.encryptedSubCategoryId=this.subCategoryList[0]["EncryptedSubCategoryId"];
+            }
+          }
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+        else {
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        }
+      },
+      (err) => {
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
+      });
   }
   //paging//
   public handlePage(e: any) {
@@ -115,36 +182,6 @@ export class ProductListComponent implements OnInit {
   onPriceChange(event: any) {
     this.filterProductsByPrice(event.value);
   }
-  findProductBySubCategoryId(categoryId: number, subcategoryId: number, brandId: number): any {
-    this.spinner.show();
-    this.productService.getProductByCategoryList(categoryId, subcategoryId, brandId).subscribe(
-      result => {
-        if (result.IsSuccess) {
-          this.dataSource = new MatTableDataSource<Element>(result.Data);
-          this.dataSource.paginator = this.paginator;
-          this.array = result.Data;
-          this.totalSize = this.array.length;
-          this.iterator();
-          this.productList = result.Data;
-
-          this.filterMainCategory = this.filterProductCategoryList[0]["CategoryName"];
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
-        else {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
-      },
-      (err) => {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000)
-      });
-  }
-
   change_Sorting(value) {
     this.sortValue = value;
     if (value === "pricehighlow") ////When Price Goes hight to low
@@ -181,50 +218,7 @@ export class ProductListComponent implements OnInit {
         return this.dateA - this.dateB //sort by date ascending
       });
   }
-  bindCategoryAttributeVariantList(): any {
-    this.spinner.show();
-    this.productService.getCategoryAttributeVariantList(this.queryString).subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          this.categoryName = result.Data.CategoryName;
-          this.subCategoryName = result.Data.SubCategoryName;
-          this.encryptedCategoryId = result.Data.EncryptedCategoryId;
-          this.encryptedSubCategoryId = result.Data.EncryptedSubCategoryId;
-          this.encryptedBrandId = result.Data.EncryptedBrandId;
-          if (result.Data.categoryFilterList != null && result.Data.categoryFilterList.length > 0) {
-            this.filterProductCategoryList = result.Data.categoryFilterList;
-          }
-          if (result.Data.attributeFilterList != null && result.Data.attributeFilterList.length > 0) {
-            this.filterProductAttributeGroupList = result.Data.attributeFilterList;
-          }
-          if (result.Data.variantFilterList != null && result.Data.variantFilterList.length > 0) {
-            this.filterProductVariantGroupList = result.Data.variantFilterList;
-          }
-          if (result.Data.variantValueFilterList != null && result.Data.variantValueFilterList.length > 0) {
-            this.filterProductVariantValueList = result.Data.variantValueFilterList;
-          }
-          if (result.Data.attributValueFilterList != null && result.Data.attributValueFilterList.length > 0) {
-            this.filterProductAttributeValueList = result.Data.attributValueFilterList;
-          }
-          if (result.Data.colorFilterList != null && result.Data.colorFilterList.length > 0) {
-            this.filterProductColorList = result.Data.colorFilterList;
-          }
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
-        else {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-        }
-      },
-      (err) => {
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000)
-      });
-  }
+ 
   getColorList(): any {
     if (this.filterAttributes.filter((x) => x.FilterType == 3).length > 0) {
       this.filterAttributes.filter((x) => x.FilterType == 3).forEach(element => {
@@ -334,12 +328,12 @@ export class ProductListComponent implements OnInit {
   }
   filterProducts() {
     this.spinner.show();
-    this.productService.getProductByFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes).subscribe(
+    this.productService.getProductSearchDataWithFilter(this.searchData,this.filterAttributes).subscribe(
       result => {
         if (result.IsSuccess) {
-          this.dataSource = new MatTableDataSource<Element>(result.Data);
+          this.dataSource = new MatTableDataSource<Element>(result.Data.productSearchDataList);
           this.dataSource.paginator = this.paginator;
-          this.array = result.Data;
+          this.array = result.Data.productSearchDataList;
           this.totalSize = this.array.length;
           this.iterator();
           window.scroll(0, 0);
@@ -357,12 +351,12 @@ export class ProductListComponent implements OnInit {
   }
   filterProductsByPrice(price: number) {
     this.spinner.show();
-    this.productService.getProductByPriceFilter(this.category_Id, this.subCategory_Id, this.brand_Id, this.filterAttributes, price).subscribe(
+    this.productService.getProductSearchDataWithFilterByPrice(this.searchData,this.filterAttributes,price).subscribe(
       result => {
         if (result.IsSuccess) {
-          this.dataSource = new MatTableDataSource<Element>(result.Data);
+          this.dataSource = new MatTableDataSource<Element>(result.Data.productSearchDataList);
           this.dataSource.paginator = this.paginator;
-          this.array = result.Data;
+          this.array = result.Data.productSearchDataList;
           this.totalSize = this.array.length;
           this.iterator();
           window.scroll(0, 0);
@@ -379,8 +373,8 @@ export class ProductListComponent implements OnInit {
       });
   }
   ShowColorList(isShowMore: number) {
-    
-    this.isColorListVisible=isShowMore;
+
+    this.isColorListVisible = isShowMore;
     //this.getColorList();
   }
 

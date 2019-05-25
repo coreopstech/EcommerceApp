@@ -113,6 +113,17 @@ export class ProductService {
                 return result;
             }));
     }
+    getProductSearchDataWithFilterByPrice(searchData,filterAttributes,price) {
+        var body = {
+            searchData: searchData,
+            filterAttribute: filterAttributes,
+            Price:price
+        }
+        return this.http.post<any>(this.baseUrl + `Product/GetProductSearchData`,body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
     getProductSearchDataWithoutFilter(searchData) {
         var body = {
             searchData: searchData

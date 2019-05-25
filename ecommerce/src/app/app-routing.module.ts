@@ -28,6 +28,7 @@ import { AccountComponent } from './account/account.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { HomeProductListComponent } from './home-product-list/home-product-list.component';
+import { SearchproductlistComponent } from './searchproductlist/searchproductlist.component';
 
 const routes: Routes = [
   {
@@ -170,6 +171,10 @@ const routes: Routes = [
  
   {
     path: 'productlist', component: ProductListComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'search', component: SearchproductlistComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
 ];

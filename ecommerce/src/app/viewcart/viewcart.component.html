@@ -1,4 +1,4 @@
-<div class="container"  >
+<div class="container">
   <div class="cart_i_list">
     <div class="row" *ngIf="productData!=null && productCartList!=null && productCartList.length>0">
       <div class="col-md-8">
@@ -8,18 +8,21 @@
             <div *ngFor="let cart of productCartList" class="_3ycxrs">
               <div class="cart_item">
                 <div class="cart_d">
-                    <a *ngIf="cart.ProductSEOUrl!=''" target="_blank" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                  <a *ngIf="cart.ProductSEOUrl!=''" target="_blank" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
                     [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
-                      <img src="{{cart.ProductImageUrl}}"></a>
+                    <img src="{{cart.ProductImageUrl}}"></a>
 
 
-                  <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
+                  <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                    [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">
                     <img src="{{cart.ProductImageUrl}}"></a>
                   <div class="cart_item_details">
                     <div class="cart_item_name">
-                      <a *ngIf="cart.ProductSEOUrl!=''" target="_blank" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
+                      <a *ngIf="cart.ProductSEOUrl!=''" target="_blank"
+                        routerLink="/productdetails/{{cart.ProductSEOUrl}}"
                         [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
-                      <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                      <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                        [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>
                     <span class="cart_price">₹{{cart.Price}}</span>
                     <span class="cart_mrp">₹{{cart.MRP}}</span>
@@ -27,10 +30,11 @@
                   <div class="delivery_details">
                     <ul>
                       <li *ngIf="cart.ExpectedDelivaryDateWithFormat!=''">
-                        Delivery by, {{cart.ExpectedDelivaryDateWithFormat}} 
+                        Delivery by, {{cart.ExpectedDelivaryDateWithFormat}}
                         <!-- | <span class="_3o5jSD">Free</span> <span class="_3ACFa6 _1wJt4G">₹40</span> -->
                       </li>
-                      <li *ngIf="cart.ReplacementDays>0 && cart.IsReplacementAvailable==true"><span>{{cart.ReplacementDays}} Days Replacement Policy</span></li>
+                      <li *ngIf="cart.ReplacementDays>0 && cart.IsReplacementAvailable==true">
+                        <span>{{cart.ReplacementDays}} Days Replacement Policy</span></li>
                     </ul>
                   </div>
                 </div>
@@ -39,24 +43,30 @@
                 <div class="_3RkJty">
                   <div class="_3md1dr">
 
-                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                    <button *ngIf="cart.ProductQuantity>cart.MinimumCartQuantity"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
                       class="cart_desc"> –
                     </button>
 
-                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)" (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
+                    <button *ngIf="!(cart.ProductQuantity>cart.MinimumCartQuantity)"
+                      (click)="SubtractProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MinimumCartQuantity)"
                       class="cart_desc" disabled="disabled"> – </button>
                     <div class="no_of_product">
                       <input type="text" value="{{cart.ProductQuantity}}" class="_2csFM9" readonly=""></div>
-                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                    <button *ngIf="(cart.ProductQuantity!=cart.MaximumCartQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
                       class="cart_desc"> +</button>
-                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)" (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
+                    <button *ngIf="(cart.MaximumCartQuantity==cart.ProductQuantity)"
+                      (click)="AddProductQuantity(cart.EncryptedProductDetailsId,cart.ProductDetailsId,cart.EncryptedProductId,cart.ProductQuantity,cart.MaximumCartQuantity)"
                       class="cart_desc" disabled="disabled"> +</button>
                   </div>
                 </div>
                 <div class="save_for_later">
-                  <button mat-button (click)="MoveProductIntoSavedLater(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">Save
+                  <button mat-button
+                    (click)="MoveProductIntoSavedLater(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">Save
                     For Later</button>
-                  <button mat-button (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">Remove
+                  <button mat-button
+                    (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">Remove
                   </button>
                 </div>
               </div>
@@ -81,13 +91,30 @@
                 <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
               </div>
             </div>
-            <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
+            <div class="total_saving"><span class="_27kB8M">Your Total Savings on this order
+                ₹<span>{{productData.TotalDiscountAmountWithFormat}}</span></span></div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row" *ngIf="savedProductData!=null">
+    <div class="row" *ngIf="!(productData!=null && productCartList!=null && productCartList.length>0)">
+        <div class="col-md-12">
+          <div class="inner_layout">
+            <div class="cart_list">
+              <h4 class="_3YIJgh">
+                <span class="_1WMqsr">My Cart(0)</span> </h4>
+              <div class="_3ycxrs">
+                <div class="center">
+                <img src="../../assets/images/emptyCart.png" class="_1rdTO5" title="Your Shopping Cart is empty"> 
+                <span class="_61Ylla">Your Shopping Cart is empty</span>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    <div class="row" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
       <div class="col-md-12">
         <div class="inner_layout">
           <div class="cart_list" *ngIf="productSavedForLaterList!=null && productSavedForLaterList.length>0">
@@ -101,7 +128,8 @@
                     <div class="cart_item_name">
                       <a *ngIf="cart.ProductSEOUrl!=''" routerLink="/productdetails/{{cart.ProductSEOUrl}}"
                         [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
-                      <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails" [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
+                      <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
+                        [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>
                     <span class="cart_price">₹{{cart.Price}}</span>
                     <span class="cart_mrp">₹{{cart.MRP}}</span>
@@ -119,8 +147,11 @@
                   </div>
                 </div>
                 <div class="save_for_later">
-                  <button mat-button (click)="MoveProductIntoCart(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">MOVE TO CART</button>
-                  <button mat-button (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">REMOVE
+                  <button mat-button
+                    (click)="MoveProductIntoCart(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">MOVE TO
+                    CART</button>
+                  <button mat-button
+                    (click)="RemoveProduct(cart.EncryptedProductDetailsId,cart.ProductDetailsId)">REMOVE
                   </button>
                 </div>
               </div>
@@ -129,5 +160,6 @@
         </div>
       </div>
     </div>
+   
   </div>
 </div>

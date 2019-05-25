@@ -179,9 +179,8 @@ export class ProductDetailsComponent implements OnInit {
               this.spinner.hide();
               
             }, 1000)
-            this.toast.successToastr('Added to bag', '');
             this.userService.changeCartValue(0);
-           
+            this.toast.successToastr('Added to bag', '');
           }
           else {
             setTimeout(() => {
@@ -209,22 +208,24 @@ export class ProductDetailsComponent implements OnInit {
         else {
           this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
           localStorage.setItem("cartList", JSON.stringify(this.myCart));
-          this.toast.successToastr("Added to bag");
           this.userService.changeCartValue(0);
+          this.toast.successToastr("Added to bag");
+          
         }
       }
       else {
         this.myCart.push(new Cart(productDetailsId, encryptedproductDetailsId, 1, false));
         localStorage.setItem("cartList", JSON.stringify(this.myCart));
-        this.toast.successToastr("Added to bag");
         this.userService.changeCartValue(0);
+        this.toast.successToastr("Added to bag");
+        
       }
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)
     }
     
-    this.router.navigate(["/viewcart"]);
+    return this.router.navigate(["/viewcart"]);
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {
     this.spinner.show();
@@ -237,7 +238,7 @@ export class ProductDetailsComponent implements OnInit {
       this.spinner.hide();
     }, 1000)
     localStorage.setItem('buynow', JSON.stringify({ itemId: encryptedproductDetailsId, quantity: 1 }));
-    this.router.navigate(['checkout'], { queryParams: { otracker: "BuyNow_Click" } });
+    this.router.navigate(['checkout'], { queryParams: { otracker: "buynow_click" } });
   }
   AddToWishList(encryptedproductDetailsId, encryptedProductId) {
     this.spinner.show();

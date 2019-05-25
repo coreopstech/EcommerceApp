@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { HomeService } from './_services/home.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,11 +13,13 @@ export class AppComponent  {
   title = 'ecommerce';
   constructor(private router: Router,
     private homeService:HomeService,
-    private spinner:NgxSpinnerService) {
+    private spinner:NgxSpinnerService
+    ) {
    }
 
   ngOnInit() {
     this. getHomeDetails();
+ 
   }
   getHomeDetails(){
      this.spinner.show();

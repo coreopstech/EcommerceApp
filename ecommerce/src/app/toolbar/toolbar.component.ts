@@ -109,5 +109,8 @@ export class ToolbarComponent implements OnInit {
     this.totalItems = 0;
      return this.router.navigate(["/home"]);
   }
+  searchProduct(searchData) {
+    this.router.navigate(['/search'], { queryParams: { query: searchData.value } });
+  }
 
 }

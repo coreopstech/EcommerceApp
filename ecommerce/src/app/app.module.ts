@@ -86,6 +86,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { OnlyNumber } from './validator/onlunumber';
 import { AllowNumeric } from './validator/allownumeric';
 import { HomeProductListComponent } from './home-product-list/home-product-list.component';
+import { SearchproductlistComponent } from './searchproductlist/searchproductlist.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,9 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
     ReviewsComponent,
     ManageAddressComponent,
     ProfileInformationComponent,
-    HomeProductListComponent
+    HomeProductListComponent,
+    SearchproductlistComponent
+    
   ],
   imports: [
 
@@ -189,4 +192,6 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  
+ }

@@ -6,9 +6,9 @@
           <li><a class="logo" [routerLink]="'/home'"><img src="../../assets/images/logo.png" alt=""></a></li>
           <li class="search_bar">
             <form>
-              <input matInput class="form-control" placeholder="Search..." />
+              <input matInput class="form-control" name="search" placeholder="Search..." required="" #searchData />
               <div class="search_btn">
-                <button mat-icon-button>
+                <button mat-icon-button (click)="searchProduct(searchData)" >
                   <mat-icon>search</mat-icon>
                 </button>
               </div>

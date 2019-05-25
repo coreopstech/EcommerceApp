@@ -171,10 +171,6 @@ export class MyCartService {
                 userEncryptedId = user.id;
             }
         }
-        if (user != null && user.id != null && user.id != '') {
-            userEncryptedId = user.id;
-        }
-        //var userEncryptedId=user.id;
         var cart = new Cart(0, buyNowCart.itemId, buyNowCart.quantity, true);
         var body = {
             UserEncryptedId: userEncryptedId,
