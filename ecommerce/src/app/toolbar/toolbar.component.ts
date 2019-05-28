@@ -5,6 +5,7 @@ import { AuthenticationService } from './../_services/authentication.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from './../_services/userService';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,11 +15,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ToolbarComponent implements OnInit {
   isLogged = false;
   totalItems = 0;
+  isPriceVisible=true;
+  isB2B=false;
+  isBulkOrder=false;
   constructor(public dialog: MatDialog,
     private userService: UserService,
     private authenticationService: AuthenticationService,
     private spinner: NgxSpinnerService,
-    private router: Router) {
+    private router: Router,
+    private global:Globals) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -40,6 +45,9 @@ export class ToolbarComponent implements OnInit {
       }
     });
     this.getTotalItemsCount();
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
   getTotalItemsCount() {
     if (!localStorage.getItem("currentidentity")) {

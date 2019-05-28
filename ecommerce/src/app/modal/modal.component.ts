@@ -9,6 +9,8 @@ import { UserService } from '../_services/userService';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { EmailChange } from './../_models/emailChange';
 import { MobileChange } from '../_models/mobileChange';
+import { BulkOrder } from './../_models/bulkOrder';
+import { ProductDetailService } from './../_services/productDetailsService';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -26,9 +28,11 @@ export class ModalComponent implements OnInit {
   newOtp: string;
   previousMobileOtp: string;
   newMobileOtp: string;
+  bulkOrderModel:BulkOrder;
   constructor(
     private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
+    private productDetailService:ProductDetailService,
     private userService: UserService,
     private snackBar: MatSnackBar,
     private toast: ToastrManager,
@@ -50,7 +54,6 @@ export class ModalComponent implements OnInit {
       }
     });
     if (this.modalData.emailChangeModel != null && this.modalData.emailChangeModel.PreviousEmailOtp != '') {
-      console.log(this.modalData.emailChangeModel);
       this.previousOtp = this.modalData.emailChangeModel.PreviousEmailOtp;
       this.newOtp = this.modalData.emailChangeModel.NewEmailOtp;
 
@@ -61,7 +64,6 @@ export class ModalComponent implements OnInit {
       this.emailModel.Password = "";
     }
     if (this.modalData.mobileChangeModel != null && this.modalData.mobileChangeModel.PreviousMobileOtp != '') {
-      console.log(this.modalData.mobileChangeModel);
       this.previousMobileOtp = this.modalData.mobileChangeModel.PreviousMobileOtp;
       this.newMobileOtp = this.modalData.mobileChangeModel.NewMobileOtp;
 
@@ -70,6 +72,10 @@ export class ModalComponent implements OnInit {
       this.mobileModel.NewMobileOtp = "";
       this.mobileModel.PreviousMobileOtp = "";
       this.mobileModel.Password = "";
+    }
+    if (this.modalData.bulkOrder != null && this.modalData.bulkOrder.EncryptedProductDetailsId != '') {
+     this.bulkOrderModel=new BulkOrder();
+     this.bulkOrderModel=this.modalData.bulkOrder;
     }
   }
 
@@ -281,6 +287,37 @@ export class ModalComponent implements OnInit {
           this.snackBar.open(error, '', {
             duration: 2000,
           });
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 1000)
+        });
+  }
+  onBulkOrder()
+  {
+    this.spinner.show();
+    this.submitted = true;
+    this.productDetailService.saveBulkOrder(this.bulkOrderModel)
+      .subscribe(
+        result => {
+          if (result.IsSuccess) {
+
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.toast.successToastr("Your Order has been Confirmed. Will connect with you soon!");
+            this.dialogRef.close();
+          }
+          else {
+
+            this.toast.errorToastr(result.Message);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+
+        },
+        error => {
+          this.toast.errorToastr(error);
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)

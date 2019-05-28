@@ -11,6 +11,7 @@ import { User } from '../_models/user';
 import { MatStepper } from '@angular/material';
 import { OrderService } from '../_services/orderService';
 import { UserAddress } from '../_models/userAddress';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-checkout',
@@ -38,8 +39,9 @@ export class CheckOutComponent implements OnInit {
   paymentType = 0;
   isAddNewAddress = false;
   cities: any;
-
-
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -49,7 +51,8 @@ export class CheckOutComponent implements OnInit {
     private myCartService: MyCartService,
     private userService: UserService,
     private headerService: HeaderMenuService,
-    private orderService: OrderService) {
+    private orderService: OrderService,
+    private global:Globals) {
 
   }
 
@@ -67,6 +70,9 @@ export class CheckOutComponent implements OnInit {
         else
           this.getCartList();
       }
+      this.isPriceVisible=this.global.isPriceVisible;
+      this.isB2B=this.global.isB2B;
+      this.isBulkOrder=this.global.isBulkOrder;
     });
 
     if (localStorage.getItem("currentidentity")) {

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductService } from '../_services/productService';
 import { PagerService } from '../_services/pager.service';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Globals } from '../_services/globalvariables';
 
 @Component({
   selector: 'app-searchproductlist',
@@ -48,11 +49,12 @@ export class SearchproductlistComponent implements OnInit {
   private sortValue: "default";
   queryString: string;
   searchData: string;
-  isB2B = false;
-  isBulkOrder = false;
-  isPriceVisible = true;
+  
   isColorListVisible = 0;
   isVariantListVisible = 0;
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
   formatLabel(value: number | null) {
     if (!value) {
       return 0;
@@ -66,7 +68,8 @@ export class SearchproductlistComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private productService: ProductService,
-    private pagerService: PagerService) {
+    private pagerService: PagerService,
+    private global:Globals) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -84,6 +87,9 @@ export class SearchproductlistComponent implements OnInit {
         this.searchData = params['query'];
       });
     this.SerachProductData(this.searchData);
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
   SerachProductData(searchData: string): any {
     this.spinner.show();

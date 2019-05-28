@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HomeService } from './../_services/home.service';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,9 @@ import { HomeService } from './../_services/home.service';
 export class HomeComponent implements OnInit {
   list:any;
   homeProductList:any;
+  isPriceVisible=true;
+  isB2B=false;
+  isBulkOrder=false;
   slides = [
     {img: 'assets/images/f1.jpg'},
     {img: 'assets/images/f1.jpg'},
@@ -43,7 +47,8 @@ export class HomeComponent implements OnInit {
     autoplaySpeed: 2000, */
   };
   constructor(private router: Router,
-    private homeService:HomeService) {
+    private homeService:HomeService,
+    private global:Globals) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
@@ -55,12 +60,16 @@ export class HomeComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     });
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
    }
 
   ngOnInit() {
     this.list=JSON.parse(localStorage.getItem('homedetails'));
     this.homeProductList=this.list.HomeProducts;
-    console.log(this.homeProductList);
+    
+  
   }
 
 }

@@ -122,6 +122,27 @@
         <button type="submit" class="bg_green" color="primary" mat-button>Save</button>
       </form>
     </div>
+    <div *ngIf="modalData.action == 'bulkOrder'">
+      <form (ngSubmit)="bulkOrderForm.form.valid && onBulkOrder()" #bulkOrderForm="ngForm" *ngIf="bulkOrderModel!=null">
+        <mat-form-field class="example-full-width">
+          <input matInput  maxlength="6" AllowNumeric="true" placeholder="Qunatity" [(ngModel)]="bulkOrderModel.ProductQuantity" name="productQuantity"
+            #productQuantity="ngModel" [ngClass]="{ 'is-invalid': bulkOrderForm.submitted && productQuantity.invalid }" required />
+          <div *ngIf="bulkOrderForm.submitted && productQuantity.invalid" class="invalid-feedback">
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Mobile" maxlength="10" minlength="10" [(ngModel)]="bulkOrderModel.MobileNumber" name="mobile" #mobile="ngModel"
+            [ngClass]="{ 'is-invalid': bulkOrderForm.submitted && mobile.invalid }" required />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" type="email" [(ngModel)]="bulkOrderModel.Email" name="email"
+            #email="ngModel" [ngClass]="{ 'is-invalid': bulkOrderForm.submitted && email.invalid }" required />
+        </mat-form-field>
+        <button type="submit" class="bg_green" color="primary" mat-button>Save</button>
+      </form>
+    </div>
   </div>
   
 </div>

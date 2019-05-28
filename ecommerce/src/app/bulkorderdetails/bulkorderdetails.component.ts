@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material';
 import { OrderService } from '../_services/orderService';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { Globals } from './../_services/globalvariables';
 
 @Component({
-  selector: 'app-orderdetails',
-  templateUrl: './orderdetails.component.html',
-  styleUrls: ['../orders/orders.component.scss','./orderdetails.component.scss']
+  selector: 'app-bulkorderdetails',
+  templateUrl: './bulkorderdetails.component.html',
+  styleUrls: ['../bulkorders/bulkorders.component.scss','./bulkorderdetails.component.scss']
 })
-export class OrderDetailsComponent implements OnInit {
+export class BulkorderdetailsComponent implements OnInit {
+
   orderNumber:string;
   orderData:any;
   isPriceVisible=true;
@@ -40,19 +41,17 @@ export class OrderDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
     .subscribe(params => {
-     
       this.orderNumber = params.order_id;
     });
-    //this.orderNumber = this.route.snapshot.paramMap.get('id');
-    this.getOrderDetails(this.orderNumber);
+    this.getBulkOrderDetails(this.orderNumber);
     this.isPriceVisible=this.global.isPriceVisible;
     this.isB2B=this.global.isB2B;
     this.isBulkOrder=this.global.isBulkOrder;
   }
-  getOrderDetails(orderNumber:string)
+  getBulkOrderDetails(orderNumber:string)
   {
     this.spinner.show();
-    this.orderService.getOrderDetails(orderNumber).subscribe(
+    this.orderService.getBulkOrderDetails(orderNumber).subscribe(
       result => {
         if (result.IsSuccess === true) {
           this.orderData=result.Data;

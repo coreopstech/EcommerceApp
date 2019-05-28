@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from '../_services/orderService';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material';
-import { Globals } from '../_services/globalvariables';
+import { OrderService } from '../_services/orderService';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  selector: 'app-bulkorders',
+  templateUrl: './bulkorders.component.html',
+  styleUrls: ['./bulkorders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class BulkordersComponent implements OnInit {
+
   orderList: any;
   orderDetailsList: any;
   isPriceVisible=true;
@@ -22,15 +23,15 @@ export class OrdersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getOrderList();
-    this.getOrderDetailsList();
+    this.getBulkOrderList();
+    this.getBulkOrderDetailsList();
     this.isPriceVisible=this.global.isPriceVisible;
     this.isB2B=this.global.isB2B;
     this.isBulkOrder=this.global.isBulkOrder;
   }
-  getOrderList() {
+  getBulkOrderList() {
     this.spinner.show();
-    this.orderService.getOrderList().subscribe(
+    this.orderService.getBulkOrderList().subscribe(
       result => {
         if (result.IsSuccess === true) {
           this.orderList = result.Data;
@@ -52,9 +53,9 @@ export class OrdersComponent implements OnInit {
 
       });
   }
-  getOrderDetailsList() {
+  getBulkOrderDetailsList() {
     this.spinner.show();
-    this.orderService.getOrderDetailsList().subscribe(
+    this.orderService.getBulkOrderDetailsList().subscribe(
       result => {
         if (result.IsSuccess === true) {
           this.orderDetailsList = result.Data;
@@ -76,7 +77,7 @@ export class OrdersComponent implements OnInit {
 
       });
   }
-  getOrderDetails(encryptedOrderId) {
+  getBulkOrderDetails(encryptedOrderId) {
     if (this.orderDetailsList != null && this.orderDetailsList.length > 0)
       return this.orderDetailsList.filter((x) => x.EncryptedOrderId == encryptedOrderId);
     else
@@ -84,3 +85,4 @@ export class OrdersComponent implements OnInit {
   }
 
 }
+

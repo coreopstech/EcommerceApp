@@ -3,12 +3,14 @@ import { BulkOrder } from './../_models/bulkOrder';
 import { Cart } from './../_models/cart';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { UserService } from '../_services/userService';
 import { FormBuilder } from '@angular/forms';
 import { WishListService } from '../_services/wishListService';
 import { ProductDetailService } from '../_services/productDetailsService';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Globals } from './../_services/globalvariables';
+import { ModalComponent } from './../modal/modal.component';
 declare const $;
 declare var jQuery: any;
 @Component({
@@ -41,12 +43,18 @@ export class ProductDetailsComponent implements OnInit {
   myCart: Cart[] = new Array();
   buyNowCart: Cart;
   maximumQuantity = 0;
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
+  bulkOrder:BulkOrder;
   constructor(private route: ActivatedRoute, private router: Router, private productDetailService: ProductDetailService,
     private spinner: NgxSpinnerService,
     private toast: ToastrManager,
     private userService: UserService,
     private wishlistService: WishListService,
     private formBuilder: FormBuilder,
+    private global:Globals,
+    public dialog: MatDialog,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -87,7 +95,9 @@ export class ProductDetailsComponent implements OnInit {
         api1.swap($this.data('standard'), $this.attr('href'));
       });
     });
-    
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
   getColorList(productId: string, productDetailId: string): any {
     this.spinner.show();
@@ -338,6 +348,18 @@ export class ProductDetailsComponent implements OnInit {
           }, 1000)
         });
     this.loading = false;
+  }
+  onBulkOrder(encryptedproductDetailsId: string,encryptedProductId: string) {
+    this.bulkOrder = new BulkOrder();
+    this.bulkOrder.EncryptedProductDetailsId=encryptedproductDetailsId;
+    this.bulkOrder.EncryptedProductId=encryptedProductId;
+    this.bulkOrder.ProductQuantity=0;
+    this.bulkOrder.Email='';
+    this.bulkOrder.MobileNumber='';
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '400px',
+      data: { action: 'bulkOrder', title: 'Bulk Order', bulkOrder: this.bulkOrder }
+    });
   }
 
 }

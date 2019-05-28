@@ -1,0 +1,66 @@
+<div class="container inner_container">
+  <div class="inner_layout">
+    <div class="row">
+      <div class="col-12">
+        <div class="order_list" *ngFor="let order of orderList">
+          <div class="order_header">
+            <ul>
+              <li>
+                <button mat-button class="btn_green" routerLink="/bulkorder_details"
+                  [queryParams]="{order_id:order.BulkOrderNumber}"> {{order.BulkOrderNumber}}</button>
+              </li>
+              <li>
+                <button class="green_c" mat-stroked-button routerLink="/bulkorder_details"
+                  [queryParams]="{order_id:order.BulkOrderNumber}">Track</button>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="orderDetailsList!=null && orderDetailsList.length>0">
+            <div class="order_body" *ngFor="let orderDetails of getBulkOrderDetails(order.EncryptedBulkOrderId)">
+              <div class="item_details" *ngIf="orderDetails.ProductSEOUrl!=''"
+                routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+                [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+                <div class="id_img">
+                  <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+                </div>
+                <div class="id_details">
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
+                </div>
+              </div>
+              <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
+                [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+                <div class="id_img">
+                  <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+                </div>
+                <div class="id_details">
+                  <h4>{{orderDetails.ProductName}}</h4>
+                  <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
+                </div>
+              </div>
+              <div class="dl_details">
+                <p>{{orderDetails.BulkOrderStatusTitle}}</p>
+                <span>{{orderDetails.BulkOrderStatusSubTitle}}</span>
+              </div>
+           
+            </div>
+          </div>
+          <div class="order_footer" *ngIf="isPriceVisible">
+            <ul>
+              <li>
+                <p><span>Ordered On</span> {{order.BulkOrderDateWithFormat}}</p>
+              </li>
+              <li>
+                <p><span>Order Total </span> ₹{{order.BulkOrderTotalAmount}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

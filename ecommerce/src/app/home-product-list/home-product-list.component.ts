@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ProductService } from '../_services/productService';
+import { Globals } from '../_services/globalvariables';
 
 @Component({
   selector: 'app-home-product-list',
@@ -11,14 +12,20 @@ import { ProductService } from '../_services/productService';
 export class HomeProductListComponent implements OnInit {
 productList:any;
 encryptedSliderId:string;
+isPriceVisible=true;
+isB2B=false;
+isBulkOrder=false;
   constructor(private router: Router,
     private spinner: NgxSpinnerService,
     private productService:ProductService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,private global:Globals) { }
 
   ngOnInit() {
    this.encryptedSliderId=this.route.snapshot.paramMap.get('id');
     this.GetHomeProductList(this.encryptedSliderId);
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
   GetHomeProductList(encryptedSliderId)
   {

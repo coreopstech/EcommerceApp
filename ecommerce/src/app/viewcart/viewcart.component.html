@@ -24,8 +24,8 @@
                       <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
                         [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>
-                    <span class="cart_price">₹{{cart.Price}}</span>
-                    <span class="cart_mrp">₹{{cart.MRP}}</span>
+                    <span *ngIf="isPriceVisible" class="cart_price">₹{{cart.Price}}</span>
+                    <span *ngIf="isPriceVisible" class="cart_mrp">₹{{cart.MRP}}</span>
                   </div>
                   <div class="delivery_details">
                     <ul>
@@ -80,9 +80,9 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="isPriceVisible">
         <div class="inner_layout p-0">
-          <div class="price_details">
+          <div class="price_details" >
             <h4>Price details</h4>
             <div class="price_description">
               <div class="price_dt">
@@ -131,8 +131,8 @@
                       <a *ngIf="cart.ProductSEOUrl===''" routerLink="/productdetails"
                         [queryParams]="{p:cart.EncryptedProductId,pd:cart.EncryptedProductDetailsId}">{{cart.ProductName}}</a>
                     </div>
-                    <span class="cart_price">₹{{cart.Price}}</span>
-                    <span class="cart_mrp">₹{{cart.MRP}}</span>
+                    <span *ngIf="isPriceVisible"  class="cart_price">₹{{cart.Price}}</span>
+                    <span *ngIf="isPriceVisible" class="cart_mrp">₹{{cart.MRP}}</span>
                   </div>
                 </div>
               </div>

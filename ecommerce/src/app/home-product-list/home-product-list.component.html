@@ -20,7 +20,7 @@
                 <div class="list_footer">
                   <p class="list_heading">{{product.ProductName}}</p>
                   <div class="d-flex justify-content-between">
-                    <p class="list_offer">
+                    <p class="list_offer" *ngIf="isPriceVisible">
                       <b class="t_price"><i class="fa fa-inr" aria-hidden="true"></i>{{product.ProductPrice}}</b>
                       <span class="price_off" *ngIf="product.ProductPrice != product.ProductMRP"><i class="fa fa-inr"
                           aria-hidden="true"></i>{{product.ProductMRP}}</span>

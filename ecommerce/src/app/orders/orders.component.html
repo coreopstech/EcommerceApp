@@ -36,7 +36,7 @@
                 </div>
                 <div class="id_details">
                   <h4>{{orderDetails.ProductName}}</h4>
-                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
                   <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
                 </div>
               </div>
@@ -57,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="order_footer">
+          <div class="order_footer" *ngIf="isPriceVisible">
             <ul>
               <li>
                 <p><span>Ordered On</span> {{order.OrderDateWithFormat}}</p>

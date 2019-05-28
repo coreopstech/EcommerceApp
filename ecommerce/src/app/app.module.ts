@@ -87,6 +87,9 @@ import { OnlyNumber } from './validator/onlunumber';
 import { AllowNumeric } from './validator/allownumeric';
 import { HomeProductListComponent } from './home-product-list/home-product-list.component';
 import { SearchproductlistComponent } from './searchproductlist/searchproductlist.component';
+import { Globals } from './_services/globalvariables';
+import { BulkordersComponent } from './bulkorders/bulkorders.component';
+import { BulkorderdetailsComponent } from './bulkorderdetails/bulkorderdetails.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +133,9 @@ import { SearchproductlistComponent } from './searchproductlist/searchproductlis
     ManageAddressComponent,
     ProfileInformationComponent,
     HomeProductListComponent,
-    SearchproductlistComponent
+    SearchproductlistComponent,
+    BulkordersComponent,
+    BulkorderdetailsComponent
     
   ],
   imports: [
@@ -180,6 +185,7 @@ import { SearchproductlistComponent } from './searchproductlist/searchproductlis
     ProductDetailsResolve,
     ProductDetailService,
     OrderService,
+    Globals,
     ReviewRatingService,
     MyCartService,
     {
