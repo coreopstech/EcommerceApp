@@ -195,7 +195,6 @@ export class ProductDetailsComponent implements OnInit {
           else {
             setTimeout(() => {
               this.spinner.hide();
-              
             }, 1000)
           }
         },
@@ -234,7 +233,7 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
       }, 1000)
     }
-    
+    setTimeout(() => 1000);
     return this.router.navigate(["/viewcart"]);
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {

@@ -11,7 +11,8 @@
               {{orderData.userAddressDetails.MobileNumber}}</p>
           </div>
           <div class="r_invoice" *ngIf="orderData.InvoiceGenerate">
-            <button class="green_c" mat-stroked-button>Request Invoice</button>
+            <button class="green_c" (click)="GenarateReportPDF(orderData.EncryptedOrderId)" mat-stroked-button>Request Invoice</button>
+            <!-- <a class="green_c" [href]="fileUrl" download="file.pdf" mat-stroked-button>Request Invoice</a> -->
           </div>
         </div>
       </div>

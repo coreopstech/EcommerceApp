@@ -181,4 +181,12 @@ export class OrderService {
                 return result;
             }));
     }
+    public downloadPdf(orderId): any {
+        
+        return this.http.get<any>(this.baseUrl + `Order/GetInvoiceDetails/`+orderId)
+        .pipe(map(result => {
+            return result;
+        }));
+        
+    }
 }
