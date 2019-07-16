@@ -11,6 +11,7 @@ import { User } from '../_models/user';
 import { MatStepper } from '@angular/material';
 import { OrderService } from '../_services/orderService';
 import { UserAddress } from '../_models/userAddress';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +20,7 @@ import { UserAddress } from '../_models/userAddress';
 })
 export class CheckOutComponent implements OnInit {
   @ViewChild('stepper') stepper;
-  customerAddress:UserAddress;
+  customerAddress: UserAddress;
   isLinear = false;
   loginForm: FormGroup;
   loginModel: User;
@@ -36,10 +37,11 @@ export class CheckOutComponent implements OnInit {
   isOrderSummaryVisible = false;
   isPaymentOptionsVisible = false;
   paymentType = 0;
-  isAddNewAddress=false;
-  cities:any;
-
-
+  isAddNewAddress = false;
+  cities: any;
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -49,7 +51,8 @@ export class CheckOutComponent implements OnInit {
     private myCartService: MyCartService,
     private userService: UserService,
     private headerService: HeaderMenuService,
-    private orderService: OrderService) {
+    private orderService: OrderService,
+    private global:Globals) {
 
   }
 
@@ -67,16 +70,22 @@ export class CheckOutComponent implements OnInit {
         else
           this.getCartList();
       }
+      this.isPriceVisible=this.global.isPriceVisible;
+      this.isB2B=this.global.isB2B;
+      this.isBulkOrder=this.global.isBulkOrder;
     });
 
     if (localStorage.getItem("currentidentity")) {
       this.isLogged = true;
       this.userName = JSON.parse(localStorage.getItem("currentidentity")).name;
-      this.getAddressList();
-      if (this.otraker != '' && this.otraker == 'buynow_click')
+      alert(this.otraker);
+      if (this.otraker != '' && this.otraker == 'buynow_click') {
         this.getBuyNowCartList();
+      }
+
       else
         this.getCartList();
+      this.getAddressList();
       this.stepper.completed = true;
       this.stepper.selectedIndex = 1;
     }
@@ -109,28 +118,37 @@ export class CheckOutComponent implements OnInit {
   }
   getBuyNowCartList() {
     this.spinner.show();
-    this.productCartList = this.myCartService.getBuyNowCartList().subscribe(
-      result => {
-        if (result.IsSuccess === true) {
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000)
-          this.productData = result.Data;
-          return this.productCartList = result.Data.productList;
-        }
-        else {
+    var buyNowData = localStorage.getItem("buynow");
+    if (buyNowData != null) {
+      this.productCartList = this.myCartService.getBuyNowCartList().subscribe(
+        result => {
+          if (result.IsSuccess === true) {
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+            this.productData = result.Data;
+            return this.productCartList = result.Data.productList;
+          }
+          else {
+            this.router.navigate(['/viewcart']);
+            setTimeout(() => {
+              this.spinner.hide();
+            }, 1000)
+          }
+        },
+        (err) => {
           this.router.navigate(['/viewcart']);
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)
-        }
-      },
-      (err) => {
-        this.router.navigate(['/viewcart']);
-        setTimeout(() => {
-          this.spinner.hide();
-        }, 1000)
-      });
+        });
+    }
+    else {
+      this.router.navigate(['/viewcart']);
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000)
+    }
   }
   onLogin(stepper: MatStepper) {
     this.spinner.show();
@@ -191,12 +209,25 @@ export class CheckOutComponent implements OnInit {
 
   SetAddressId(encryptedAddressId) {
     this.selectedAddressId = encryptedAddressId;
-    this.isAddNewAddress=false;
+    this.isAddNewAddress = false;
   }
   RemoveProduct(encryptedProductDetailsId, ProductDetailsId) {
     this.spinner.show();
     if (this.otraker != '' && this.otraker == 'buynow_click') {
-      localStorage.removeItem("buynow")
+      localStorage.removeItem("buynow");
+      var buyNowData = localStorage.getItem("buynow");
+      if (buyNowData != null) {
+        this.productCartList = this.getBuyNowCartList();
+        this.userService.changePriceCalculation(true);
+      }
+      else {
+        if (this.productCartList == null) {
+          this.router.navigate(['/viewcart']);
+        }
+        if (this.productCartList.length <= 0) {
+          this.router.navigate(['/viewcart']);
+        }
+      }
 
       setTimeout(() => {
         this.spinner.hide();
@@ -323,10 +354,9 @@ export class CheckOutComponent implements OnInit {
     this.isPaymentOptionsVisible = true;
     stepper.next();
   }
-  OpenAddNewAddress()
-  {
-    this.isAddNewAddress=true;
-    this.customerAddress=new UserAddress();
+  OpenAddNewAddress() {
+    this.isAddNewAddress = true;
+    this.customerAddress = new UserAddress();
     this.ShowAddressDetails('0');
   }
 
@@ -418,7 +448,7 @@ export class CheckOutComponent implements OnInit {
         });
 
   }
-  SaveAddress(stepper:MatStepper) {
+  SaveAddress(stepper: MatStepper) {
     this.spinner.show();
     this.userService.saveUserAddressDetails(this.customerAddress)
       .subscribe(
@@ -427,10 +457,10 @@ export class CheckOutComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            this.selectedAddressId=result.EncryptedAddressId;
-            this.isAddNewAddress=false;
+            this.selectedAddressId = result.EncryptedAddressId;
+            this.isAddNewAddress = false;
             this.getAddressList();
-            this.customerAddress=new UserAddress();
+            this.customerAddress = new UserAddress();
             this.ShowAddressDetails('0');
             this.isOrderSummaryVisible = true;
             stepper.next();
@@ -489,36 +519,6 @@ export class CheckOutComponent implements OnInit {
       }, 1000)
       return;
     }
-
     this.loading = true;
-    //   this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //     .subscribe(
-    //       result => {
-    //         if (result.IsSuccess) {
-    //           setTimeout(() => {
-    //             this.spinner.hide();
-    //           }, 1000)
-    //           this.loginForm.reset();
-    //           this.loading = false;
-    //           this.ngOnInit();
-    //         }
-    //         else {
-    //           this.toastr.error(result.Message);
-    //           this.loading = false;
-    //           setTimeout(() => {
-    //             this.spinner.hide();
-    //           }, 1000)
-    //         }
-
-    //       },
-    //       error => {
-    //         alert("error");
-    //         this.toastr.error(error);
-    //         this.loading = false;
-    //         setTimeout(() => {
-    //           this.spinner.hide();
-    //         }, 1000)
-    //       });
-    //   this.loading = false;
   }
 }

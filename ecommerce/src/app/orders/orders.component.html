@@ -26,7 +26,7 @@
                 <div class="id_details">
                   <h4>{{orderDetails.ProductName}}</h4>
                   <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                  <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
                 </div>
               </div>
               <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
@@ -36,8 +36,8 @@
                 </div>
                 <div class="id_details">
                   <h4>{{orderDetails.ProductName}}</h4>
-                  <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                  <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                  <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                  <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
                 </div>
               </div>
               <div class="dl_details">
@@ -57,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="order_footer">
+          <div class="order_footer" *ngIf="isPriceVisible">
             <ul>
               <li>
                 <p><span>Ordered On</span> {{order.OrderDateWithFormat}}</p>

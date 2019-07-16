@@ -11,7 +11,8 @@
               {{orderData.userAddressDetails.MobileNumber}}</p>
           </div>
           <div class="r_invoice" *ngIf="orderData.InvoiceGenerate">
-            <button class="green_c" mat-stroked-button>Request Invoice</button>
+            <button class="green_c" (click)="GenarateReportPDF(orderData.EncryptedOrderId)" mat-stroked-button>Request Invoice</button>
+            <!-- <a class="green_c" [href]="fileUrl" download="file.pdf" mat-stroked-button>Request Invoice</a> -->
           </div>
         </div>
       </div>
@@ -30,8 +31,8 @@
               </div>
               <div class="id_details">
                 <h4>{{orderDetails.ProductName}}</h4>
-                <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
               </div>
             </div>
             <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
@@ -41,8 +42,8 @@
               </div>
               <div class="id_details">
                 <h4>{{orderDetails.ProductName}}</h4>
-                <p><span class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
-                <p class="item_spc"><b>Color:</b> White and Sky Blue</p>
+                <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
               </div>
             </div>
             <div class="track_details">
@@ -115,7 +116,7 @@
                 ITEM</a>
             </div>
           </div>
-          <div class="order_footer">
+          <div class="order_footer" *ngIf="isPriceVisible">
             <ul>
               <li>
                 <p><span>Ordered On</span> {{orderData.OrderDateWithFormat}}</p>

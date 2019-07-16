@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { WishListService } from '../_services/wishListService';
 import { UserService } from '../_services/userService';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-wishlist',
@@ -14,10 +15,16 @@ export class WishListComponent implements OnInit {
   wishList: any;
   totalWishCount: 0;
   isRemoveModelVisible=false;
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
   constructor(private toastr: ToastrManager,
     private spinner: NgxSpinnerService,
     private userService:UserService,
-    private route: ActivatedRoute, private router: Router, private wishlistService: WishListService) {
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private wishlistService: WishListService,
+    private global:Globals) {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -35,6 +42,9 @@ export class WishListComponent implements OnInit {
   ngOnInit() {
 
     this.getProductWishList();
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
   getProductWishList() {
     this.spinner.show();

@@ -68,9 +68,44 @@ export class OrderService {
                 return result;
             }));
     }
+    getBulkOrderList()
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `Order/GetBulkOrderList/`+userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    getBulkOrderDetailsList()
+    {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        return this.http.get<any>(this.baseUrl + `Order/GetBulkOrderDetailsList/`+ userEncryptedId)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
     getOrderDetails(orderNumber:string)
     {
         return this.http.get<any>(this.baseUrl + `Order/GetOrderDetails/`+ orderNumber)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    getBulkOrderDetails(orderNumber:string)
+    {
+        return this.http.get<any>(this.baseUrl + `Order/GetBulkOrderDetails/`+ orderNumber)
             .pipe(map(result => {
                 return result;
             }));
@@ -145,5 +180,13 @@ export class OrderService {
             .pipe(map(result => {
                 return result;
             }));
+    }
+    public downloadPdf(orderId): any {
+        
+        return this.http.get<any>(this.baseUrl + `Order/GetInvoiceDetails/`+orderId)
+        .pipe(map(result => {
+            return result;
+        }));
+        
     }
 }

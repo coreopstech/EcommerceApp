@@ -20,7 +20,6 @@ export class AuthenticationService {
     }
 
     login(loginModel:User) {
-        console.log(loginModel);
         var cartData = localStorage.getItem("cartList");
         var userModel={
             emailMobile:loginModel.EmailModile,

@@ -1,0 +1,132 @@
+<div class="container inner_container" *ngIf="orderData!=null">
+  <div class="inner_layout">
+    <div class="row">
+      <div class="col-12">
+        <div class="address_details">
+          <div class="address">
+            <h4>Delivery Address</h4>
+            <p *ngIf="orderData.MobileNumber!=''"><b>Email</b>
+              {{orderData.Email}}</p>
+            <p *ngIf="orderData.MobileNumber!=''"><b>Phone</b>
+              {{orderData.MobileNumber}}</p>
+          </div>
+          <div class="r_invoice" *ngIf="orderData.InvoiceGenerate">
+            <button class="green_c" mat-stroked-button>Request Invoice</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="inner_layout">
+    <div class="row">
+      <div class="col-12">
+        <div class="order_list track_item">
+          <div class="order_body" *ngFor="let orderDetails of orderData.orderDetailsList">
+            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl!=''"
+              routerLink="/productdetails/{{orderDetails.ProductSEOUrl}}"
+              [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+              <div class="id_img">
+                <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+              </div>
+              <div class="id_details">
+                <h4>{{orderDetails.ProductName}}</h4>
+                <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
+              </div>
+            </div>
+            <div class="item_details" *ngIf="orderDetails.ProductSEOUrl===''" routerLink="/productdetails"
+              [queryParams]="{p:orderDetails.EncryptedProductId,pd:orderDetails.EncryptedProductDetailsId}">
+              <div class="id_img">
+                <img src="{{orderDetails.ProductImage}}" alt="{{orderDetails.ProductName}}">
+              </div>
+              <div class="id_details">
+                <h4>{{orderDetails.ProductName}}</h4>
+                <p><span *ngIf="isPriceVisible" class="cart_price">₹{{orderDetails.TotalAmountWithFormat}}</span></p>
+                <p class="item_spc"><b>Color:</b> {{orderDetails.ProductColor}}</p>
+              </div>
+            </div>
+            <div class="track_details">
+              <ul>
+
+                <li [ngStyle]="{'background': orderDetails.BulkOrderStatus>1  ? 'green' : '' }">
+                  <span class="text_label"
+                    [ngStyle]="{'color':orderDetails.BulkOrderStatus>=1 ? 'green' : '' }">Ordered</span>
+                  <div class="cricle" [mdePopoverTriggerFor]="orderedPopover" [mdePopoverTargetAt]="mainToolbar"
+                    mdePopoverTriggerOn="hover" [ngStyle]="{'background':orderDetails.BulkOrderStatus>=1 ? 'green' : '' }">
+                  </div>
+                </li>
+
+                <li [ngStyle]="{'background': orderDetails.BulkOrderStatus>3  ? 'green' : '' }">
+                  <span *ngIf="orderDetails.BulkOrderStatus!=6" class="text_label"
+                    [ngStyle]="{'color':orderDetails.OrderStatus>=3 ? 'green' : '' }">Packed</span>
+                  <div *ngIf="orderDetails.BulkOrderStatus!=6" class="cricle"
+                    [ngStyle]="{'background':orderDetails.BulkOrderStatus>=3 ? 'green' : '' }"></div>
+                </li>
+
+                <li [ngStyle]="{'background': orderDetails.BulkOrderStatus>4  ? 'green' : '' }">
+                  <span *ngIf="orderDetails.BulkOrderStatus!=6" class="text_label"
+                    [ngStyle]="{'color':orderDetails.BulkOrderStatus>=4 ? 'green' : '' }">Shipped</span>
+                  <div *ngIf="orderDetails.BulkOrderStatus!=6" class="cricle"
+                    [ngStyle]="{'background':orderDetails.BulkOrderStatus>=4 ? 'green' : '' }"></div>
+                </li>
+
+                <li>
+                  <span class="text_label" *ngIf="orderDetails.BulkOrderStatus!=6"
+                    [ngStyle]="{'color':orderDetails.BulkOrderStatus==5 ? 'green' : orderDetails.BulkOrderStatus==6?'red':'' }">Delivered</span>
+                    <span class="text_label"  *ngIf="orderDetails.BulkOrderStatus==6"
+                    [ngStyle]="{'color':orderDetails.BulkOrderStatus==5 ? 'green' : orderDetails.BulkOrderStatus==6?'red':'' }">Cancelled</span>
+                  <div class="cricle" [mdePopoverTriggerFor]="orderedPopover1" [mdePopoverTargetAt]="mainToolbar"
+                    mdePopoverTriggerOn="hover"
+                    [ngStyle]="{'background':orderDetails.BulkOrderStatus==5 ? 'green' : orderDetails.BulkOrderStatus==6?'red':'' }">
+                  </div>
+                </li>
+              </ul>
+              <div class="track_dt">
+                <mde-popover #orderedPopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverOffsetY]="10"
+                  [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000" [mdePopoverCloseOnClick]="false">
+                  <ul>
+                    <li>Seller has processed your order.</li>
+                    <li>Seller has processed your order.</li>
+                  </ul>
+                </mde-popover>
+                <mde-popover #orderedPopover1="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverOffsetY]="10"
+                  [mdePopoverArrowOffsetX]="8" mdePopoverArrowColor="#000" [mdePopoverCloseOnClick]="false">
+                  fsdfsdgfd
+                </mde-popover>
+              </div>
+            </div>
+
+            <div class="w_areview">
+              <span [class.order_cancel]="orderDetails.BulkOrderStatus==6"
+                [class.order_deliver]="orderDetails.BulkOrderStatus!=6">
+                {{orderDetails.BulkOrderStatusTitle}}
+              </span>
+
+              <a *ngIf="orderDetails.IsReviewVisible" class="green_c" mat-button
+                routerLink="/write-reviews/{{orderDetails.EncryptedBulkOrderDetailsId}}"
+                [queryParams]="{pId:orderDetails.EncryptedReviewRatingId}">RATE & REVIEW PRODUCT</a>
+              <a *ngIf="orderDetails.IsCancelButtonVisible" class="green_c" mat-button
+                [routerLink]="['/orders/cancel-order']"
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">CANCEL
+                ITEM</a>
+              <a *ngIf="orderDetails.IsReturnButtonVisible" class="green_c" mat-button
+                [routerLink]="['/orders/return-order']"
+                [queryParams]="{itemId:orderDetails.EncryptedOrderDetailsId,orderId:orderDetails.OrderNumber}">RETURN
+                ITEM</a>
+            </div>
+          </div>
+          <div class="order_footer" *ngIf="isPriceVisible">
+            <ul>
+              <li>
+                <p><span>Ordered On</span> {{orderData.BulkOrderDateWithFormat}}</p>
+              </li>
+              <li>
+                <p><span>Order Total </span> ₹{{orderData.BulkOrderTotalAmountWithFormat}}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

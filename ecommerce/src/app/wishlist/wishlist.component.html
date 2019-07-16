@@ -12,7 +12,7 @@
             </div>
             <div class="id_details">
               <h4>{{wish.ProductName}}</h4>
-              <p><span class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
+              <p><span *ngIf="isPriceVisible" class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
               <p class="item_spc"><b>Color:</b> {{wish.ProductColor}}</p>
             </div>
           </div>
@@ -25,7 +25,7 @@
             </div>
             <div class="id_details">
               <h4>{{wish.ProductName}}</h4>
-              <p><span class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
+              <p><span *ngIf="isPriceVisible" class="cart_price">₹ {{wish.PriceWithFormat}}</span></p>
               <p class="item_spc"><b>Color:</b> {{wish.ProductColor}}</p>
             </div>
           </div>

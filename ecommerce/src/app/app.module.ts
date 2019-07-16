@@ -86,6 +86,10 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { OnlyNumber } from './validator/onlunumber';
 import { AllowNumeric } from './validator/allownumeric';
 import { HomeProductListComponent } from './home-product-list/home-product-list.component';
+import { SearchproductlistComponent } from './searchproductlist/searchproductlist.component';
+import { Globals } from './_services/globalvariables';
+import { BulkordersComponent } from './bulkorders/bulkorders.component';
+import { BulkorderdetailsComponent } from './bulkorderdetails/bulkorderdetails.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +132,11 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
     ReviewsComponent,
     ManageAddressComponent,
     ProfileInformationComponent,
-    HomeProductListComponent
+    HomeProductListComponent,
+    SearchproductlistComponent,
+    BulkordersComponent,
+    BulkorderdetailsComponent
+    
   ],
   imports: [
 
@@ -177,6 +185,7 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
     ProductDetailsResolve,
     ProductDetailService,
     OrderService,
+    Globals,
     ReviewRatingService,
     MyCartService,
     {
@@ -189,4 +198,6 @@ import { HomeProductListComponent } from './home-product-list/home-product-list.
   entryComponents: [ModalComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  
+ }

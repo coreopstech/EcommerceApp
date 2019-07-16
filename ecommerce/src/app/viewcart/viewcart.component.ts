@@ -5,6 +5,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from '../_services/userService';
 import { HeaderMenuService } from './../_services/headerMenuService';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-viewcart',
@@ -17,12 +18,16 @@ export class ViewCartComponent implements OnInit {
   productData: any;
   savedProductData: any;
   productSavedForLaterList: any;
+  isPriceVisible:true;
+  isB2B:false;
+  isBulkOrder:false;
   constructor(private myCartService: MyCartService,
     private spinner: NgxSpinnerService,
     private toast: ToastrManager,
     private router: Router,
     private userService: UserService,
-    private headerService: HeaderMenuService) {
+    private headerService: HeaderMenuService,
+    private global:Globals) {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -41,6 +46,9 @@ export class ViewCartComponent implements OnInit {
 
     this.getCartList();
     this.getSavedForLaterList();
+    this.isPriceVisible=this.global.isPriceVisible;
+      this.isB2B=this.global.isB2B;
+      this.isBulkOrder=this.global.isBulkOrder;
   }
   getCartList() {
     this.spinner.show();

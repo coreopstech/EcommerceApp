@@ -28,6 +28,9 @@ import { AccountComponent } from './account/account.component';
 import { CustomerlistComponent } from './customerlist/customerlist.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { HomeProductListComponent } from './home-product-list/home-product-list.component';
+import { SearchproductlistComponent } from './searchproductlist/searchproductlist.component';
+import { BulkordersComponent } from './bulkorders/bulkorders.component';
+import { BulkorderdetailsComponent } from './bulkorderdetails/bulkorderdetails.component';
 
 const routes: Routes = [
   {
@@ -75,12 +78,20 @@ const routes: Routes = [
     component: OrdersComponent
   },
   {
+    path: 'account/bulkorders',
+    component: BulkordersComponent
+  },
+  {
     path: 'account/addresses',
     component: AccountComponent
   },
   {
     path: 'order_details',
     component: OrderDetailsComponent
+  },
+  {
+    path: 'bulkorder_details',
+    component: BulkorderdetailsComponent
   },
   {
     path: 'orders/cancel-order', component: CancelOrderComponent,
@@ -170,6 +181,10 @@ const routes: Routes = [
  
   {
     path: 'productlist', component: ProductListComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'search', component: SearchproductlistComponent,
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
 ];

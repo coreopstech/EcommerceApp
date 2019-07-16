@@ -6,6 +6,7 @@ import { AuthenticationService } from './../_services/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../_models/user';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Globals } from './../_services/globalvariables';
 
 @Component({
   selector: 'app-account',
@@ -17,13 +18,17 @@ export class AccountComponent implements OnInit {
   currentPage = 'profile';
   profileModel: User;
   isEditable = false;
+  isPriceVisible=true;
+  isB2B=false;
+  isBulkOrder=false;
   constructor(private spinner: NgxSpinnerService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private snackBar: MatSnackBar,
     private toast: ToastrManager,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private global:Globals) {
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -41,6 +46,9 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.getUserDetails();
+    this.isPriceVisible=this.global.isPriceVisible;
+    this.isB2B=this.global.isB2B;
+    this.isBulkOrder=this.global.isBulkOrder;
   }
 
   changeView(value: string) {

@@ -13,9 +13,8 @@
                             </div>
                             <div class="list_footer">
                                 <p class="list_heading">{{slide.ProductName}} </p>
-                                <p class="list_offer" *ngIf="slide.DiscountPercentage>0">Min
+                                <p class="list_offer" *ngIf="slide.DiscountPercentage>0 && isPriceVisible">Min
                                     {{slide.DiscountPercentageWithFormat}} off</p>
-                                <!-- <p class="buy_now">Buy Now</p> -->
                             </div>
 
                             <a *ngIf="slide.ProductSEOUrl!=''" class="anchor" target="_blank"

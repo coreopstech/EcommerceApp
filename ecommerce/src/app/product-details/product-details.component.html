@@ -31,9 +31,13 @@
 							<button mat-button class="btn_blue" (click)="AddToCart(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">ADD
 								TO CART</button>
 						</li>
-						<li>
+						<li *ngIf="!isBulkOrder">
 							<button mat-button class="btn_green" (click)="BuyNow(productDescription.EncryptedProductDetailsId,productDescription.ProductDetailsId,productDescription.EncryptedProductId,productDescription.ProductId)">BUY
 								NOW</button>
+						</li>
+						<li *ngIf="isBulkOrder">
+							<button mat-button class="btn_green" (click)="onBulkOrder(productDescription.EncryptedProductDetailsId,productDescription.EncryptedProductId)">BULK
+								ORDER</button>
 						</li>
 						<li *ngIf="productDetails.IsAvailableInCart">
 							<button class="btn_blue" mat-button (click)="router.navigate(['/viewcart']);">Go TO CART</button>
@@ -45,7 +49,7 @@
 			</div>
 			<div class="col-md-7 single-right-left simpleCart_shelfItem">
 				<h3>{{productDetails.ProductName}}</h3>
-				<p><span class="item_price">₹{{productDescription.Price}}</span> <span class="_dash">-</span>
+				<p *ngIf="isPriceVisible"><span  class="item_price">₹{{productDescription.Price}}</span> <span class="_dash">-</span>
 					<del>₹{{productDescription.MRP}}</del> <span class="item_DiscountPercentage">  {{productDescription.DiscountPercentage}}% off</span>
 				</p>
 				<div class="total_rating_review">
@@ -152,13 +156,6 @@
 									</div>
 								</div>
 								<p class="desc">{{review.ReviewDescription}}</p>
-
-								<div class="certified_buyer">
-									<div>
-										<p>{{review.UserName}} <span>Certified Buyer</span> {{review.ReviewRatingDateWithFormat}}</p>
-										<span class="l_d"> <mat-icon>thumb_up</mat-icon>&nbsp; {{review.ReviewLike}} <mat-icon>thumb_down</mat-icon>&nbsp; {{review.ReviewUnLike}}</span>
-									</div>
-								</div>
 							</li>
 						</ul>
 					</div>
