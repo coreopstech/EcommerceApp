@@ -53,6 +53,8 @@ export class UserService {
     register(user: User) {
         return this.http.post<any>(this.baseUrl + `Product/SignUp`, user)
             .pipe(map(result => {
+                debugger;
+                console.log(result);
                 if (result.IsSuccess) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentidentity', JSON.stringify({ token: result.Data.TokenNo, name: result.Data.FullName, id: result.Data.EncrytedId }));

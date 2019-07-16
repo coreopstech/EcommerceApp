@@ -232,7 +232,7 @@ export class ViewCartComponent implements OnInit {
     this.userService.changeCartValue(0);
   }
   SubtractProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, minimumQuantity) {
-    alert(ProductQuantity);
+    //alert(ProductQuantity);
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
       if (localStorage.getItem("currentidentity")) {

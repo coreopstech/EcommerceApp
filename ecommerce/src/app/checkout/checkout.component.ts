@@ -274,7 +274,7 @@ export class CheckOutComponent implements OnInit {
     }
   }
   SubtractProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, minimumQuantity) {
-    alert(ProductQuantity);
+    //alert(ProductQuantity);
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
       if (this.otraker != '' && this.otraker == 'buynow_click') {

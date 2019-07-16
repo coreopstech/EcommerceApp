@@ -104,7 +104,7 @@ export class WriteReviewsComponent implements OnInit {
             setTimeout(() => {
               this.spinner.hide();
             }, 1000)
-            alert('');
+           // alert('');
             return this.router.navigate(["account"]);
           }
           else {

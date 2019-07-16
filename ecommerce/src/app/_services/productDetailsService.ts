@@ -5,7 +5,6 @@ import { environment } from './../../environments/environment.prod';
 import { BulkOrder } from './../_models/bulkOrder';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 var token = '';
 if (localStorage.getItem("currentidentity") != null) {
     token = JSON.parse(localStorage.getItem("currentidentity")).token;
@@ -19,11 +18,11 @@ const httpOptions = {
 @Injectable()
 export class ProductDetailService {
     baseUrl = environment.baseUrl;
-    constructor(private http: HttpClient,private spinner:NgxSpinnerService) {
+    constructor(private http: HttpClient, private spinner: NgxSpinnerService) {
     }
 
     getProductDetails(productId, productDetailId) {
-        var userEncryptedId = '';
+                var userEncryptedId = '';
         if (localStorage.getItem("currentidentity") != null) {
             var user = JSON.parse(localStorage.getItem("currentidentity"));
             if (user != null && user.id != null && user.id != '') {
@@ -37,9 +36,22 @@ export class ProductDetailService {
             UserEncryptedId: userEncryptedId,
             cartDetails: JSON.parse(cartData)
         }
-        return this.http.post<any>(this.baseUrl + 'Product/GetProductDetail/', body)
+        // return new Promise((resolve, reject) => {
+        //     this.http.post<any>(this.baseUrl + 'Product/GetProductDetail/', body)
+        //         .pipe(map(res => res))
+        //         .subscribe(response => {
+        //             resolve(true);
+        //             console.log(response);
+        //            return response;
+                    
+                    
+                    
+        //         })
+        // })
+
+        return  this.http.post<any>(this.baseUrl + 'Product/GetProductDetail/', body)
             .pipe(map(result => {
-                
+
                 return result;
             }));
     }
@@ -49,7 +61,7 @@ export class ProductDetailService {
                 return result;
             }));
     }
-        getProductVariantList(productId, productDetailId) {
+    getProductVariantList(productId, productDetailId) {
         return this.http.get<any>(this.baseUrl + `Product/GetProductVariantList/` + productId + '/' + productDetailId)
             .pipe(map(result => {
                 return result;
@@ -79,8 +91,7 @@ export class ProductDetailService {
                 return result;
             }));
     }
-    saveBulkOrder(bulkOrder:BulkOrder)
-    {
+    saveBulkOrder(bulkOrder: BulkOrder) {
         var userEncryptedId = '';
         if (localStorage.getItem("currentidentity") != null) {
             var user = JSON.parse(localStorage.getItem("currentidentity"));
@@ -88,11 +99,11 @@ export class ProductDetailService {
                 userEncryptedId = user.id;
             }
         }
-        bulkOrder.UserEncryptedId=userEncryptedId;
+        bulkOrder.UserEncryptedId = userEncryptedId;
         return this.http.post<any>(this.baseUrl + `Product/SaveBulkOrder/`, bulkOrder)
             .pipe(map(result => {
                 return result;
             }));
     }
-   
+
 }

@@ -62,17 +62,19 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-        this.route.queryParams
+    this.route.queryParams
       .subscribe(params => {
         this.productId = params.p;
         this.productDetailId = params.pd;
       });
-
-    this.products = this.route.snapshot.data['productDetails'];
+    
+    this.route.data.subscribe((data => { this.products = data.productDetails }));
+    // this.products = this.route.snapshot.data['productDetails'];
     this.productDetails = this.products.Data;
     this.productImageList = this.productDetails.ProductImagesList;
     this.productFirstImageList = this.productDetails.ProductImagesList[0];
     this.productDescription = this.productDetails.ProductDetailsList[0];
+    
     this.productColorList = this.getColorList(this.productId, this.productDetailId);
     this.productVariantList = this.getVariantList(this.productId, this.productDetailId);
     this.productVariantGroupList = this.getVariantGroupList(this.productId, this.productDetailId);
@@ -87,7 +89,7 @@ export class ProductDetailsComponent implements OnInit {
         api1.swap($this.data('standard'), $this.attr('href'));
       });
     });
-    
+
   }
   getColorList(productId: string, productDetailId: string): any {
     this.spinner.show();
@@ -177,25 +179,25 @@ export class ProductDetailsComponent implements OnInit {
           if (result.IsSuccess === true) {
             setTimeout(() => {
               this.spinner.hide();
-              
+
             }, 1000)
             this.toast.successToastr('Added to bag', '');
             this.userService.changeCartValue(0);
-           
+
           }
           else {
             setTimeout(() => {
               this.spinner.hide();
-              
+
             }, 1000)
           }
         },
         (err) => {
           setTimeout(() => {
             this.spinner.hide();
-            
+
           }, 1000)
-          
+
         });
     }
     else {
@@ -223,7 +225,7 @@ export class ProductDetailsComponent implements OnInit {
         this.spinner.hide();
       }, 1000)
     }
-    
+
     this.router.navigate(["/viewcart"]);
   }
   BuyNow(encryptedproductDetailsId: string, productDetailsId: number, encryptedProductId, productId) {
@@ -248,11 +250,11 @@ export class ProductDetailsComponent implements OnInit {
             this.toast.successToastr("Added to your WishList");
           }
           else {
-     
+
           }
         },
         (err) => {
-     
+
 
         });
     }
