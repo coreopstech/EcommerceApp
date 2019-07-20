@@ -172,7 +172,7 @@ export class OrderSummaryComponent implements OnInit {
     }
   }
   SubtractProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, minimumQuantity) {
-    alert(ProductQuantity);
+    
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
       if (this.otraker!='' && this.otraker == 'buynow_click') {

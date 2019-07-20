@@ -23,7 +23,10 @@ export class HeaderComponent implements OnInit {
     this.spinner.show();
 
     this.list=JSON.parse(localStorage.getItem('homedetails'));
+    if(this.list!=null && this.list.HomeHeaderList!=null)
+    {
      this.headerMenuList=this.list.HomeHeaderList;
+    }
       setTimeout(() => {
         this.spinner.hide();
       }, 1000)

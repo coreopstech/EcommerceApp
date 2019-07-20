@@ -22,6 +22,7 @@ export class AppComponent  {
  
   }
   getHomeDetails(){
+    
      this.spinner.show();
     this.homeService.getHomeDetails().subscribe(
       result => {

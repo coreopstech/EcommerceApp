@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { Globals } from './../_services/globalvariables';
 import { OrderService } from './../_services/orderService';
-import { saveAs } from 'file-saver';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrManager } from 'ng6-toastr-notifications';
 

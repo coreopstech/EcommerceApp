@@ -78,7 +78,7 @@ export class CheckOutComponent implements OnInit {
     if (localStorage.getItem("currentidentity")) {
       this.isLogged = true;
       this.userName = JSON.parse(localStorage.getItem("currentidentity")).name;
-      alert(this.otraker);
+      
       if (this.otraker != '' && this.otraker == 'buynow_click') {
         this.getBuyNowCartList();
       }
@@ -305,7 +305,7 @@ export class CheckOutComponent implements OnInit {
     }
   }
   SubtractProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, minimumQuantity) {
-    //alert(ProductQuantity);
+    
     this.spinner.show();
     if (minimumQuantity <= ProductQuantity - 1) {
       if (this.otraker != '' && this.otraker == 'buynow_click') {

@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  // baseUrl:"http://localhost/Ecommerce.WebApi/",
-  
-  //baseImageUrl:"http://localhost/Ecommerce.Web/Upload/ProductImages/",
-  baseUrl:"http://ecartwebapi.coreopstech.com/",
-   baseImageUrl:"http://ecart.coreopstech.com/Upload/ProductImages/",
+  baseUrl:"http://localhost/Ecommerce.WEBAPI1/",
+  baseImageUrl:"http://localhost/Ecommerce.Web/Upload/ProductImages/",
+  // baseUrl:"http://ecartwebapi.coreopstech.com/",
+  //  baseImageUrl:"http://ecart.coreopstech.com/Upload/ProductImages/",
   // baseUrl:"http://150.107.189.25/PublishEcommerceWebAPI/",
   // baseUrl:"http://150.107.189.25/Ecommerce.WebApi1/",
   // baseImageUrl:"http://150.107.189.25/PublishEcommerceWeb/Upload/ProductImages/",
