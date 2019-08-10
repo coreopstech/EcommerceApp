@@ -46,7 +46,7 @@
                 <div class="r_invoice">
                   <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
                     name="address">
-                    <mat-radio-button class="example-radio-button" [value]="address.EncryptedAddressId" name="address"
+                    <mat-radio-button class="example-radio-button" aria-checked="address.EncryptedAddressId===selectedAddressId" [value]="address.EncryptedAddressId" name="address"
                       (click)="SetAddressId(address.EncryptedAddressId)">
                     </mat-radio-button>
                   </mat-radio-group>
@@ -102,17 +102,7 @@
                         </mat-form-field>
                       </div>
 
-                      <div class="col-sm-6">
-                        <mat-form-field class="example-full-width">
-                          <mat-label>City</mat-label>
-                          <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
-                            <mat-option>None</mat-option>
-                            <mat-option *ngFor="let city of cities" value="{{city.Value}}">
-                              {{city.Text}}</mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-
+                      
                       <div class="col-sm-6">
                         <mat-form-field>
                           <mat-label>State</mat-label>
@@ -124,6 +114,18 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
+                      <div class="col-sm-6">
+                        <mat-form-field class="example-full-width">
+                          <mat-label>City</mat-label>
+                          <mat-select [(ngModel)]="customerAddress.CityIdWithFormat" name="city" #state="ngModel">
+                            <mat-option>None</mat-option>
+                            <mat-option *ngFor="let city of cities" value="{{city.Value}}">
+                              {{city.Text}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      
 
                     </div>
                     <div class="form-group my-20">
@@ -219,7 +221,7 @@
             </div>
             <div *ngIf="isOrderSummaryVisible">
               <button mat-button matStepperPrevious class="btn_blue mat-button">Back</button>
-              <button mat-button (click)="OpenPaymentOptions(stepper)" type="button" class="btn_green">Continue</button>
+              <button mat-button (click)="OpenPaymentOptions(stepper)" type="button" class="btn_green" *ngIf="productData.IsShypliteNotDeliver===false">Continue</button>
             </div>
           </mat-step>
           <mat-step label="Payment Options">
@@ -228,11 +230,18 @@
                 (click)="SetPaymentOptions(1)">
               </mat-radio-button>
               <label *ngIf=" isLogged && isPaymentOptionsVisible">Cash On Delivery</label>
+              <div></div>
+              <mat-radio-button *ngIf="isPaymentOptionsVisible" [value]="ONLINE" name="paymentOptions"
+                (click)="SetPaymentOptions(2)">
+              </mat-radio-button>
+              
+              <label *ngIf=" isLogged && isPaymentOptionsVisible">Pay Online</label>
               <div *ngIf="isLogged && isPaymentOptionsVisible ">
                 <button mat-button matStepperPrevious class="btn_blue mat-button">Back</button>
                 <button *ngIf="paymentType>0" class="btn_green" mat-button (click)="SaveOrderDetails()"
                   type="button">Continue</button>
               </div>
+              
             </div>
           </mat-step>
 
@@ -245,7 +254,11 @@
             <div class="price_description">
               <div class="price_dt">
                 <div class="price">Price ({{productData.TotalItems}})<span> ₹{{productData.TotalPrice}}</span></div>
-                <div class="delivery">Delivery Charges<span>Free</span></div>
+
+                <div class="delivery" *ngIf="(!(productData.TotalDeliveryCharges!=null && productData.TotalDeliveryCharges>0 ) && !productData.IsShypliteNotDeliver)">Delivery Charges<span>Free</span></div>
+                <div class="delivery"  *ngIf="productData.TotalDeliveryCharges!=null && productData.TotalDeliveryCharges>0 && !productData.IsShypliteNotDeliver">Delivery Charges<span>₹{{productData.TotalDeliveryCharges}}</span></div>
+                <div class="delivery"  *ngIf="productData.TotalDeliveryCharges!=null && productData.TotalDeliveryCharges>0 && !productData.IsShypliteNotDeliver">Expected Delivery Days<span>{{productData.TotalDeliveryDays}} days</span></div>
+                <div class="delivery"  *ngIf="productData.IsShypliteNotDeliver">Expected Delivery Days<span>Not deliver here</span></div>
                 <div class="amount">Amount Payable<span> ₹{{productData.TotalPayableAmount}}</span></div>
               </div>
             </div>

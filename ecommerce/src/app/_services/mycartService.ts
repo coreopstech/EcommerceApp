@@ -162,6 +162,24 @@ export class MyCartService {
                 return result;
             }));
     }
+    getSavedCartWithAddressList(addressId) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+
+            }
+        }
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            SelectedAddressId:addressId
+        }
+        return this.http.post<any>(this.baseUrl + `Product/GetSavedCartList`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
     getBuyNowCartList() {
         var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
         var userEncryptedId = '';
@@ -175,6 +193,26 @@ export class MyCartService {
         var body = {
             UserEncryptedId: userEncryptedId,
             cartModel: cart
+        }
+        return this.http.post<any>(this.baseUrl + `Product/GetBuyNowCartList`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    getBuyNowCartWithAddressList(addressId) {
+        var buyNowCart = JSON.parse(localStorage.getItem("buynow"));
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        var cart = new Cart(0, buyNowCart.itemId, buyNowCart.quantity, true);
+        var body = {
+            UserEncryptedId: userEncryptedId,
+            cartModel: cart,
+            SelectedAddressId:addressId
         }
         return this.http.post<any>(this.baseUrl + `Product/GetBuyNowCartList`, body)
             .pipe(map(result => {

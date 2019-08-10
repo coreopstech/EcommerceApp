@@ -40,6 +40,25 @@ export class OrderService {
                 return result;
             }));
     }
+    saveOnlineOrderDetails(paymentType:number,encryptedAddressId:string,paymentOrderId:string) {
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        var body={
+                paymentType:paymentType,
+                encryptedAddressId:encryptedAddressId,
+                userEncryptedId:userEncryptedId,
+                payment_orderId:paymentOrderId
+        }
+        return this.http.post<any>(this.baseUrl + `Order/SaveOrderDetails`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
     getOrderList()
     {
         var userEncryptedId = '';
@@ -174,6 +193,30 @@ export class OrderService {
                 paymentType:paymentType,
                 encryptedAddressId:encryptedAddressId,
                 userEncryptedId:userEncryptedId,
+                cartDetails:cart
+        }
+        return this.http.post<any>(this.baseUrl + `Order/SaveBuyNowOrderDetails`, body)
+            .pipe(map(result => {
+                return result;
+            }));
+    }
+    
+    saveonlinebuynoworder(paymentType:number,encryptedAddressId:string,paymentOrderId:string)
+    {
+        var buyNowCart=JSON.parse(localStorage.getItem("buynow"));
+        var cart=new Cart(0,buyNowCart.itemId,buyNowCart.quantity,true);
+        var userEncryptedId = '';
+        if (localStorage.getItem("currentidentity") != null) {
+            var user = JSON.parse(localStorage.getItem("currentidentity"));
+            if (user != null && user.id != null && user.id != '') {
+                userEncryptedId = user.id;
+            }
+        }
+        var body={
+                paymentType:paymentType,
+                encryptedAddressId:encryptedAddressId,
+                userEncryptedId:userEncryptedId,
+                payment_orderId:paymentOrderId,
                 cartDetails:cart
         }
         return this.http.post<any>(this.baseUrl + `Order/SaveBuyNowOrderDetails`, body)
