@@ -19,6 +19,7 @@
       <div class="col-md-5">
         <ul class="right_bar">
           <li  *ngIf="!isUserLogged()"><a href="javascript:void(0)" (click)="doLogin()">Login</a></li>
+          <li  *ngIf="!isUserLogged()"><a href="http://ecommerce.coreopstech.com" >Merchant Login</a></li>
           <li  *ngIf="!isUserLogged()"><a href="javascript:void(0)" (click)="createAccount()">Register</a></li>
           <li class="my_ac" *ngIf="isUserLogged()">
             <a >My Account</a>

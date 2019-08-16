@@ -108,12 +108,15 @@ export class ReturnOrderComponent implements OnInit {
     this.orderService.saveOrderReturnDetails(encryptedOrderDetailsId,encryptedOrderId,this.reasonId,this.remarkText).subscribe(
       result => {
         if (result.IsSuccess === true) {
-          this.router.navigate(['order_details'],{ queryParams: { order_Id:this.productOrderDetails.OrderNumber } });
+          this.toast.successToastr("Order Return Successfully");
           setTimeout(() => {
             this.spinner.hide();
-          }, 1000)
+          }, 1000);
+          this.router.navigate(['order_details'],{ queryParams: { order_Id:this.productOrderDetails.OrderNumber } });
+        
         }
         else {
+          this.toast.errorToastr(result.Message);
           setTimeout(() => {
             this.spinner.hide();
           }, 1000)

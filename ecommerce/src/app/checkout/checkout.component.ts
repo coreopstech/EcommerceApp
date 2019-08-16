@@ -446,7 +446,7 @@ export class CheckOutComponent implements OnInit {
     this.spinner.show();
 
     if (this.otraker != '' && this.otraker == 'buynow_click') {
-
+      alert(this.paymentType);
       if (this.paymentType == 1) {
         this.orderService.savebuynoworder(this.paymentType, this.selectedAddressId).subscribe(
           result => {
