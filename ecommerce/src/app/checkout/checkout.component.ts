@@ -437,16 +437,12 @@ export class CheckOutComponent implements OnInit {
   }
 
   SetPaymentOptions(str) {
-    if (str == "COD")
-      this.paymentType = 1;
-    else
-      this.paymentType = 2;
+    this.paymentType=str;
   }
   SaveOrderDetails() {
     this.spinner.show();
 
     if (this.otraker != '' && this.otraker == 'buynow_click') {
-      alert(this.paymentType);
       if (this.paymentType == 1) {
         this.orderService.savebuynoworder(this.paymentType, this.selectedAddressId).subscribe(
           result => {
@@ -494,6 +490,9 @@ export class CheckOutComponent implements OnInit {
 
         let rzp = new Razorpay(options);
         rzp.open();
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000)
       }
 
     }
