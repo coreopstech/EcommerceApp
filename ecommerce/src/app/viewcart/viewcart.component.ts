@@ -187,7 +187,7 @@ export class ViewCartComponent implements OnInit {
     }
   }
   AddProductQuantity(encryptedProductDetailsId, ProductDetailsId, encryptedProductId, ProductQuantity, maximumQuantity) {
-    alert(maximumQuantity);
+    
     //alert(ProductQuantity);
     this.spinner.show();
     if (maximumQuantity >= ProductQuantity + 1) {

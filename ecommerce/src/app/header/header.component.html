@@ -8,13 +8,15 @@
               <div *ngFor="let parentmenus of parentMenuList">
                 <div *ngIf="parentmenus.IsChildHas==1">
                   <li class="nav-item">
-                    <a class="nav-link down_arrow" [routerLink]="''" > {{parentmenus.Menu}}</a>
+                    <a class="nav-link down_arrow" [routerLink]="['/productlist']"
+                    [queryParams]="{categoryId:parentmenus.EncryptedCategoryId,subcategoryId:parentmenus.EncryptedSubCategoryId,brandId:parentmenus.EncryptedBrandId}" > {{parentmenus.Menu}}</a>
                     <div class="header_mega_menu">
                       <div *ngFor="let level1menus of GetLevel1sList(parentmenus.MenuId)">
                         <ul>
                           <div *ngIf="level1menus.IsChildHas==1">
                             <li class="menu_list_col">
-                              <a class="submenu_list" title="{{level1menus.Menu}}" [routerLink]="''">
+                              <a class="submenu_list" title="{{level1menus.Menu}}" [routerLink]="['/productlist']"
+                              [queryParams]="{categoryId:level1menus.EncryptedCategoryId,subcategoryId:level1menus.EncryptedSubCategoryId,brandId:level1menus.EncryptedBrandId}">
                                 {{level1menus.Menu}}</a>
                               <ul class="menu_list_item">
                                 <li *ngFor="let level2menus of GetLevel1sList(level1menus.MenuId)">
@@ -35,7 +37,8 @@
                   </li>
                 </div>
                 <div *ngIf="parentmenus.IsChildHas===0">
-                  <li class="nav-item"> <a class="nav-link down_arrow" href="#"> {{parentmenus.Menu}}</a></li>
+                  <li class="nav-item"> <a class="nav-link down_arrow" [routerLink]="['/productlist']"
+                    [queryParams]="{categoryId:parentmenus.EncryptedCategoryId,subcategoryId:parentmenus.EncryptedSubCategoryId,brandId:parentmenus.EncryptedBrandId}"> {{parentmenus.Menu}}</a></li>
                 </div>
               </div>
             </ul>
